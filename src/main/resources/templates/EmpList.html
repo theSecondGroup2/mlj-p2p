@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>员工信息列表</title>
+</head>
+<body>
+<h1>员工信息列表</h1>
+<table>
+    <tr  th:each="emp : ${empList}" >
+        <td th:text="${emp.empNo}">Red Chair</td>
+        <td th:text="${emp.eName}">Red Chair</td>
+    </tr>
+</table>
+</body>
+</html>
