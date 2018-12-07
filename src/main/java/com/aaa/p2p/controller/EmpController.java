@@ -43,5 +43,4 @@ public class EmpController {
         model.addAttribute(empList);
         return "empList";
     }
-
 }
