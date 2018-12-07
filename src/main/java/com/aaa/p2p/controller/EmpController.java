@@ -39,6 +39,7 @@ public class EmpController {
     @RequestMapping("/empList")
     public String empList(Model model) {
         List<Emp> empList = empService.selectEmpList();
+        //马哥真帅
         model.addAttribute(empList);
         return "empList";
     }
