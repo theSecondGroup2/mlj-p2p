@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>后台首页</title>
+    <style type="text/css">
+        .el-header {
+            background-color: #B3C0D1;
+            color: #333;
+            line-height: 60px;
+        }
+
+        .el-aside {
+            color: #333;
+        }
+        /*头部的背景图片*/
+        #hd {
+            position: relative;
+            width: 100%;
+            height: 114px;
+            background: url(../imgs/topbg.png) repeat-x;
+            z-index: 2;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.4.11/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.4.11/lib/index.js"></script>
+    <script type="text/javascript" src="../js/axios.min.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <el-container style=" border: 1px solid #eee">
+
+
+        <!--整体头部-->
+        <el-header id="hd" style="text-align: right; font-size: 12px; height: 100px">
+            <el-dropdown>
+                <i class="el-icon-setting" style="margin-right: 15px"></i>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>查看</el-dropdown-item>
+                    <el-dropdown-item>新增</el-dropdown-item>
+                    <el-dropdown-item>删除</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+            <span>芦瑞华</span>
+        </el-header>
+
+
+        <!--整体的底部-->
+        <el-container>
+
+            <!--左侧菜单栏-->
+            <el-aside width="250px" style="background-color: rgb(255,255,255)">
+                <el-tree :data="treeData" :props="defaultProps" accordion @node-click="handleNodeClick">
+                </el-tree>
+            </el-aside>
+
+
+            <!--右侧表单-->
+            <el-main>
+                <iframe scrolling="auto" frameborder="0" :src="toUrl" style="width:100%;height:600px;"></iframe>
+            </el-main>
+        </el-container>
+    </el-container>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            tableData: [{
+                date: '2016-05-02',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }],
+            name: '',
+            src: '',
+            defaultProps: {
+                children: 'children',
+                label: 'label'
+            },
+            treeData: [],
+            toUrl:'/user/toList'
+        },
+        methods: {
+            //					add: function() {
+            //						this.src = '/user/page'
+            //					},
+            handleNodeClick(data) {
+                this.toUrl = data.url
+            }
+
+        },
+        created: function () {
+            var self = this;
+            axios.post('/power/tree').then(function (response) {
+                self.treeData = response.data
+            })
+        }
+    })
+</script>
+</body>
+
+</html>

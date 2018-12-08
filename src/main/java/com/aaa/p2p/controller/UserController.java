@@ -1,92 +1,91 @@
 package com.aaa.p2p.controller;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
+import com.aaa.p2p.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * className:UserController
  * discription:
  * author:luRuiHua
- * createTime:2018-11-30 15:59
- *
+ * createTime:2018-12-05 09:30
  */
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    /**
-     * 跳转登陆页面
-     * @return
-     */
-    @RequestMapping("/login")
-    public String login() {
-        return "login";
-    }
-    /**
-     * 跳转老师页面
-     * @return
-     */
-    @RequestMapping("/teacher")
-    public String teacher() {
-        return "back/teacher";
-    }
-    /**
-     * 跳转学生页面
-     * @return
-     */
-    @RequestMapping("/student")
-    public String student() {
-        return "back/student";
-    }
-    /**
-     * 跳转首页
-     * @return
-     */
-    @RequestMapping("/index")
-    public String index() {
-        return "back/welcome";
-    }
-    /**
-     * 跳转首页
-     * @return
-     */
-    @RequestMapping("/unAuth")
-    public String unAuth() {
-        return "unAuth";
-    }
-    /**
-     * 跳转欢迎页面
-     * @return
-     */
-    @RequestMapping("/toLogin")
-    public String toLogin(String userName, String passWord, Model model) {
-        System.out.println("账号是："+userName);
+    @Autowired
+    private UserService userService;
 
-        //shiro的关键代码，执行认证功能
-        //1.获取subject
-        Subject subject = SecurityUtils.getSubject();
-        //2.封装用户数据
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName, passWord);
-        //3.执行登陆方法
-        try {
-            //登陆成功
-            subject.login(usernamePasswordToken);
-            model.addAttribute("msg","登陆成功");
-            //跳到欢迎页面
-            return "back/welcome";
-        } catch (UnknownAccountException e) {//用户名不存在的异常
-            model.addAttribute("msg","用户名不存在");
-            return "login";
-        } catch (IncorrectCredentialsException e) {//用户名和密码错误
-            model.addAttribute("msg","用户名和密码错误");
-            return "login";
-        }
+
+    /**
+     * 跳转列表页面
+     * @return
+     */
+    @RequestMapping("/toList")
+    public String toList(){
+        //System.out.println("111111");
+        return "back/list";
+    }
+
+    /**
+     * 分页
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/page")
+    public Object page(@RequestBody Map map){
+        Map resultMap = new HashMap();
+        //分页数据
+        resultMap.put("pageData",userService.getPageByParam(map));
+        //分页总数量
+        resultMap.put("total",userService.getPageCount(map));
+        return resultMap;
+    }
+
+    /**
+     * 添加
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/add")
+    public Object add(@RequestBody Map map){
+        return userService.add(map);
+    }
+    /**
+     * 更改
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/update")
+    public Object update(@RequestBody Map map){
+        return userService.update(map);
+    }
+    /**
+     * 删除
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/delete")
+    public Object delete(@RequestBody Map map){
+        return userService.delete(Integer.valueOf(map.get("empNo")+""));
+    }
+    /**
+     * 批量删除
+     */
+    @ResponseBody
+    @RequestMapping("/batchDel")
+    public Object batchDel(@RequestBody Map map){
+        return userService.batchDel(map);
     }
 
 }

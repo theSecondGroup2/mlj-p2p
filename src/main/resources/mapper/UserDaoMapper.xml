@@ -1,8 +1,55 @@
-<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--dao层接口的全路径-->
 <mapper namespace="com.aaa.p2p.dao.UserDao">
-    <select id="selectUserList" resultType="map">
-        select * from tb_user where username = #{userName}
+    <select id="getPageByParam" resultType="map">
+       select empno,ename,job,hiredate,sal,comm,deptno
+        from
+        (select rownum rn,empno,ename,job,to_char(hiredate,'yyyy-mm-dd') hiredate,sal,comm,deptno from tb_user
+        where rownum &lt; #{end}
+        <if test="empNo!=null and empNo!=''">
+           and empno=#{empNo}
+        </if>
+        <if test="ename!=null and ename!=''">
+            and ename like '%'||#{ename}||'%'
+        </if>
+        <if test="deptNo!=null and deptNo!=''">
+            and deptno =#{deptNo}
+        </if>
+         ) a
+        where a.rn &gt; #{start}
     </select>
+    <select id="getPageCount" resultType="int">
+        select count(*) from tb_user
+        <where>
+            <if test="empNo!=null and empNo!=''">
+                and empno=#{empNo}
+            </if>
+            <if test="ename!=null and ename!=''">
+                and ename like '%'||#{ename}||'%'
+            </if>
+            <if test="deptNo!=null and deptNo!=''">
+                and deptno =#{deptNo}
+            </if>
+        </where>
+    </select>
+    <!--增-->
+    <insert id="add">
+        insert into tb_user values (seq_tbuser_id.nextval,#{ENAME},
+        #{JOB},to_date(substr(#{HIREDATE},1,10),'yyyy-mm-dd'),#{SAL},#{COMM},#{DEPTNO})
+    </insert>
+    <update id="update">
+        update tb_user set ENAME=#{ENAME},
+       JOB = #{JOB},SAL = #{SAL},COMM = #{COMM},DEPTNO = #{DEPTNO},HIREDATE = to_date(substr(#{HIREDATE},1,10),'yyyy-mm-dd')
+       where empno = #{EMPNO}
+    </update>
+    <delete id="delete">
+        delete from tb_user where empno = #{empNo}
+    </delete>
+    <delete id="batchDel">
+        delete from tb_user where empno in
+            <foreach collection="list" item="empNo" open="(" separator="," close=")">
+                #{empNo}
+            </foreach>
+    </delete>
 </mapper>
