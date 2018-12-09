@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.p2p.dao.EmpDao">
+    <select id="getEmpList" resultType="map">
+      select e.ID,e.USERNAME,e.PASSWORD,r.ROLE,e.EMPNAME,d.DNAME,e.SEX,e.HIREDATE,e.SAL,e.COMM,e.IDCARD,e.TEL
+from TB_EMP e
+join TB_ROLE r
+    on e.ROLEID = r.ID
+join TB_DEPT d
+    on e.DEPTNO = d.ID
+    <where>
+        <if test="userName != null and userName != ''">
+            and username = #{userName}
+        </if>
+        <if test="empName != null and empName != ''">
+            and empname = #{empName}
+        </if>
+        <if test="dName != null and dName != ''">
+            and dname = #{dName}
+        </if>
+    </where>
+   </select>
+</mapper>
