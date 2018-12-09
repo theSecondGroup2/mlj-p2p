@@ -54,7 +54,8 @@
 
             <!--左侧菜单栏-->
             <el-aside width="250px" style="background-color: rgb(255,255,255)">
-                <el-tree :data="treeData" :props="defaultProps" accordion @node-click="handleNodeClick">
+                <!--accordion是否每次只打开一个同级节点  highlight-current高亮-->
+                <el-tree :default-expand-all="false"  :icon-class="icon" :highlight-current="true" :data="treeData"  :props="defaultProps" :accordion="true" @node-click="handleNodeClick">
                 </el-tree>
             </el-aside>
 
@@ -82,7 +83,8 @@
                 label: 'label'
             },
             treeData: [],
-            toUrl:'/user/toList'
+            toUrl:'/user/toList',
+            icon:'el-icon-menu'
         },
         methods: {
             //					add: function() {
@@ -96,7 +98,12 @@
         created: function () {
             var self = this;
             axios.post('/power/tree').then(function (response) {
-                self.treeData = response.data
+                //icon-class="el-icon-menu"
+                self.treeData = response.data;
+
+                //alert(JSON.stringify(response.data.ICONCLS))
+                //self.icon = response.data.ICONCLS
+
             })
         }
     })
