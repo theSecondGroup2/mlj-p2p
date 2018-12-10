@@ -29,4 +29,13 @@ public class DeptController {
     public Object getDeptList(){
         return deptService.getDeptList();
     }
+
+    /**
+     * 跳转dept页面
+     * @return
+     */
+    @RequestMapping("/toDept")
+    public String toDept(){
+        return "back/dept";
+    }
 }
