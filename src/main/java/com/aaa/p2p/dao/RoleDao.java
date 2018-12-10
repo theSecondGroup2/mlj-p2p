@@ -15,4 +15,10 @@ public interface RoleDao {
      * @return
      */
     List<Map> getRoleList();
+
+    /**
+     * 根据条件获取角色列表
+     * @return
+     */
+    List<Map> getRoleListBy(Map map);
 }
