@@ -14,6 +14,10 @@ import java.util.Map;
  */
 public class PhoneMsgTest {
 
+    /**
+     * 非作者请勿运行！
+     * @param args
+     */
     public static void main(String[] args) {
         String host = "http://dingxin.market.alicloudapi.com";
         String path = "/dx/sendSms";
