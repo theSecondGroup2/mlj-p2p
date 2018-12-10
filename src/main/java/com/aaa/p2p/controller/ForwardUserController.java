@@ -61,7 +61,7 @@ public class ForwardUserController {
      */
     @RequestMapping("/toImgTest")
     public String toImgTest() {
-        return "imgtest";
+        return "forward/imgtest";
     }
 
     /**
