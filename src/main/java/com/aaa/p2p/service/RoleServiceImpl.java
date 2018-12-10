@@ -19,11 +19,21 @@ public class RoleServiceImpl implements RoleService{
     @Autowired
     private RoleDao roleDao;
     /**
-     * dept列表查询
+     * role列表查询
      * @return
      */
     @Override
     public List<Map> getRoleList() {
         return roleDao.getRoleList();
+    }
+
+    /**
+     * 根据条件查询角色列表
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> getRoleListBy(Map map) {
+        return roleDao.getRoleListBy(map);
     }
 }

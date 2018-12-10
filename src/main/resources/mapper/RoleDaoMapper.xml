@@ -5,4 +5,12 @@
    <select id="getRoleList" resultType="map">
        select * from TB_ROLE
    </select>
+    <select id="getRoleListBy" resultType="map">
+        select * from TB_ROLE
+        <where>
+            <if test="ID != null and ID != ''">
+                and id= #{ID}
+            </if>
+        </where>
+    </select>
 </mapper>

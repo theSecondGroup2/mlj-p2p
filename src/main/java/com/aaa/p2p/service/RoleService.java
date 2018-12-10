@@ -15,4 +15,9 @@ public interface RoleService {
      * @return
      */
     List<Map> getRoleList();
+    /**
+     * 通过条件获取角色列表
+     * @return
+     */
+    List<Map> getRoleListBy(Map map);
 }
