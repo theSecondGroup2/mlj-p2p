@@ -28,4 +28,18 @@ public interface EmpDao {
      * @return
      */
     int insertEmp(Map map);
+
+    /**
+     * 删除员工
+     * @param map
+     * @return
+     */
+    int deleteEmp(Map map);
+
+    /**
+     * 获取账号
+     * @param userName
+     * @return
+     */
+    List<Map> selectEmp(String userName);
 }

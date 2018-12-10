@@ -65,7 +65,16 @@ public class EmpController {
     @RequestMapping("/insertEmp")
     @ResponseBody
     public Object insertEmp(@RequestBody Map map) {
-        System.out.println("添加的："+map);
         return empService.insertEmp(map);
+    }
+    /**
+     * 删除员工信息
+     * @param map
+     * @return
+     */
+    @RequestMapping("/deleteEmp")
+    @ResponseBody
+    public Object deleteEmp(@RequestBody Map map) {
+        return empService.deleteEmp(map);
     }
 }

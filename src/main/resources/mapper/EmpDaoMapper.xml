@@ -2,6 +2,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.p2p.dao.EmpDao">
+    <select id="selectEmp" resultType="map">
+        select * from TB_EMP where username = #{userName}
+    </select>
     <select id="getEmpList" resultType="map">
       select e.ID,e.USERNAME,e.PASSWORD,r.ROLE,e.EMPNAME,d.DNAME,e.SEX,to_char(e.HIREDATE,'yyyy-mm-dd') HIREDATE,e.SAL,e.COMM,e.IDCARD,e.TEL
 from TB_EMP e
@@ -41,4 +44,7 @@ join TB_DEPT d
         insert into TB_EMP values (TB_EMP_ID.nextval,#{USERNAME},#{PASSWORD},#{ROLE},#{EMPNAME},
         #{DNAME},#{SEX},to_date(#{HIREDATE},'yyyy-mm-dd'),#{SAL},#{COMM},#{IDCARD},#{TEL})
     </insert>
+    <delete id="deleteEmp">
+        delete from TB_EMP where ID = #{ID}
+    </delete>
 </mapper>
