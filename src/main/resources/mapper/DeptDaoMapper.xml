@@ -5,4 +5,32 @@
    <select id="getDeptList" resultType="map">
        select * from TB_DEPT
    </select>
+    <select id="getDeptListBy" resultType="map">
+        select * FROM TB_DEPT
+        <where>
+            <if test="DNAME != null and DNAME != ''">
+                and dname like '%' ||#{DNAME}|| '%'
+            </if>
+        </where>
+    </select>
+    <insert id="deptAdd" >
+        insert into TB_DEPT VALUES (TB_DEPT_ID.nextval,#{DNAME},#{DES},#{STATE})
+    </insert>
+    <update id="updateDept">
+        update TB_DEPT set
+        DNAME=#{DNAME},
+        DES=#{DES},
+        STATE=#{STATE}
+        where
+        ID=#{ID}
+    </update>
+    <delete id="deleteDept">
+         delete from TB_DEPT where ID = #{ID}
+    </delete>
+    <delete id="batchDel">
+        delete from TB_DEPT where ID in
+        <foreach collection="list" item="ID" open="(" separator="," close=")">
+            #{ID}
+        </foreach>
+    </delete>
 </mapper>

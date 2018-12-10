@@ -20,27 +20,12 @@
     <!--列表顶部搜索和工具条-->
     <el-row>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-            <el-form-item label="账号">
-                <el-input v-model="searchForm.username" placeholder="账号"></el-input>
+            <el-form-item label="部门名称">
+                <el-input v-model="searchForm.DNAME" placeholder="账号"></el-input>
             </el-form-item>
-            <el-form-item label="姓名">
-                <el-input v-model="searchForm.empname" placeholder="姓名"></el-input>
-            </el-form-item>
-            <el-form-item label="部门">
-                <template>
-                    <el-select v-model="searchForm.dname" clearable  placeholder="请选择">
-                        <el-option
-                                v-for="item in options"
-                                :key="item.ID"
-                                :label="item.DNAME"
-                                :value="item.DNAME">
-                        </el-option>
-                    </el-select>
-                </template>
-            </el-form-item><el-form-item>
             <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
             <el-button type="success" icon="plus" @click="addClick">新增</el-button>
-            <el-button type="success" icon="plus" @click="flushData">清空</el-button>
+            <el-button type="success" icon="plus" @click="toPush">刷新</el-button>
         </el-form-item>
         </el-form>
     </el-row>
@@ -62,59 +47,18 @@
                     align="center">
             </el-table-column>
             <el-table-column
-                    prop="USERNAME"
-                    label="账号"
-                    align="center">
-            </el-table-column>
-
-            <el-table-column
-                    prop="PASSWORD"
-                    label="员工密码"
-                    align="center">
-            </el-table-column>
-            <el-table-column
-                    prop="ROLE"
-                    label="角色"
-                    align="center">
-            </el-table-column>
-            <el-table-column
-                    prop="EMPNAME"
-                    label="员工姓名"
-                    align="center">
-            </el-table-column>
-            <el-table-column
                     prop="DNAME"
-                    label="部门"
+                    label="部门名称"
                     align="center">
             </el-table-column>
             <el-table-column
-                    prop="SEX"
-                    label="性别"
+                    prop="DES"
+                    label="部门简介"
                     align="center">
             </el-table-column>
             <el-table-column
-                    prop="SAL"
-                    label="薪水"
-                    align="center">
-            </el-table-column>
-            <el-table-column
-                    prop="COMM"
-                    label="奖金"
-                    align="center">
-            </el-table-column>
-            <el-table-column
-                    prop="IDCARD"
-                    label="身份证"
-                    align="center">
-            </el-table-column>
-            <el-table-column
-                    prop="TEL"
-                    label="电话号"
-                    align="center">
-            </el-table-column>
-            <el-table-column
-                    prop="HIREDATE"
-                    label="入职日期"
+                    prop="STATE"
+                    label="部门状态"
                     align="center">
             </el-table-column>
             <el-table-column
@@ -153,65 +97,14 @@
             <el-form-item label="ID" prop="ID"  disabled="true">
                 <el-input v-model="editForm.ID" auto-complete="off" readonly="readonly"></el-input>
             </el-form-item>
-            <el-form-item label="账号" prop="USERNAME">
-                <el-input v-model="editForm.USERNAME" auto-complete="off"></el-input>
+            <el-form-item label="部门名称" prop="DNAME">
+                <el-input v-model="editForm.DNAME" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="PASSWORD">
-                <el-input v-model="editForm.PASSWORD" auto-complete="off"></el-input>
+            <el-form-item label="部门简介" prop="DES">
+                <el-input v-model="editForm.DES" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="角色">
-                <template>
-                    <el-select v-model="editForm.ROLE" placeholder="请选择">
-                        <el-option
-                                v-for="item in roles"
-                                :key="item.ID"
-                                :label="item.ROLE"
-                                :value="item.ID">
-                        </el-option>
-                    </el-select>
-                </template>
-            </el-form-item>
-            <el-form-item label="姓名" prop="EMPNAME">
-                <el-input v-model="editForm.EMPNAME" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="部门">
-                <template>
-                    <el-select v-model="editForm.DNAME" placeholder="请选择">
-                        <el-option
-                                v-for="item in options"
-                                :key="item.ID"
-                                :label="item.DNAME"
-                                :value="item.ID">
-                        </el-option>
-                    </el-select>
-                </template>
-            </el-form-item>
-            <el-form-item label="性别" >
-                <el-radio-group v-model="editForm.SEX">
-                    <el-radio class="radio" label="男" >男</el-radio>
-                    <el-radio class="radio" label="女" >女</el-radio>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item label="雇佣日期">
-                <el-date-picker
-                        type="date"
-                        placeholder="选择日期"
-                        value-format="yyyy-MM-dd"
-                        v-model="editForm.HIREDATE"
-                        >
-                </el-date-picker>
-            </el-form-item>
-            <el-form-item label="薪水" prop="SAL">
-                <el-input v-model="editForm.SAL" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="奖金" prop="COMM">
-                <el-input v-model="editForm.COMM" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="身份证号" prop="IDCARD">
-                <el-input v-model="editForm.IDCARD" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="电话号" prop="TEL">
-                <el-input v-model="editForm.TEL" auto-complete="off"></el-input>
+            <el-form-item label="部门状态" prop="STATE">
+                <el-input v-model="editForm.STATE" auto-complete="off"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -243,9 +136,7 @@
             loading:false,
             //搜索表单
             searchForm: {
-                username: '',
-                empname: '',
-                dname: ''
+                DNAME: ''
             },
             //多选值
             multipleSelection: [],
@@ -269,55 +160,43 @@
             //编辑界面数据
             editForm: {
                 ID:'',
-                USERNAME:'',
-                PASSWORD:'',
-                ROLE:'',
-                EMPNAME:'',
                 DNAME:'',
-                SEX:'',
-                HIREDATE:'',
-                SAL:0,
-                COMM:0,
-                IDCARD:0,
-                TEL:0
+                DES:'',
+                STATE:''
             },
         },
         //列表显示
         created:function(){
             //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
             var self = this;
-            axios.post('/emp/getEmpList',{'pageNo':self.currentPage,'pageSize':self.pageSize}).then(function(response){
+            axios.post('/dept/getDeptListBy',{'pageNo':self.currentPage,'pageSize':self.pageSize}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.pageData;
-            })
-            axios.post('/dept/getDeptList').then(function(response){
-                self.options = response.data;
-            })
-            axios.post('/role/getRoleList').then(function(response){
-                self.roles = response.data;
             })
         },
         methods:{
             //清空表格数据
-            flushData:function(){
-                //搜索表单
-                searchForm = {
-                    username: '',
-                    empname: '',
-                    dname: ''
+            toPush:function(){
+               this. searchForm= {
+                   ID:'',
+                   DNAME: '',
+                   DES:'',
+                   STATE:''
                 }
+                //alert('刷新');
+                this.loadingData();//重新加载数据
             },
             //表格重新加载数据
             loadingData:function() {
                 var _self = this;
                 _self.loading = true;
                 //传过去的参数
-                var searchForm={'pageNo':_self.currentPage,'pageSize':_self.pageSize,'userName':_self.searchForm.username,'empName':_self.searchForm.empname,'dName':_self.searchForm.dname};
-                axios.post('/emp/getEmpList',searchForm).then(function(response){
+                var searchForm={'pageNo':_self.currentPage,'pageSize':_self.pageSize,'DNAME':_self.searchForm.DNAME};
+                axios.post('/dept/getDeptListBy',searchForm).then(function(response){
                     _self.total=response.data.total;
                     _self.tableData = response.data.pageData;
                 })
-                console.log(_self.currentPage);
+                //console.log(_self.currentPage);
                 //查
                 setTimeout(function(){
                     console.info("加载数据成功");
@@ -325,24 +204,25 @@
                 },300);
             },
             //表格编辑事件
-            editClick:function(row) {
-                this.goUrl="/emp/updateEmp";
+            editClick:function(row){
+                this.goUrl="/dept/updateDept";
                 this.editFormVisible = true;
-                alert(Object.assign({}, row));
+                //alert(Object.assign({}, row));
                 this.editForm = Object.assign({}, row);
+                _self.loadingData();//重新加载数据
             },
             //表格删除事件
             deleteClick:function(row) {
                 var _self = this;
-                this.$confirm('确认删除' + row.EMPNO +'吗?', '提示', {
+                this.$confirm('确认删除' + row.ID +'吗?', '提示', {
                     type: 'warning'
                 }).then(function(){
-                    var url="/user/delete";
-                    axios.post(url,{empNo:row.EMPNO}).then(function (response) {
+                    var url="/dept/delete";
+                    axios.post(url,{ID:row.ID}).then(function (response) {
                         //alert(response.data);
                         if(response.data>0){
                             _self.$message({
-                                message: row.EMPNO + '删除成功',
+                                message: row.ID+ '删除成功',
                                 type: 'success'
                             });
                             _self.loadingData();//重新加载数据
@@ -355,22 +235,15 @@
             },
             //新建事件
             addClick:function() {
-                this.goUrl="/emp/insertEmp";
+                this.goUrl="/dept/insertAdd";
                 var _self = this;
                 //清空url，解决先点更新，点取消，后点添加的是带这条数据的Bug
                 this.editForm= {
                         ID:'',
-                        USERNAME:'',
-                        PASSWORD:'',
-                        ROLE:'',
-                        EMPNAME:'',
                         DNAME:'',
-                        SEX:'',
-                        HIREDATE:'',
-                        SAL:0,
-                        COMM:0,
-                        IDCARD:0,
-                        TEL:0
+                        DES:'',
+                        STATE:''
+
                 }
                 this.editFormVisible = true;
                 _self.loadingData();//重新加载数据
@@ -398,12 +271,12 @@
                 var ids = '';
                 for(var i=0;i<multipleSelection.length;i++) {
                     var row = multipleSelection[i];
-                    ids += row.EMPNO + ","
+                    ids += row.ID + ","
                 }
                 this.$confirm('确认删除' + ids +'吗?', '提示', {
                     type: 'warning'
                 }).then(function(){
-                    var  url="/user/batchDel";
+                    var  url="/dept/batchDel";
                     axios.post(url,{ids:ids}).then(function (response) {
                         //alert(response.data);
                         var temp="";
@@ -445,12 +318,13 @@
                 var formData =this.editForm;
                 var goUrl=this.goUrl;
                 axios.post(goUrl,formData).then(function(response){
-                    alert(JSON.stringify(formData));
-                    alert(formData);
+                   // alert(JSON.stringify(formData));
+                   // alert(formData);
                      if(response.data>0){
                          _self.editFormVisible = false;
-                         _self.loadingData();//重新加载数据
+
                      }
+                    _self.loadingData();//重新加载数据
                 })
                 console.info(this.editForm);
             }
