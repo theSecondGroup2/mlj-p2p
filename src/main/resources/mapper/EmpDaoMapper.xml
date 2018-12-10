@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.p2p.dao.EmpDao">
     <select id="getEmpList" resultType="map">
-      select e.ID,e.USERNAME,e.PASSWORD,r.ROLE,e.EMPNAME,d.DNAME,e.SEX,e.HIREDATE,e.SAL,e.COMM,e.IDCARD,e.TEL
+      select e.ID,e.USERNAME,e.PASSWORD,r.ROLE,e.EMPNAME,d.DNAME,e.SEX,to_char(e.HIREDATE,'yyyy-mm-dd') HIREDATE,e.SAL,e.COMM,e.IDCARD,e.TEL
 from TB_EMP e
 join TB_ROLE r
     on e.ROLEID = r.ID
@@ -21,4 +21,24 @@ join TB_DEPT d
         </if>
     </where>
    </select>
+    <update id="updateEmp">
+        update TB_EMP set
+            USERNAME=#{USERNAME},
+            PASSWORD=#{PASSWORD},
+            ROLEID=#{ROLE},
+            EMPNAME=#{EMPNAME},
+            DEPTNO=#{DNAME},
+            SEX=#{SEX},
+            HIREDATE=to_date(#{HIREDATE},'yyyy-mm-dd'),
+            SAL=#{SAL},
+            COMM=#{COMM},
+            IDCARD=#{IDCARD},
+            TEL=#{TEL}
+        where
+            ID=#{ID}
+    </update>
+    <insert id="insertEmp">
+        insert into TB_EMP values (TB_EMP_ID.nextval,#{USERNAME},#{PASSWORD},#{ROLE},#{EMPNAME},
+        #{DNAME},#{SEX},to_date(#{HIREDATE},'yyyy-mm-dd'),#{SAL},#{COMM},#{IDCARD},#{TEL})
+    </insert>
 </mapper>

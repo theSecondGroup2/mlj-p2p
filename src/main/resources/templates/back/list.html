@@ -27,11 +27,6 @@
                 <el-input v-model="searchForm.name" placeholder="姓名"></el-input>
             </el-form-item>
             <el-form-item label="部门">
-                <!--<el-select v-model="searchForm.deptNo" placeholder="部门">-->
-                    <!--<el-option label="全部" value=""></el-option>-->
-                    <!--<el-option label="财务部" value="10"></el-option>-->
-                    <!--<el-option label="销售部" value="20"></el-option>-->
-                <!--</el-select>-->
                 <template>
                     <el-select v-model="searchForm.deptNo" placeholder="请选择">
                         <el-option
@@ -42,7 +37,8 @@
                         </el-option>
                     </el-select>
                 </template>
-            </el-form-item><el-form-item>
+            </el-form-item>
+            <el-form-item>
             <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
             <el-button type="success" icon="plus" @click="addClick">新增</el-button>
         </el-form-item>
@@ -118,24 +114,55 @@
     <!--编辑界面-->
     <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-            <el-form-item label="姓名" prop="ENAME">
-                <el-input v-model="editForm.ENAME" auto-complete="off"></el-input>
+            <el-form-item label="账号" prop="USERNAME">
+                <el-input v-model="editForm.USERNAME" auto-complete="off"></el-input>
             </el-form-item>
-           <!-- <el-form-item label="性别">
-                <el-radio-group v-model="editForm.sex">
-                    <el-radio class="radio" :label="1">男</el-radio>
-                    <el-radio class="radio" :label="0">女</el-radio>
-                </el-radio-group>  EMPNO: 0,
-                ENAME: '',
-                JOB: '',
-                SAL: 0,
-                HIREDATE: ''
-            </el-form-item>-->
+            <el-form-item label="密码" prop="PASSWORD">
+                <el-input v-model="editForm.PASSWORD" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="角色">
+                <template>
+                    <el-select v-model="editForm.ROLE" placeholder="请选择">
+                        <el-option
+                                v-for="item in roles"
+                                :key="item.ID"
+                                :label="item.ROLE"
+                                :value="item.ID">
+                        </el-option>
+                    </el-select>
+                </template>
+            </el-form-item>
+            <el-form-item label="姓名" prop="EMPNAME">
+                <el-input v-model="editForm.EMPNAME" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="部门">
+                <template>
+                    <el-select v-model="editForm.DNAME" placeholder="请选择">
+                        <el-option
+                                v-for="item in options"
+                                :key="item.DEPTNO"
+                                :label="item.DNAME"
+                                :value="item.DEPTNO">
+                        </el-option>
+                    </el-select>
+                </template>
+            </el-form-item>
+            <el-form-item label="性别">
+                <el-radio-group v-model="editForm.SEX">
+                    <el-radio class="radio" :label="男">男</el-radio>
+                    <el-radio class="radio" :label="男">男</el-radio>
+                </el-radio-group>
+            </el-form-item>
             <el-form-item label="薪水">
                 <el-input-number v-model="editForm.SAL" :min="0" :max="20000"></el-input-number>
             </el-form-item>
             <el-form-item label="雇佣日期">
-                <el-date-picker type="date" placeholder="选择日期" value-format="yyyy-MM-dd" v-model="editForm.HIREDATE"></el-date-picker>
+                <el-date-picker
+                        type="date"
+                        placeholder="选择日期"
+                        value-format="yyyy-MM-dd"
+                        v-model="editForm.HIREDATE">
+                </el-date-picker>
             </el-form-item>
             <el-form-item label="职位">
                 <el-input type="textarea" v-model="editForm.JOB"></el-input>
@@ -161,6 +188,7 @@
         el: '#tableView',
         data: {
             options:[],
+            roles:[],
             //列表数据
             tableData: [],
             //显示加载中样式

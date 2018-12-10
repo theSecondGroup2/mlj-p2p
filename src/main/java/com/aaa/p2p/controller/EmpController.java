@@ -1,6 +1,7 @@
 package com.aaa.p2p.controller;
 
 import com.aaa.p2p.service.EmpService;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,28 @@ public class EmpController {
         resultMap.put("total", pageInfo.getTotal());
         resultMap.put("pageData", pageInfo.getList());
         return resultMap;
+    }
+
+    /**
+     * 更改员工信息
+     * @param map
+     * @return
+     */
+    @RequestMapping("/updateEmp")
+    @ResponseBody
+    public Object updateEmp(@RequestBody Map map) {
+        System.out.println("更改的"+map);
+        return empService.updateEmp(map);
+    }
+    /**
+     * 插入员工信息
+     * @param map
+     * @return
+     */
+    @RequestMapping("/insertEmp")
+    @ResponseBody
+    public Object insertEmp(@RequestBody Map map) {
+        System.out.println("添加的："+map);
+        return empService.insertEmp(map);
     }
 }

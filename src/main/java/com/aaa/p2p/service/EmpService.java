@@ -15,4 +15,17 @@ public interface EmpService {
      * @return
      */
     List<Map> getEmpList(Map map);
+
+    /**
+     * 更改员工
+     * @param map
+     * @return
+     */
+    int updateEmp(Map map);
+    /**
+     * 新增员工
+     * @param map
+     * @return
+     */
+    int insertEmp(Map map);
 }

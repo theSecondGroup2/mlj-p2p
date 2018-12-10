@@ -27,4 +27,24 @@ public class EmpServiceImpl implements EmpService{
     public List<Map> getEmpList(Map map) {
         return empDao.getEmpList(map);
     }
+
+    /**
+     * 更改员工
+     * @param map
+     * @return
+     */
+    @Override
+    public int updateEmp(Map map) {
+        return empDao.updateEmp(map);
+    }
+
+    /**
+     * 新增员工
+     * @param map
+     * @return
+     */
+    @Override
+    public int insertEmp(Map map) {
+        return empDao.insertEmp(map);
+    }
 }

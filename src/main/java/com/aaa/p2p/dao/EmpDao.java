@@ -15,4 +15,17 @@ public interface EmpDao {
      * @return
      */
     List<Map> getEmpList(Map map);
+
+    /**
+     * 更改emp
+     * @param map
+     * @return
+     */
+    int updateEmp(Map map);
+    /**
+     * 新增emp
+     * @param map
+     * @return
+     */
+    int insertEmp(Map map);
 }

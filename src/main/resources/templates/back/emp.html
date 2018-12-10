@@ -150,27 +150,68 @@
     <!--编辑界面-->
     <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-            <el-form-item label="姓名" prop="ENAME">
-                <el-input v-model="editForm.ENAME" auto-complete="off"></el-input>
+            <el-form-item label="ID" prop="ID"  disabled="true">
+                <el-input v-model="editForm.ID" auto-complete="off" readonly="readonly"></el-input>
             </el-form-item>
-           <!-- <el-form-item label="性别">
-                <el-radio-group v-model="editForm.sex">
-                    <el-radio class="radio" :label="1">男</el-radio>
-                    <el-radio class="radio" :label="0">女</el-radio>
-                </el-radio-group>  EMPNO: 0,
-                ENAME: '',
-                JOB: '',
-                SAL: 0,
-                HIREDATE: ''
-            </el-form-item>-->
-            <el-form-item label="薪水">
-                <el-input-number v-model="editForm.SAL" :min="0" :max="20000"></el-input-number>
+            <el-form-item label="账号" prop="USERNAME">
+                <el-input v-model="editForm.USERNAME" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="PASSWORD">
+                <el-input v-model="editForm.PASSWORD" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="角色">
+                <template>
+                    <el-select v-model="editForm.ROLE" placeholder="请选择">
+                        <el-option
+                                v-for="item in roles"
+                                :key="item.ID"
+                                :label="item.ROLE"
+                                :value="item.ID">
+                        </el-option>
+                    </el-select>
+                </template>
+            </el-form-item>
+            <el-form-item label="姓名" prop="EMPNAME">
+                <el-input v-model="editForm.EMPNAME" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="部门">
+                <template>
+                    <el-select v-model="editForm.DNAME" placeholder="请选择">
+                        <el-option
+                                v-for="item in options"
+                                :key="item.ID"
+                                :label="item.DNAME"
+                                :value="item.ID">
+                        </el-option>
+                    </el-select>
+                </template>
+            </el-form-item>
+            <el-form-item label="性别" >
+                <el-radio-group v-model="editForm.SEX">
+                    <el-radio class="radio" label="男" >男</el-radio>
+                    <el-radio class="radio" label="女" >女</el-radio>
+                </el-radio-group>
             </el-form-item>
             <el-form-item label="雇佣日期">
-                <el-date-picker type="date" placeholder="选择日期" value-format="yyyy-MM-dd" v-model="editForm.HIREDATE"></el-date-picker>
+                <el-date-picker
+                        type="date"
+                        placeholder="选择日期"
+                        value-format="yyyy-MM-dd"
+                        v-model="editForm.HIREDATE"
+                        >
+                </el-date-picker>
             </el-form-item>
-            <el-form-item label="职位">
-                <el-input type="textarea" v-model="editForm.JOB"></el-input>
+            <el-form-item label="薪水" prop="SAL">
+                <el-input v-model="editForm.SAL" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="奖金" prop="COMM">
+                <el-input v-model="editForm.COMM" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="身份证号" prop="IDCARD">
+                <el-input v-model="editForm.IDCARD" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="电话号" prop="TEL">
+                <el-input v-model="editForm.TEL" auto-complete="off"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -192,7 +233,10 @@
     var tableView = new Vue({
         el: '#tableView',
         data: {
+            //部门下拉框框
             options:[],
+            //角色下拉框
+            roles:[],
             //列表数据
             tableData: [],
             //显示加载中样式
@@ -224,11 +268,18 @@
             },
             //编辑界面数据
             editForm: {
-                EMPNO: 0,
-                ENAME: '',
-                JOB: '',
-                SAL: 0,
-                HIREDATE: ''
+                ID:'',
+                USERNAME:'',
+                PASSWORD:'',
+                ROLE:'',
+                EMPNAME:'',
+                DNAME:'',
+                SEX:'',
+                HIREDATE:'',
+                SAL:0,
+                COMM:0,
+                IDCARD:0,
+                TEL:0
             },
         },
         //列表显示
@@ -241,6 +292,9 @@
             })
             axios.post('/dept/getDeptList').then(function(response){
                 self.options = response.data;
+            })
+            axios.post('/role/getRoleList').then(function(response){
+                self.roles = response.data;
             })
         },
         methods:{
@@ -272,8 +326,9 @@
             },
             //表格编辑事件
             editClick:function(row) {
-                this.goUrl="/user/update";
+                this.goUrl="/emp/updateEmp";
                 this.editFormVisible = true;
+                alert(Object.assign({}, row));
                 this.editForm = Object.assign({}, row);
             },
             //表格删除事件
@@ -300,16 +355,22 @@
             },
             //新建事件
             addClick:function() {
-                //alert(111);
-                this.goUrl="/user/add";
+                this.goUrl="/emp/insertEmp";
                 var _self = this;
                 //清空url，解决先点更新，点取消，后点添加的是带这条数据的Bug
-                this.editForm = {
-                    EMPNO: 0,
-                    ENAME: '',
-                    JOB: '',
-                    SAL: 0,
-                    HIREDATE: ''
+                this.editForm= {
+                        ID:'',
+                        USERNAME:'',
+                        PASSWORD:'',
+                        ROLE:'',
+                        EMPNAME:'',
+                        DNAME:'',
+                        SEX:'',
+                        HIREDATE:'',
+                        SAL:0,
+                        COMM:0,
+                        IDCARD:0,
+                        TEL:0
                 }
                 this.editFormVisible = true;
                 _self.loadingData();//重新加载数据
@@ -382,14 +443,10 @@
                 var _self = this;
                 _self.loading = true;
                 var formData =this.editForm;
-                //alert(formData);
                 var goUrl=this.goUrl;
-                //alert(goUrl);
-                //alert(JSON.stringify(formData));
                 axios.post(goUrl,formData).then(function(response){
-                    // console.log(response.data);
-                    // alert(222);
-                    // self.total=response.data.total;
+                    alert(JSON.stringify(formData));
+                    alert(formData);
                      if(response.data>0){
                          _self.editFormVisible = false;
                          _self.loadingData();//重新加载数据
