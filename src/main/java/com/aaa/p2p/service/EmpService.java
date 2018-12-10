@@ -17,6 +17,13 @@ public interface EmpService {
     List<Map> getEmpList(Map map);
 
     /**
+     * 获取账号
+     * @param userName
+     * @return
+     */
+    List<Map> selectEmp(String userName);
+
+    /**
      * 更改员工
      * @param map
      * @return
@@ -28,4 +35,11 @@ public interface EmpService {
      * @return
      */
     int insertEmp(Map map);
+
+    /**
+     * 删除员工
+     * @param map
+     * @return
+     */
+    int deleteEmp(Map map);
 }
