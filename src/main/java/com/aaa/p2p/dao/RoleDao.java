@@ -21,4 +21,32 @@ public interface RoleDao {
      * @return
      */
     List<Map> getRoleListBy(Map map);
+
+    /**
+     * 添加新角色
+     * @param map
+     * @return
+     */
+    int insertAdd(Map map);
+
+    /**
+     * 更新角色
+     * @param map
+     * @return
+     */
+    int updateRole(Map map);
+
+    /**
+     * 通过ID单个删除角色
+     * @param ID
+     * @return
+     */
+    int deleteRole(Integer ID);
+
+    /**
+     * 通过ID批量删除角色
+     * @param
+     * @return
+     */
+    int batchDel(List IDs);
 }
