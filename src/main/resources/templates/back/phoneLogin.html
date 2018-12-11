@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>马六甲P2P</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" type="text/css" href="/assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/assets/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="/assets/css/form-elements.css">
+        <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="/assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
+        <!-- Javascript -->
+        <script type="text/javascript" src="/assets/js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/assets/js/jquery.backstretch.min.js"></script>
+        <script type="text/javascript" src="/assets/js/scripts.js"></script>
+<style>
+    body{
+        background-size:cover;
+        background:url(../assets/img/backgrounds/1.jpg)  no-repeat center center;
+
+    }
+
+</style>
+
+    </head>
+
+    <body>
+
+        <!-- Top content -->
+        <div class="top-content">
+        	
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1><strong>马六甲P2P</strong> 欢迎登陆 </h1>
+                            <div class="description">
+                            	<p>
+	                            	 您可以选择普通用户名密码登陆<br />
+	                            	或者手机号验证码登陆
+                            	</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>后台登陆</h3>
+                            		<p>请您登陆:</p>
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="fa fa-lock"></i>
+                        		</div>
+                            </div>
+                            <div class="form-bottom">
+			                    <form role="form" action="/power/toPhoneLogin" method="post" class="login-form" onsubmit="return check()">
+			                    	<span><td th:text="${msg}"></span>
+                                    <div class="form-group">
+			                    		<label class="sr-only">Username</label>
+			                        	<input type="text" name="phoneNum" placeholder="手机号" class="form-username form-control" id="phoneNum">
+			                        </div>
+			                        <div class="form-group">
+			                        	<label class="sr-only">Password</label>
+			                        	<input type="password" name="msgCode" placeholder="验证码" class="form-password form-control" id="msgCode">
+                                        <button type="button" class="btn" id="btn">发送验证码</button>
+			                        </div>
+			                        <button type="submit" class="btn" id="sub">登陆</button>
+			                    </form>
+		                    </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 social-login">
+                        	<h3>登陆方式:</h3>
+                        	<div class="social-login-buttons">
+	                        	<a class="btn btn-link-2" href="/power/userLogin">
+	                        		<i class="fa fa-facebook"></i> 普通登陆
+	                        	</a>
+	                        	<a class="btn btn-link-2" href="/power/phoneLogin">
+	                        		<i class="fa fa-twitter"></i> 手机验证登陆
+	                        	</a>
+                        	</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+<script>
+    var btn = document.getElementById("btn");
+    var num =20;
+    btn.onclick = function () {
+        var phoneNum = $("#phoneNum").val();
+        $.post(
+            "/power/Msg",
+            {phoneNum:phoneNum},
+            function (data) {
+                alert(data);
+            },
+            "json"
+        );
+        btn.disabled = true;
+        var timer = setInterval(autoplay,1000);
+        function autoplay() {
+            num--;
+            if (num>=0){
+                btn.innerHTML ="(" + num + "s)后重发";
+            } else {
+                btn.innerHTML="重新发送验证码";
+                btn.disabled = false;
+                clearInterval(timer);
+                num = 20;//给了一个定时器重启的条件;
+            }
+        }
+    }
+    function check(){
+        var phoneNum = $("#phoneNum").val();
+        var msgCode = $("#msgCode").val();
+        if(phoneNum == "" ){
+            alert("请将表单填写完整!");
+            return false;
+        }
+        if(msgCode == ""){
+            alert("请将表单填写完整!");
+            return false;
+        }
+    }
+</script>
+
+</html>

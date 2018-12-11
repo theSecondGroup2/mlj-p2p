@@ -53,9 +53,9 @@ public class ShiroConfig {
         //filterMap.put("/user/index","authc");//首页
 
         //被拦截后跳转登陆页面
-        shiroFilterFactoryBean.setLoginUrl("/power/login");
+        shiroFilterFactoryBean.setLoginUrl("/power/userLogin");
         //未授权跳转页面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/power/login");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/power/userLogin");
 
 
 

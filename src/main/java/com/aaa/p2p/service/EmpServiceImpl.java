@@ -64,4 +64,13 @@ public class EmpServiceImpl implements EmpService{
     public int deleteEmp(Map map) {
         return empDao.deleteEmp(map);
     }
+    /**
+     * 通过手机号获取用户
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Map> selectEmpByPhone(Map map) {
+        return empDao.selectEmpByPhone(map);
+    }
 }

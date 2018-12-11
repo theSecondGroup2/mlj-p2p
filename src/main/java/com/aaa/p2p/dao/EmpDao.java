@@ -37,9 +37,16 @@ public interface EmpDao {
     int deleteEmp(Map map);
 
     /**
-     * 获取账号
+     * 通过用户名获取账号
      * @param userName
      * @return
      */
     List<Map> selectEmp(String userName);
+
+    /**
+     * 通过手机号获取用户
+     * @param map
+     * @return
+     */
+    List<Map> selectEmpByPhone(Map map);
 }

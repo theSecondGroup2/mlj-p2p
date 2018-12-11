@@ -42,4 +42,10 @@ public interface EmpService {
      * @return
      */
     int deleteEmp(Map map);
+    /**
+     * 通过手机号获取用户
+     * @param map
+     * @return
+     */
+    List<Map> selectEmpByPhone(Map map);
 }
