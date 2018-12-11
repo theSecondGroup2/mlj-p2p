@@ -20,10 +20,21 @@
     <!--列表顶部搜索和工具条-->
     <el-row>
         <el-form :inline="true" :model="searchForm" class="demo-form-inline">
-            <el-form-item label="ID">
-                <el-input v-model="searchForm.username" placeholder="ID"></el-input>
+            <!--<el-form-item label="角色">
+                <el-input v-model="searchForm.ROLE" placeholder="role"></el-input>
+            </el-form-item>-->
+            <el-form-item label="角色">
+                <template>
+                    <el-select v-model="searchForm.ROLE" clearable  placeholder="请选择">
+                        <el-option
+                                v-for="item in options"
+                                :key="item.ID"
+                                :label="item.ROLE"
+                                :value="item.ROLE">
+                        </el-option>
+                    </el-select>
+                </template>
             </el-form-item>
-            </el-form-item><el-form-item>
             <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
             <el-button type="success" icon="plus" @click="addClick">新增</el-button>
             <el-button type="success" icon="plus" @click="flushData">清空</el-button>
@@ -85,14 +96,15 @@
     <!--编辑界面-->
     <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-            <el-form-item label="ID" prop="ID"  disabled="true">
+           <!-- <el-form-item label="ID" prop="ID"  disabled="true">
                 <el-input v-model="editForm.ID" auto-complete="off" readonly="readonly"></el-input>
-            </el-form-item>
+            </el-form-item>-->
             <el-form-item label="" prop="ROLE">
-                <el-input v-model="editForm.ROLE" auto-complete="off"></el-input>
+                <el-input v-model="editForm.ROLE" auto-complete="off" placeholder="请输入角色名称"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
+
             <el-button @click.native="editFormVisible = false">取消</el-button>
             <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
         </div>
@@ -121,7 +133,7 @@
             loading:false,
             //搜索表单
             searchForm: {
-                ID: ''
+                ROLE: ''
             },
             //多选值
             multipleSelection: [],
@@ -144,8 +156,8 @@
             },
             //编辑界面数据
             editForm: {
-                ID:'',
-                ROLE:0
+                //ID:'',
+                ROLE:''
             },
         },
         //列表显示
@@ -155,14 +167,17 @@
             axios.post('/role/getRoleListBy',{'pageNo':self.currentPage,'pageSize':self.pageSize}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.pageData;
-            })
+            });
+            axios.post('/role/getRoleList').then(function(response){
+                self.options = response.data;
+            });
         },
         methods:{
             //清空表格数据
             flushData:function(){
                 //搜索表单
                 searchForm = {
-                    ID: ''
+                    ROLE: ''
                 }
             },
             //表格重新加载数据
@@ -170,7 +185,7 @@
                 var _self = this;
                 _self.loading = true;
                 //传过去的参数
-                var searchForm={'pageNo':_self.currentPage,'pageSize':_self.pageSize,'ID':_self.searchForm.ID};
+                var searchForm={'pageNo':_self.currentPage,'pageSize':_self.pageSize,'ROLE':_self.searchForm.ROLE};
                 axios.post('/role/getRoleListBy',searchForm).then(function(response){
                     _self.total=response.data.total;
                     _self.tableData = response.data.pageData;
@@ -184,7 +199,7 @@
             },
             //表格编辑事件
             editClick:function(row) {
-                this.goUrl="/emp/updateEmp";
+                this.goUrl="/role/updateRole";
                 this.editFormVisible = true;
                 alert(Object.assign({}, row));
                 this.editForm = Object.assign({}, row);
@@ -192,15 +207,15 @@
             //表格删除事件
             deleteClick:function(row) {
                 var _self = this;
-                this.$confirm('确认删除' + row.EMPNO +'吗?', '提示', {
+                this.$confirm('确认删除' + row.ID +'吗?', '提示', {
                     type: 'warning'
                 }).then(function(){
-                    var url="/user/delete";
-                    axios.post(url,{empNo:row.EMPNO}).then(function (response) {
+                    var url="/role/deleteRole";
+                    axios.post(url,{ID:row.ID}).then(function (response) {
                         //alert(response.data);
                         if(response.data>0){
                             _self.$message({
-                                message: row.EMPNO + '删除成功',
+                                message: row.ID + '删除成功',
                                 type: 'success'
                             });
                             _self.loadingData();//重新加载数据
@@ -213,22 +228,12 @@
             },
             //新建事件
             addClick:function() {
-                this.goUrl="/emp/insertEmp";
+                this.goUrl="/role/insertAdd";
                 var _self = this;
                 //清空url，解决先点更新，点取消，后点添加的是带这条数据的Bug
                 this.editForm= {
-                        ID:'',
-                        USERNAME:'',
-                        PASSWORD:'',
-                        ROLE:'',
-                        EMPNAME:'',
-                        DNAME:'',
-                        SEX:'',
-                        HIREDATE:'',
-                        SAL:0,
-                        COMM:0,
-                        IDCARD:0,
-                        TEL:0
+                        //ID:'',
+                        ROLE:''
                 }
                 this.editFormVisible = true;
                 _self.loadingData();//重新加载数据
@@ -256,12 +261,12 @@
                 var ids = '';
                 for(var i=0;i<multipleSelection.length;i++) {
                     var row = multipleSelection[i];
-                    ids += row.EMPNO + ","
+                    ids += row.ID + ","
                 }
                 this.$confirm('确认删除' + ids +'吗?', '提示', {
                     type: 'warning'
                 }).then(function(){
-                    var  url="/user/batchDel";
+                    var  url="/role/batchDel";
                     axios.post(url,{ids:ids}).then(function (response) {
                         //alert(response.data);
                         var temp="";

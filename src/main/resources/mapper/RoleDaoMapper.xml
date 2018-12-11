@@ -8,9 +8,27 @@
     <select id="getRoleListBy" resultType="map">
         select * from TB_ROLE
         <where>
-            <if test="ID != null and ID != ''">
-                and id= #{ID}
+            <if test="ROLE != null and ROLE != ''">
+                and role= #{ROLE}
             </if>
         </where>
     </select>
+    <insert id="insertAdd" >
+        insert into TB_ROLE VALUES (TB_ROLE_ID.nextval,#{ROLE})
+    </insert>
+    <update id="updateRole">
+        update TB_ROLE set
+        role=#{ROLE}
+        where
+        id=#{ID}
+    </update>
+    <delete id="deleteRole">
+        delete from TB_ROLE where id = #{ID}
+    </delete>
+    <delete id="batchDel">
+        delete from TB_ROLE where id in
+        <foreach collection="list" item="ID" open="(" separator="," close=")">
+            #{ID}
+        </foreach>
+    </delete>
 </mapper>
