@@ -8,12 +8,12 @@
         .el-header {
             background-color: #B3C0D1;
             color: #333;
-            line-height: 60px;
         }
 
         .el-aside {
             color: #333;
         }
+
         /*头部的背景图片*/
         #hd {
             position: relative;
@@ -55,14 +55,25 @@
             <!--左侧菜单栏-->
             <el-aside width="250px" style="background-color: rgb(255,255,255)">
                 <!--accordion是否每次只打开一个同级节点  highlight-current高亮-->
-                <el-tree :default-expand-all="false"  :icon-class="icon" :highlight-current="true" :data="treeData"  :props="defaultProps" :accordion="true" @node-click="handleNodeClick">
+                <el-tree :default-expand-all="false" :icon-class="icon" :highlight-current="true" :data="treeData"
+                         :props="defaultProps" :accordion="true" @node-click="handleNodeClick">
                 </el-tree>
             </el-aside>
 
 
             <!--右侧表单-->
             <el-main>
-                <iframe scrolling="auto" frameborder="0" :src="toUrl" style="width:100%;height:600px;"></iframe>
+                <el-tabs v-model="editableTabsValue2" type="card" closable @tab-remove="removeTab">
+                    <el-tab-pane
+                            v-for="(item, index) in editableTabs2"
+                            :key="item.name"
+                            :label="item.title"
+                            :name="item.name"
+                    >
+                        <iframe scrolling="auto" frameborder="0" :src="item.url" style="width:100%;height:600px;"></iframe>
+                    </el-tab-pane>
+                </el-tabs>
+
             </el-main>
         </el-container>
     </el-container>
@@ -71,11 +82,7 @@
     new Vue({
         el: '#app',
         data: {
-            tableData: [{
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }],
+            tableData: [],
             name: '',
             src: '',
             defaultProps: {
@@ -83,27 +90,51 @@
                 label: 'label'
             },
             treeData: [],
-            toUrl:'/user/toList',
-            icon:'el-icon-menu'
+            icon: 'el-icon-menu',
+            editableTabsValue2: '2',
+            editableTabs2: [{
+                title: '百度',
+                name: '2',
+                url: 'https://www.baidu.com/1'
+            }],
+            tabIndex: 2
         },
         methods: {
-            //					add: function() {
-            //						this.src = '/user/page'
-            //					},
             handleNodeClick(data) {
-                this.toUrl = data.url
+                this.addTab(data.label,data.url);
+            },
+            addTab:function(targetName,url) {
+                var newTabName = targetName;
+                if (JSON.stringify(this.editableTabs2).indexOf(newTabName) == -1) {
+                    this.editableTabs2.push({
+                        title: targetName,
+                        name: newTabName,
+                        url: url
+                    });
+                }
+                this.editableTabsValue2 = newTabName;
+            },
+            removeTab:function(targetName) {
+                let tabs = this.editableTabs2;
+                let activeName = this.editableTabsValue2;
+                if (activeName === targetName) {
+                    tabs.forEach((tab, index) => {
+                        if (tab.name === targetName) {
+                            let nextTab = tabs[index + 1] || tabs[index - 1];
+                            if (nextTab) {
+                                activeName = nextTab.name;
+                            }
+                        }
+                    });
+                }
+                this.editableTabsValue2 = activeName;
+                this.editableTabs2 = tabs.filter(tab => tab.name !== targetName);
             }
-
         },
         created: function () {
             var self = this;
             axios.post('/power/tree').then(function (response) {
-                //icon-class="el-icon-menu"
                 self.treeData = response.data;
-
-                //alert(JSON.stringify(response.data.ICONCLS))
-                //self.icon = response.data.ICONCLS
-
             })
         }
     })

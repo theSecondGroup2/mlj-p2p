@@ -3,7 +3,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.p2p.dao.EmpDao">
     <select id="selectEmp" resultType="map">
-        select * from TB_EMP where username = #{userName}
+        select * from TB_EMP
+        <where>
+            <if test="userName != null and userName != ''">
+                and username = #{userName}
+            </if>
+        </where>
+    </select>
+    <select id="selectEmpByPhone" resultType="map">
+        select * from TB_EMP
+        <where>
+            <if test="phoneNum != null and phoneNum != ''">
+                and tel = #{phoneNum}
+            </if>
+        </where>
     </select>
     <select id="getEmpList" resultType="map">
       select e.ID,e.USERNAME,e.PASSWORD,r.ROLE,e.EMPNAME,d.DNAME,e.SEX,to_char(e.HIREDATE,'yyyy-mm-dd') HIREDATE,e.SAL,e.COMM,e.IDCARD,e.TEL
