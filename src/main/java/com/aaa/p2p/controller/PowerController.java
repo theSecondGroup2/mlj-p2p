@@ -12,11 +12,13 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +48,26 @@ public class PowerController {
         return powerList;
     }
 
+    /**
+     * 在session中获取用户
+     * @param httpSession
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/user")
+    public Object getUser(HttpSession httpSession){
+        return httpSession.getAttribute("userName");
+    }
 
+    /**
+     * 跳转后台首页
+     *
+     * @return
+     */
+    @RequestMapping("/wel")
+    public String wel() {
+        return "back/wel";
+    }
     /**
      * 跳转登陆页面
      *
@@ -113,7 +134,9 @@ public class PowerController {
      * @return
      */
     @RequestMapping("/toLogin")
-    public String toLogin(String userName, String passWord, Model model) {
+    public String toLogin(String userName, String passWord, Model model, HttpSession httpSession) {
+        //将用户放到session中
+        httpSession.setAttribute("userName",userName);
         System.out.println("账号是：" + userName);
         //shiro的关键代码，执行认证功能
         // 1.获取subject

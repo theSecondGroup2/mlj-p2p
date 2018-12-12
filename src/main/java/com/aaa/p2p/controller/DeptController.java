@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * className:DeptController
- * discription:
+ * discription:对dept表进行增删该查
  * author:luRuiHua
  * createTime:2018-12-09 16:43
  */

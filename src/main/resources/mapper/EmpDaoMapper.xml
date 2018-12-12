@@ -48,6 +48,9 @@ join TB_DEPT d
         where
             ID=#{ID}
     </update>
+    <update id="updatepassword">
+        update TB_EMP set PASSWORD = #{param1} where USERNAME = #{param2}
+    </update>
     <insert id="insertEmp">
         insert into TB_EMP values (TB_EMP_ID.nextval,#{USERNAME},#{PASSWORD},#{ROLE},#{EMPNAME},
         #{DNAME},#{SEX},to_date(#{HIREDATE},'yyyy-mm-dd'),#{SAL},#{COMM},#{IDCARD},#{TEL})

@@ -15,7 +15,7 @@ import java.io.FileOutputStream;
 
 /**
  * className:AliyunOSSController
- * discription:
+ * discription:无用的Controller，测试的deme，用于获得图片的url
  * author:luRuiHua
  * createTime:2018-12-12 10:58
  */
@@ -90,6 +90,7 @@ public class AliyunOSSController {
                     file.transferTo(newFile);
                     // 上传到OSS
                     String uploadUrl = aliyunOSSUtil.upLoad(newFile);
+                    System.out.println("文件的url:"+uploadUrl);
                     model.addAttribute("url",uploadUrl);
                 }
 
