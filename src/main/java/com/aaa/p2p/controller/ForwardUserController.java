@@ -1,5 +1,6 @@
 package com.aaa.p2p.controller;
 
+import com.aaa.p2p.service.ForwardUserService;
 import com.aaa.p2p.util.ImgCheckUtil;
 import com.aaa.p2p.util.PhoneMsgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,14 +8,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
 
 /**
  * className:ForwardUserController
- * discription:
+ * discription:前台用户控制台
  * author:ZhangSenYao
  * createTime:2018-12-07 15:13
  */
@@ -87,6 +90,51 @@ public class ForwardUserController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    /**
+     * 跳转用户注册页面
+     * @return
+     */
+    @RequestMapping("/toForwardUserReg")
+    public String toForwardUserReg() {
+        return "forward/forwarduserreg";
+    }
+
+    @Autowired
+    private ForwardUserService fUserService;
+
+    /**
+     * 用户名唯一性校验
+     * @param userName
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/userExist")
+    public int userExist(String userName) {
+        return fUserService.userExist(userName);
+    }
+
+    /**
+     * 手机号唯一性校验
+     * @param tel
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/telExist")
+    public int telExist(String tel) {
+        return fUserService.telExist(tel);
+    }
+
+    /**
+     * 新增前台用户
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/addForwardUser")
+    public int addForwardUser(@RequestParam Map map) {
+        return fUserService.addForwardUser(map);
     }
 
 }
