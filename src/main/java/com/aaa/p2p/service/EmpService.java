@@ -48,4 +48,11 @@ public interface EmpService {
      * @return
      */
     List<Map> selectEmpByPhone(Map map);
+
+    /**
+     * 批量删除
+     * @param map
+     * @return
+     */
+    int batchDel(Map map);
 }

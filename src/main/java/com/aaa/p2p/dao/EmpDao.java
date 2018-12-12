@@ -49,4 +49,11 @@ public interface EmpDao {
      * @return
      */
     List<Map> selectEmpByPhone(Map map);
+
+    /**
+     * 批量删除
+     * @param idList
+     * @return
+     */
+    int batchDel(List idList);
 }

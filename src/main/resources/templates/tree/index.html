@@ -101,6 +101,8 @@
         },
         methods: {
             handleNodeClick(data) {
+                //父标签点击不会显示
+                if (data.url != null && data.url != 'null' && data.url != '')
                 this.addTab(data.label,data.url);
             },
             addTab:function(targetName,url) {
@@ -108,8 +110,7 @@
                 if (JSON.stringify(this.editableTabs2).indexOf(newTabName) == -1) {
                     this.editableTabs2.push({
                         title: targetName,
-                        name: newTabName,
-                        url: url
+                        name: newTabName,                        url: url
                     });
                 }
                 this.editableTabsValue2 = newTabName;
