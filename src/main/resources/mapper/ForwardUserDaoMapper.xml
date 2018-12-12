@@ -14,4 +14,8 @@
     <insert id="addForwardUser" parameterType="map">
         insert into tb_fwdlogin values (TB_FWDLOGIN_ID.nextval, #{userName}, #{userPsw}, #{userPhone}, #{recPeople}, 1)
     </insert>
+    <!--检查用户名密码是否正确-->
+    <select id="checkNamePsw" resultType="map">
+        select * from TB_FWDLOGIN where USERNAME = #{userName} and USERPSW = #{userPsw}
+    </select>
 </mapper>
