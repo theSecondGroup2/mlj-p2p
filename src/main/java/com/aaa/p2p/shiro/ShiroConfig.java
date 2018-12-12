@@ -1,6 +1,5 @@
 package com.aaa.p2p.shiro;
 
-import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,7 +47,7 @@ public class ShiroConfig {
 
         //必须登陆才可以访问
         //设置哪些页面必须授权后才可以登陆
-        filterMap.put("/emp/toList","authc");//
+        //filterMap.put("/emp/toList","authc");//
         //filterMap.put("/poewr/","authc");//
         //filterMap.put("/user/index","authc");//首页
 
@@ -84,11 +83,5 @@ public class ShiroConfig {
     public UserRealm getRealm() {
         return new UserRealm();
     }
-    /**
-     * 配置shiroDialect，用于thymeleaf和shiro标签配合使用
-     */
-    @Bean
-    public ShiroDialect getShiroDialect() {
-        return new ShiroDialect();
-    }
+
 }

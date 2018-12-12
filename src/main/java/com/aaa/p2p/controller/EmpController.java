@@ -77,4 +77,14 @@ public class EmpController {
     public Object deleteEmp(@RequestBody Map map) {
         return empService.deleteEmp(map);
     }
+    /**
+     * 批量删除
+     */
+    @ResponseBody
+    @RequestMapping("/batchDel")
+    public Object batchDel(@RequestBody Map map){
+        return empService.batchDel(map);
+    }
+
+
 }
