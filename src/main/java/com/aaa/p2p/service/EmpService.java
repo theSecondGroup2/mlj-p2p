@@ -55,4 +55,11 @@ public interface EmpService {
      * @return
      */
     int batchDel(Map map);
+    /**
+     * 更改密码
+     * @param passWord
+     * @param userName
+     * @return
+     */
+    int updatepassword(String passWord,String userName);
 }

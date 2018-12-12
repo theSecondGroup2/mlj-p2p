@@ -36,16 +36,12 @@
 
 
         <!--整体头部-->
-        <el-header id="hd" style="text-align: right; font-size: 12px; height: 100px">
-            <el-dropdown>
-                <i class="el-icon-setting" style="margin-right: 15px"></i>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>查看</el-dropdown-item>
-                    <el-dropdown-item>新增</el-dropdown-item>
-                    <el-dropdown-item>删除</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
-            <span>芦瑞华</span>
+        <el-header id="hd" style="text-align: right; font-size: 30px; height: 100px">
+            <ul>
+                <li>
+                    用户名：{{userName}}
+                </li>
+            </ul>
         </el-header>
 
 
@@ -93,11 +89,12 @@
             icon: 'el-icon-menu',
             editableTabsValue2: '2',
             editableTabs2: [{
-                title: '百度',
+                title: '马六甲P2P后台',
                 name: '2',
-                url: 'https://www.baidu.com/1'
+                url: '/power/wel'
             }],
-            tabIndex: 2
+            tabIndex: 2,
+            userName:''
         },
         methods: {
             handleNodeClick(data) {
@@ -136,6 +133,10 @@
             var self = this;
             axios.post('/power/tree').then(function (response) {
                 self.treeData = response.data;
+            })
+            axios.post('/power/user').then(function (response) {
+                alert(JSON.stringify(response.data))
+                self.userName = response.data;
             })
         }
     })

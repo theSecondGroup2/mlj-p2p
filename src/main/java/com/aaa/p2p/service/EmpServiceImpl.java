@@ -91,4 +91,14 @@ public class EmpServiceImpl implements EmpService{
         int i = empDao.batchDel(idList);
         return i;
     }
+    /**
+     * 更改密码
+     * @param passWord
+     * @param userName
+     * @return
+     */
+    @Override
+    public int updatepassword(String passWord, String userName) {
+        return empDao.updatepassword(passWord,userName);
+    }
 }
