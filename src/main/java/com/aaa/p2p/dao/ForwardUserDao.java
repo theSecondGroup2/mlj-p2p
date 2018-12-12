@@ -32,4 +32,11 @@ public interface ForwardUserDao {
      */
     int addForwardUser(Map map);
 
+    /**
+     * 检查用户名密码是否正确
+     * @param map
+     * @return
+     */
+    List<Map> checkNamePsw(Map map);
+
 }

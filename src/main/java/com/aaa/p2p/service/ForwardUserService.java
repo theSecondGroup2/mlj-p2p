@@ -29,4 +29,22 @@ public interface ForwardUserService {
      */
     int addForwardUser(Map map);
 
+    /**
+     * 前台用户登录业务
+     * @param map
+     * @return
+     */
+    int checkNamePsw(Map map);
+
+    /**
+     * 获得session
+     * @return
+     */
+    Map getSession();
+
+    /**
+     * 注销用户（销毁session）
+     */
+    void userLogOut();
+
 }

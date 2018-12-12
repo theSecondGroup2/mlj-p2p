@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-md-8 col-sm-12 text-right col-xs-12">
                     <div class="top-nav"> 
-						<span class="top-text"><a href="#">已有账号，去登录</a></span> 
+						<span class="top-text"><a href="/forwardUser/toForwardUserLogin">已有账号，去登录</a></span>
 					</div>
                 </div>
             </div>
@@ -106,10 +106,11 @@
           <input type="checkbox" checked>同意<a href="#">马六甲用户使用协议</a>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span id="submitSpan"></span>
-		</form>
+        </form>
+        </div>
 	</div>
 
-    <!-- /.footer -->
+    <!-- /9.footer -->
     <div class="tiny-footer">
         <!-- tiny footer -->
         <div class="container" style="font-size: 15px;">
@@ -273,7 +274,11 @@
                     recPeople : $("#recPeople").val()
                 }, function (data) {
                     if (data > 0) {
-                        alert("注册成功！");
+                        if (confirm("注册成功！现在去登录吗？")) {
+                            window.location.href = "/forwardUser/toForwardUserLogin"
+                        } else {
+                            alert("跳转到主页");
+                        }
                     }
                 });
             }

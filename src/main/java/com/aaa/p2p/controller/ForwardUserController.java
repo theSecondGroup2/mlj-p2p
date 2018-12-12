@@ -26,16 +26,7 @@ import java.util.Map;
 public class ForwardUserController {
 
     /**
-     * 测试跳转页面
-     * @return
-     */
-    @RequestMapping("/toRegTest")
-    public String toRegTest() {
-        return "forward/rigistertest";
-    }
-
-    /**
-     * 发送短信测试
+     * 发送短信
      * @param tel
      * @return
      */
@@ -57,15 +48,6 @@ public class ForwardUserController {
      */
     @Value("${upload.path}")
     private String uploadPath;
-
-    /**
-     * 跳转图片验证测试
-     * @return
-     */
-    @RequestMapping("/toImgTest")
-    public String toImgTest() {
-        return "forward/imgtest";
-    }
 
     /**
      * 获取随机图片验证码
@@ -135,6 +117,41 @@ public class ForwardUserController {
     @RequestMapping("/addForwardUser")
     public int addForwardUser(@RequestParam Map map) {
         return fUserService.addForwardUser(map);
+    }
+
+    /**
+     * 跳转用户登录页面
+     * @return
+     */
+    @RequestMapping("/toForwardUserLogin")
+    public String toForwardUserLogin() {
+        return "forward/forwarduserlogin";
+    }
+
+    /**
+     * 前台用户登录业务
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/checkNamePsw")
+    public int checkNamePsw(@RequestParam Map map) {
+        return fUserService.checkNamePsw(map);
+    }
+
+    @RequestMapping("/toSessionTest")
+    public String toSessionTest() {
+        return "forward/sessiontest";
+    }
+
+    /**
+     * 获得session
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getSession")
+    public Map getSession() {
+        return fUserService.getSession();
     }
 
 }
