@@ -201,7 +201,6 @@
             editClick:function(row) {
                 this.goUrl="/role/updateRole";
                 this.editFormVisible = true;
-                alert(Object.assign({}, row));
                 this.editForm = Object.assign({}, row);
             },
             //表格删除事件
@@ -212,7 +211,6 @@
                 }).then(function(){
                     var url="/role/deleteRole";
                     axios.post(url,{ID:row.ID}).then(function (response) {
-                        //alert(response.data);
                         if(response.data>0){
                             _self.$message({
                                 message: row.ID + '删除成功',
@@ -268,7 +266,6 @@
                 }).then(function(){
                     var  url="/role/batchDel";
                     axios.post(url,{ids:ids}).then(function (response) {
-                        //alert(response.data);
                         var temp="";
                         if(response.data>0){
                             temp="删除成功";
@@ -308,8 +305,6 @@
                 var formData =this.editForm;
                 var goUrl=this.goUrl;
                 axios.post(goUrl,formData).then(function(response){
-                    alert(JSON.stringify(formData));
-                    alert(formData);
                      if(response.data>0){
                          _self.editFormVisible = false;
                          _self.loadingData();//重新加载数据
