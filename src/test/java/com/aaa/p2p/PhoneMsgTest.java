@@ -27,7 +27,7 @@ public class PhoneMsgTest {
         //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
         headers.put("Authorization", "APPCODE " + appcode);
         Map<String, String> querys = new HashMap<String, String>();
-        querys.put("mobile", "16638043729");
+        querys.put("mobile", "13253959318");
         int codeNum = (int)((Math.random()*9+1)*100000);
         querys.put("param", "code:" + codeNum);
         querys.put("tpl_id", "TP1711063");
