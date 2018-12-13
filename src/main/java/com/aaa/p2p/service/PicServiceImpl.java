@@ -37,4 +37,7 @@ public class PicServiceImpl implements PicService {
     public int updateUrl(String url, String loc) {
         return picDao.updateUrl(url,loc);
     }
+
+
+
 }

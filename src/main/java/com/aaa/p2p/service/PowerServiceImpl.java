@@ -82,4 +82,34 @@ public class PowerServiceImpl implements PowerService {
             }
         }
     }
+
+    /**
+     * 通过pid获取权限列表
+     * @return
+     */
+    public List<Map> selectTreeByPid(Map map){
+        return powerDao.selectTreeByPid(map);
+    }
+    /**
+     * 添加节点
+     * @param map
+     * @return
+     */
+    public int insertTree(Map map){
+        return powerDao.insertTree(map);
+    }
+    /**
+     * 更改节点
+     * @param map
+     * @return
+     */
+    public int updateTree(Map map){
+        return powerDao.updateTree(map);
+    }
+    /**
+     * 删除节点
+     */
+    public int deleteTree(Map map){
+        return powerDao.deleteTree(map);
+    }
 }

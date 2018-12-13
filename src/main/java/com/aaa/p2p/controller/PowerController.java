@@ -45,6 +45,7 @@ public class PowerController {
     @RequestMapping("/tree")
     public Object getTree() {
         List<TreeNode> powerList = powerService.getPowerList();
+        //System.out.println(powerList.get(1));
         return powerList;
     }
 
@@ -113,7 +114,6 @@ public class PowerController {
      */
     @RequestMapping("/toPhoneLogin")
     public String toPhoneLogin(@RequestParam Map map, Model model) {
-        System.out.println("表单数据"+map);
         int size = empService.selectEmpByPhone(map).size();
         if (size == 0) {
             model.addAttribute("msg","手机号不存在");
@@ -137,7 +137,6 @@ public class PowerController {
     public String toLogin(String userName, String passWord, Model model, HttpSession httpSession) {
         //将用户放到session中
         httpSession.setAttribute("userName",userName);
-        System.out.println("账号是：" + userName);
         //shiro的关键代码，执行认证功能
         // 1.获取subject
         Subject subject = SecurityUtils.getSubject();

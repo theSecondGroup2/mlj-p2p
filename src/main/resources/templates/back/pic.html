@@ -41,7 +41,7 @@
 </head>
 <body>
 <!--div中的v-loading绑定的是加载中的样式，和loadingData的刷新方法相对应-->
-<div id="app" v-loading="loading1" :data="tables" element-loading-background="rgba(0, 0, 0, 0.8)" element-loading-text="拼命加载中">
+<div id="app" v-loading="loading1"  element-loading-background="rgba(0, 0, 0, 0.8)" element-loading-text="拼命加载中">
     <el-collapse v-model="activeName" accordion>
         <el-collapse-item title="轮播图1" name="1" >
             <el-row>
