@@ -1,17 +1,18 @@
-package com.aaa.p2p.config;
+package com.aaa.p2p.util;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-@Component
-@ConfigurationProperties(prefix = "aliyun.oss")
+
 /**
  * className:AliyunOSSConfig
  * discription:
  * author:luRuiHua
  * createTime:2018-12-12 10:49
  */
+@Component
+@ConfigurationProperties(prefix = "aliyun.oss")
 public class AliyunOSSConfig {
     private String bucketname;
     private String endpoint;

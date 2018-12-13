@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -36,8 +35,7 @@ public class PicController {
     @ResponseBody
     @RequestMapping("/getPicByLoc")
     public Object getPicByLoc(@RequestBody Map map){
-        System.out.println("map:"+map);
-        System.out.println("进入查询url地址");
+        //通过map里面的路径查询url
         return picService.getPicByLoc(map);
     }
     /**
@@ -47,13 +45,9 @@ public class PicController {
     @RequestMapping("/getPicUrl")
     @ResponseBody
     public Object getPicUrl(@RequestBody MultipartFile file,String loc){
-        System.out.println("文件上传");
-        System.out.println("文件位置"+loc);
         String filename = file.getOriginalFilename();
-        System.out.println("文件名称："+filename);
         String uploadUrl = "";
         try {
-
             if (file != null) {
                 if (!"".equals(filename.trim())) {
                     File newFile = new File(filename);
@@ -61,19 +55,24 @@ public class PicController {
                     os.write(file.getBytes());
                     os.close();
                     file.transferTo(newFile);
-                    // 上传到OSS
+                    // 上传到OSS，返回一个url
                     uploadUrl = aliyunOSSUtil.upLoad(newFile);
-                    System.out.println("文件的url:"+uploadUrl);
                 }
-
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        //执行更改操作
-        return picService.updateUrl(uploadUrl,loc);
+        return uploadUrl;
     }
-
+    /**
+     * 上传图片后的提交按钮
+     */
+    @RequestMapping("/goInsertPic")
+    @ResponseBody
+    public Object goInsertPic(@RequestBody Map map){
+        //更改指定位置的图片url
+        return picService.updateUrl(map.get("url")+"",map.get("loc")+"");
+    }
     /**
      * 跳转更改轮播图页面
      * @return

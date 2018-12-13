@@ -51,7 +51,7 @@
                         <div style="padding: 14px;">
                             <span>前台图片</span>
                             <div class="bottom clearfix">
-                                <el-button type="text" class="button" @click="update(1)">更改</el-button>
+                                <el-button type="text" class="button" @click="update('1')">更改</el-button>
                             </div>
                         </div>
                     </el-card>
@@ -69,7 +69,7 @@
                         <div style="padding: 14px;">
                             <span>前台图片</span>
                             <div class="bottom clearfix">
-                                <el-button type="text" class="button" @click="update(2)">更改</el-button>
+                                <el-button type="text" class="button" @click="update('2')">更改</el-button>
                             </div>
                         </div>
                     </el-card>
@@ -87,7 +87,7 @@
                         <div style="padding: 14px;">
                             <span>前台图片</span>
                             <div class="bottom clearfix">
-                                <el-button type="text" class="button" @click="update(3)">更改</el-button>
+                                <el-button type="text" class="button" @click="update('3')">更改</el-button>
                             </div>
                         </div>
                     </el-card>
@@ -101,7 +101,13 @@
 <!--编辑页面-->
     <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
         <el-form>
-            <el-upload class="upload-demo" drag :action="act" multiple>
+            <el-upload
+                    class="upload-demo"
+                    drag
+                    :action="act"
+                    auto-upload="false"
+                    :on-success="picSuccess"
+                    multiple>
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                 <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -112,7 +118,24 @@
             <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
         </div>
     </el-dialog>
+
+
+
+    <!--提示框-->
+    <el-dialog
+            title="提示"
+            :visible.sync="centerDialogVisible"
+            width="30%"
+            center>
+        <span>更改成功</span>
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+        </span>
+    </el-dialog>
 </div>
+
+
+
 </body>
 <script>
     //卡片
@@ -120,20 +143,26 @@
         data() {
             return {
                 activeName: '1',
-                //路径地址
+                //三个位置的对应的路径地址
                 pic1: '',
                 pic2: '',
                 pic3: '',
-                //图片位置，用于向台传数据来查询该位置的图片
+                //用于更改的时候向后台传数据的路径
+                lujing:'',
+                //图片位置，用于当页面加载时，向后台传数据来查询该位置的图片
                 loc1:'1',
                 loc2:'2',
                 loc3:'3',
-                params:'',
+                //用于更改url时向后台传递位置
+                locc:'',
+                //拖曳图片上传请求的url
                 act:'',
                 //编辑界面是否显示
                 editFormVisible: false,
                 editLoading: false,
-                loading1:false
+                //加载中的特效
+                loading1:false,
+                centerDialogVisible: false
             };
         },
         methods: {
@@ -148,7 +177,6 @@
                 self.loading1 = true;
                 //请求图片的url来给pic1
                 axios.post('/pic/getPicByLoc',{loc:loc1}).then(function (response) {
-                    alert(JSON.stringify(response.data))
                     self.pic1=response.data[0].URL
                 });
                 axios.post('/pic/getPicByLoc',{loc:loc2}).then(function (response) {
@@ -167,14 +195,24 @@
             },
             //弹出编辑框，参数a是图片的位置
             update(a) {
-                //alert(a);
-                this.params=a;
+                //位置传给picSuccess方法
+                this.locc=a;
                 this.act = '/pic/getPicUrl?loc='+a;
                 //编辑界面是否显示
                 this.editFormVisible=true;
             },
-            //保存点击事件，实际上没有效果
+            //图片上传后的回调函数，返回url
+            picSuccess:function(response, file, fileList){
+                this.lujing = response;
+            },
+            //保存点击事件
             editSubmit:function(a){
+                var self = this;
+                axios.post('/pic/goInsertPic',{'url':self.lujing,'loc':self.locc}).then(function (response) {
+                    if (response == 1){
+                        centerDialogVisible: true;
+                    }
+                })
                 this.editFormVisible=false;
                 this.loadingData();
 
