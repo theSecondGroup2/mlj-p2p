@@ -67,7 +67,6 @@ public class DeptController {
     @RequestMapping("/insertAdd")
     @ResponseBody
     public Object insertAdd(@RequestBody Map map) {
-        System.out.println("添加的："+map);
         return deptService.deptAdd(map);
     }
 
@@ -79,7 +78,6 @@ public class DeptController {
     @RequestMapping("/updateDept")
     @ResponseBody
     public Object updateDept(@RequestBody Map map) {
-        System.out.println("更改的"+map);
         return deptService.updateDept(map);
     }
 

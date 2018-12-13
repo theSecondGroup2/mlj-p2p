@@ -5,4 +5,18 @@
     <select id="getPowerList" resultType="map">
         select * from tb_power
     </select>
+
+    <select id="selectTreeByPid" resultType="map">
+        select * from TB_POWER where  PARENTID = #{pid}
+    </select>
+
+    <insert id="insertTree">
+        insert into TB_POWER (ID,NAME,ICONCLS,STATE,URL,PARENTID) values (TB_POWER_ID.nextval,#{NAME},'aaa','1',#{URL},#{PARENTID})
+    </insert>
+    <update id="updateTree">
+        update TB_POWER set NAME = #{NAME}, URL = #{URL}, PARENTID = #{PARENTID} where ID = #{ID}
+    </update>
+    <delete id="deleteTree">
+        delete from TB_POWER where ID = #{ID}
+    </delete>
 </mapper>

@@ -55,7 +55,6 @@ public class EmpController {
     @RequestMapping("/updateEmp")
     @ResponseBody
     public Object updateEmp(@RequestBody Map map) {
-        System.out.println("更改的"+map);
         return empService.updateEmp(map);
     }
     /**
@@ -101,8 +100,6 @@ public class EmpController {
     @RequestMapping("/updatepassword")
     public Object updatepassword(@RequestBody Map map, HttpSession httpSession){
         String userName = httpSession.getAttribute("userName")+"";
-        System.out.println("用户名是："+userName);
-        System.out.println("被更改的密码是"+map.get("passWord"));
         return empService.updatepassword(map.get("passWord")+"",userName);
     }
     /**
@@ -112,7 +109,6 @@ public class EmpController {
     @RequestMapping("/selectEmpPassWord")
     public Object selectEmpPassWord( HttpSession httpSession){
         String userName = httpSession.getAttribute("userName")+"";
-        System.out.println("该用户是："+userName);
         Map map = new HashMap();
         map.put("userName",userName);
         List<Map> empList = empService.getEmpList(map);
