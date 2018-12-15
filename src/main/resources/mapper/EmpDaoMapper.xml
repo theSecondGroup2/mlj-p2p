@@ -3,12 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.p2p.dao.EmpDao">
     <select id="selectEmp" resultType="map">
-        select * from TB_EMP
-        <where>
-            <if test="userName != null and userName != ''">
-                and username = #{userName}
-            </if>
-        </where>
+        select * from TB_EMP where username = #{userName}
     </select>
     <select id="selectEmpByPhone" resultType="map">
         select * from TB_EMP
@@ -30,7 +25,7 @@ join TB_DEPT d
             and username = #{userName}
         </if>
         <if test="empName != null and empName != ''">
-            and empname = #{empName}
+            and empname like '%'||#{empName}||'%'
         </if>
         <if test="dName != null and dName != ''">
             and dname = #{dName}
@@ -53,11 +48,20 @@ join TB_DEPT d
         where
             ID=#{ID}
     </update>
+    <update id="updatepassword">
+        update TB_EMP set PASSWORD = #{param1} where USERNAME = #{param2}
+    </update>
     <insert id="insertEmp">
         insert into TB_EMP values (TB_EMP_ID.nextval,#{USERNAME},#{PASSWORD},#{ROLE},#{EMPNAME},
         #{DNAME},#{SEX},to_date(#{HIREDATE},'yyyy-mm-dd'),#{SAL},#{COMM},#{IDCARD},#{TEL})
     </insert>
     <delete id="deleteEmp">
         delete from TB_EMP where ID = #{ID}
+    </delete>
+    <delete id="batchDel">
+        delete from TB_EMP where ID in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </delete>
 </mapper>

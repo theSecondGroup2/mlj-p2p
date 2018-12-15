@@ -57,4 +57,46 @@ public class RoleController {
         resultMap.put("pageData", pageInfo.getList());
         return resultMap;
     }
+    /**
+     * 添加部門信息
+     * @param map
+     * @return
+     */
+    @RequestMapping("/insertAdd")
+    @ResponseBody
+    public Object insertAdd(@RequestBody Map map) {
+        return roleService.insertAdd(map);
+    }
+
+    /**
+     * 更改员工信息
+     * @param map
+     * @return
+     */
+    @RequestMapping("/updateRole")
+    @ResponseBody
+    public Object updateRole(@RequestBody Map map) {
+        System.out.println("更改的"+map);
+        return roleService.updateRole(map);
+    }
+
+    /**
+     * 删除
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/deleteRole")
+    public Object deleteRole(@RequestBody Map map){
+        return roleService.deleteRole(Integer.valueOf(map.get("ID")+""));
+    }
+
+    /**
+     * 批量删除
+     */
+    @ResponseBody
+    @RequestMapping("/batchDel")
+    public Object batchDel(@RequestBody Map map){
+        return roleService.batchDel(map);
+    }
 }

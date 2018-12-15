@@ -48,4 +48,18 @@ public interface EmpService {
      * @return
      */
     List<Map> selectEmpByPhone(Map map);
+
+    /**
+     * 批量删除
+     * @param map
+     * @return
+     */
+    int batchDel(Map map);
+    /**
+     * 更改密码
+     * @param passWord
+     * @param userName
+     * @return
+     */
+    int updatepassword(String passWord,String userName);
 }

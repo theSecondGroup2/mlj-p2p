@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.p2p.dao.PicDao">
+    <select id="getPicByLoc" resultType="map">
+        select * from TB_PIC
+        <where>
+            <if test="loc != null and loc != ''">
+                and loc = #{loc}
+            </if>
+        </where>
+    </select>
+    <update id="updateUrl">
+        update TB_PIC set URL = #{param1} where LOC = #{param2}
+    </update>
+
+</mapper>

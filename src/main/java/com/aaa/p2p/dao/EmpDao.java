@@ -49,4 +49,19 @@ public interface EmpDao {
      * @return
      */
     List<Map> selectEmpByPhone(Map map);
+
+    /**
+     * 批量删除
+     * @param idList
+     * @return
+     */
+    int batchDel(List idList);
+
+    /**
+     * 更改密码
+     * @param passWord
+     * @param userName
+     * @return
+     */
+    int updatepassword(String passWord,String userName);
 }

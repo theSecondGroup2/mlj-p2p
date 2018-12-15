@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.p2p.dao.ForwardUserDao">
+    <!--用户名唯一性校验-->
+    <select id="userExist" resultType="map">
+        select * from TB_FWDLOGIN where USERNAME = #{userName}
+    </select>
+    <!--手机号唯一性校验-->
+    <select id="telExist" resultType="map">
+        select * from TB_FWDLOGIN where USERTEL = #{tel}
+    </select>
+    <!--新增前台用户-->
+    <insert id="addForwardUser" parameterType="map">
+        insert into tb_fwdlogin values (TB_FWDLOGIN_ID.nextval, #{userName}, #{userPsw}, #{userPhone}, #{recPeople}, 1)
+    </insert>
+    <!--检查用户名密码是否正确-->
+    <select id="checkNamePsw" resultType="map">
+        select * from TB_FWDLOGIN where USERNAME = #{userName} and USERPSW = #{userPsw}
+    </select>
+</mapper>

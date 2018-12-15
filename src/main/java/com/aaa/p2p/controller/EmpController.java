@@ -1,7 +1,6 @@
 package com.aaa.p2p.controller;
 
 import com.aaa.p2p.service.EmpService;
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * className:EmpController
- * discription:
+ * discription:对emp表进行增删改查
  * author:luRuiHua
  * createTime:2018-12-09 14:23
  */
@@ -76,5 +77,48 @@ public class EmpController {
     @ResponseBody
     public Object deleteEmp(@RequestBody Map map) {
         return empService.deleteEmp(map);
+    }
+    /**
+     * 批量删除
+     */
+    @ResponseBody
+    @RequestMapping("/batchDel")
+    public Object batchDel(@RequestBody Map map){
+        return empService.batchDel(map);
+    }
+
+    /**
+     * 跳转更改密码页面
+     */
+    @RequestMapping("/updatePassWord")
+    public String updatePassWord(){
+        return "back/updatePassWord";
+    }
+    /**
+     * 更改密码
+     */
+    @ResponseBody
+    @RequestMapping("/updatepassword")
+    public Object updatepassword(@RequestBody Map map, HttpSession httpSession){
+        String userName = httpSession.getAttribute("userName")+"";
+        System.out.println("用户名是："+userName);
+        System.out.println("被更改的密码是"+map.get("passWord"));
+        return empService.updatepassword(map.get("passWord")+"",userName);
+    }
+    /**
+     * 通过用户名查询原密码
+     */
+    @ResponseBody
+    @RequestMapping("/selectEmpPassWord")
+    public Object selectEmpPassWord( HttpSession httpSession){
+        String userName = httpSession.getAttribute("userName")+"";
+        System.out.println("该用户是："+userName);
+        Map map = new HashMap();
+        map.put("userName",userName);
+        List<Map> empList = empService.getEmpList(map);
+        if (empList.size() != 0) {
+            System.out.println("该用户密码是:"+empList.get(0).get("PASSWORD"));
+        }
+        return empList;
     }
 }

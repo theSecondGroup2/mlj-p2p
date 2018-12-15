@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图</title>
+    <script src="/js/axios.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.4.11/lib/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.4.11/lib/theme-chalk/index.css">
+    <style>
+        .time {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .bottom {
+            margin-top: 13px;
+            line-height: 12px;
+        }
+
+        .button {
+            padding: 0;
+            float: right;
+        }
+
+        .image {
+            width: 100%;
+            display: block;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            display: table;
+            content: "";
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+    </style>
+</head>
+<body>
+<!--div中的v-loading绑定的是加载中的样式，和loadingData的刷新方法相对应-->
+<div id="app" v-loading="loading1" :data="tables" element-loading-background="rgba(0, 0, 0, 0.8)" element-loading-text="拼命加载中">
+    <el-collapse v-model="activeName" accordion>
+        <el-collapse-item title="轮播图1" name="1" >
+            <el-row>
+                <el-col :span="8">
+                    <el-card :body-style="{ padding: '0px' }">
+                        <img :src="pic1" class="image">
+                        <div style="padding: 14px;">
+                            <span>前台图片</span>
+                            <div class="bottom clearfix">
+                                <el-button type="text" class="button" @click="update('1')">更改</el-button>
+                            </div>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-collapse-item>
+    </el-collapse>
+
+    <el-collapse v-model="activeName" accordion>
+        <el-collapse-item title="轮播图2" name="2" >
+            <el-row>
+                <el-col :span="8">
+                    <el-card :body-style="{ padding: '0px' }">
+                        <img :src="pic2" class="image">
+                        <div style="padding: 14px;">
+                            <span>前台图片</span>
+                            <div class="bottom clearfix">
+                                <el-button type="text" class="button" @click="update('2')">更改</el-button>
+                            </div>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-collapse-item>
+    </el-collapse>
+
+    <el-collapse v-model="activeName" accordion>
+        <el-collapse-item title="轮播图3" name="3" >
+            <el-row>
+                <el-col :span="8">
+                    <el-card :body-style="{ padding: '0px' }">
+                        <img :src="pic3" class="image">
+                        <div style="padding: 14px;">
+                            <span>前台图片</span>
+                            <div class="bottom clearfix">
+                                <el-button type="text" class="button" @click="update('3')">更改</el-button>
+                            </div>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-collapse-item>
+    </el-collapse>
+
+
+
+<!--编辑页面-->
+    <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
+        <el-form>
+            <el-upload
+                    class="upload-demo"
+                    drag
+                    :action="act"
+                    auto-upload="false"
+                    :on-success="picSuccess"
+                    multiple>
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+            </el-upload>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click.native="editFormVisible = false">取消</el-button>
+            <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+        </div>
+    </el-dialog>
+
+
+
+    <!--提示框-->
+    <el-dialog
+            title="提示"
+            :visible.sync="centerDialogVisible"
+            width="30%"
+            center>
+        <span>更改成功</span>
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+        </span>
+    </el-dialog>
+</div>
+
+
+
+</body>
+<script>
+    //卡片
+    var Main = {
+        data() {
+            return {
+                activeName: '1',
+                //三个位置的对应的路径地址
+                pic1: '',
+                pic2: '',
+                pic3: '',
+                //用于更改的时候向后台传数据的路径
+                lujing:'',
+                //图片位置，用于当页面加载时，向后台传数据来查询该位置的图片
+                loc1:'1',
+                loc2:'2',
+                loc3:'3',
+                //用于更改url时向后台传递位置
+                locc:'',
+                //拖曳图片上传请求的url
+                act:'',
+                //编辑界面是否显示
+                editFormVisible: false,
+                editLoading: false,
+                //加载中的特效
+                loading1:false,
+                centerDialogVisible: false
+            };
+        },
+        methods: {
+            //刷新方法
+            loadingData:function(){
+                var self = this;
+                //像后台传数据
+                var loc1 = this.loc1;
+                var loc2 = this.loc2;
+                var loc3 = this.loc3;
+
+                self.loading1 = true;
+                //请求图片的url来给pic1
+                axios.post('/pic/getPicByLoc',{loc:loc1}).then(function (response) {
+                    self.pic1=response.data[0].URL
+                });
+                axios.post('/pic/getPicByLoc',{loc:loc2}).then(function (response) {
+                    self.pic2=response.data[0].URL
+                });
+                axios.post('/pic/getPicByLoc',{loc:loc3}).then(function (response) {
+                    self.pic3=response.data[0].URL
+                });
+
+
+                //设置loading1的显示拼命加载的动态效果
+                setTimeout(() => {
+                    console.info("加载数据成功");
+                    self.loading1 = false;
+                }, 2000);
+            },
+            //弹出编辑框，参数a是图片的位置
+            update(a) {
+                //位置传给picSuccess方法
+                this.locc=a;
+                this.act = '/pic/getPicUrl?loc='+a;
+                //编辑界面是否显示
+                this.editFormVisible=true;
+            },
+            //图片上传后的回调函数，返回url
+            picSuccess:function(response, file, fileList){
+                this.lujing = response;
+            },
+            //保存点击事件
+            editSubmit:function(a){
+                var self = this;
+                axios.post('/pic/goInsertPic',{'url':self.lujing,'loc':self.locc}).then(function (response) {
+                    if (response == 1){
+                        centerDialogVisible: true;
+                    }
+                })
+                this.editFormVisible=false;
+                this.loadingData();
+
+            }
+        },
+        created:function(){
+            //当页面加载时显示图片的原始样子，更改后重新加载数据
+            var self = this;
+            var loc1 = this.loc1;
+            var loc2 = this.loc2;
+            var loc3 = this.loc3;
+            axios.post('/pic/getPicByLoc',{loc:loc1}).then(function (response) {
+                self.pic1=response.data[0].URL
+            });
+            axios.post('/pic/getPicByLoc',{loc:loc2}).then(function (response) {
+                self.pic2=response.data[0].URL
+            });
+            axios.post('/pic/getPicByLoc',{loc:loc3}).then(function (response) {
+                self.pic3=response.data[0].URL
+            });
+        }
+    }
+    var Ctor = Vue.extend(Main)
+    new Ctor().$mount('#app')
+
+</script>
+</html>
