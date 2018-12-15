@@ -76,7 +76,6 @@ public class RoleController {
     @RequestMapping("/updateRole")
     @ResponseBody
     public Object updateRole(@RequestBody Map map) {
-        System.out.println("更改的"+map);
         return roleService.updateRole(map);
     }
 

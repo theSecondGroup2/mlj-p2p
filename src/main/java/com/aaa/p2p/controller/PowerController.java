@@ -45,7 +45,6 @@ public class PowerController {
     @RequestMapping("/tree")
     public Object getTree() {
         List<TreeNode> powerList = powerService.getPowerList();
-        //System.out.println(powerList.get(1));
         return powerList;
     }
 

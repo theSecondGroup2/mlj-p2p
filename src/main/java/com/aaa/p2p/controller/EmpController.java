@@ -112,9 +112,6 @@ public class EmpController {
         Map map = new HashMap();
         map.put("userName",userName);
         List<Map> empList = empService.getEmpList(map);
-        if (empList.size() != 0) {
-            System.out.println("该用户密码是:"+empList.get(0).get("PASSWORD"));
-        }
         return empList;
     }
 }
