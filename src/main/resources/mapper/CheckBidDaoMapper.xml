@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.p2p.dao.CheckBidDao">
+    <!--查询标的信息-->
+   <select id="selectList" resultType="map">
+        select u.userID,
+               u.realname,
+               u.income,
+               b.id,
+               substr(to_char(b.bidIssueDate,'yyyy-mm-dd hh24:mi:ss'),1,10) as bidIssueDate,
+               b.bidDesc,
+               b.bidType,
+               b.bidAmount,
+               b.bidDeadline,
+               b.bidState,
+               b.BIDRATE,
+               b.BIDREPAYMENTMETHOD,
+               b.BIDDEADDAY,
+               substr(to_char(b.bidApplyDate,'yyyy-mm-dd hh24:mi:ss'),1,10) as bidApplyDate
+        from tb_bidinfo b
+        join tb_UserReal u
+            on b.userID = u.userID
+            <where>
+                <if test="REALNAME != '' and REALNAME != null">
+                    and REALNAME = #{REALNAME}
+                </if>
+                <if test="BIDTYPE != '' and BIDTYPE != null">
+                    and BIDTYPE = #{BIDTYPE}
+                </if>
+                <if test="BIDSTATE != '' and BIDSTATE != null">
+                    and BIDSTATE = #{BIDSTATE}
+                </if>
+                <if test="ID != '' and ID != null">
+                    and b.ID = #{ID}
+                </if>
+            </where>
+   </select>
+    <!--查询实名信息-->
+    <select id="selectUserReal" resultType="map">
+        select u.REALNAME,u.SEX,u.IDNUMBER,u.ACADEMIC,u.HOUSED,f.USERTEL
+        from TB_USERREAL u
+        join TB_FWDLOGIN f
+        on u.USERID = f.USERID
+        where f.USERID = #{USERID}
+    </select>
+    <!--查询账户信息-->
+    <select id="selectAccount" resultType="map">
+        select AVAILABLEBALANCE,RECEIVEPRINCIPAL,
+        CREDITLINE,RETURNAMOUNT,FREEZINGAMOUNT,SURPLUSCREDITLINE
+        from TB_ACCOUNT
+        where USERID = #{USERID}
+    </select>
+    <!--更改标的状态-->
+    <update id="updateState">
+        update TB_BIDINFO set BIDSTATE=#{BIDSTATUS},BIDISSUEDATE = sysdate,BIDDEADDATE = sysdate + #{DAY} where ID = #{ID}
+    </update>
+</mapper>

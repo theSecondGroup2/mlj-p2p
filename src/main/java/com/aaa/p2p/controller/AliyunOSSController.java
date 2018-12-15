@@ -46,7 +46,6 @@ public class AliyunOSSController {
         File file = new File("E:/Picture/test.jpg");
         AliyunOSSUtil aliyunOSSUtil = new AliyunOSSUtil();
         String url = aliyunOSSUtil.upLoad(file);
-        System.out.println(url);
         return "success";
     }
     /**
@@ -76,9 +75,7 @@ public class AliyunOSSController {
      */
     @RequestMapping(value = "/uploadFile")
     public String uploadPicture(@RequestParam("file") MultipartFile file, Model model) {
-        logger.info("文件上传");
         String filename = file.getOriginalFilename();
-        System.out.println(filename);
         try {
 
             if (file != null) {
@@ -90,7 +87,6 @@ public class AliyunOSSController {
                     file.transferTo(newFile);
                     // 上传到OSS
                     String uploadUrl = aliyunOSSUtil.upLoad(newFile);
-                    System.out.println("文件的url:"+uploadUrl);
                     model.addAttribute("url",uploadUrl);
                 }
 

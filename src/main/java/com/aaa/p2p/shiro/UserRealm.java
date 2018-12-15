@@ -59,7 +59,6 @@ public class UserRealm extends AuthorizingRealm {
         //编写shiro判断逻辑，判断用户名密码是否正确
         UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
         String username = token.getUsername();
-        System.out.println("账号是："+token.getUsername());
         //1.判断用户名
         List<Map> mapList = empService.selectEmp(token.getUsername());
         if (mapList.size() == 0) {

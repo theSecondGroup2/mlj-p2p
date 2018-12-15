@@ -29,7 +29,6 @@ public class UserController {
      */
     @RequestMapping("/toList")
     public String toList(){
-        //System.out.println("111111");
         return "back/list";
     }
 
