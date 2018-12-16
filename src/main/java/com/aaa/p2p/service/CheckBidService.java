@@ -1,5 +1,6 @@
 package com.aaa.p2p.service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -33,5 +34,5 @@ public interface CheckBidService {
     /**
      * 更改标的状态
      */
-    int updateState(Map map);
+    int updateState(Map map, HttpSession session);
 }

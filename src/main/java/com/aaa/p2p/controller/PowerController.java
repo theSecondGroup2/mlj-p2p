@@ -48,6 +48,8 @@ public class PowerController {
         return powerList;
     }
 
+
+
     /**
      * 在session中获取用户
      * @param httpSession
@@ -105,14 +107,22 @@ public class PowerController {
     public String userLogin() {
         return "back/userLogin";
     }
-
+    /**
+     * 通过手机号查询的登陆用户放到session中
+     *
+     */
+    public void setPhoneSession(Map map,HttpSession httpSession){
+        List<Map> maps = empService.selectEmpByPhone(map);
+        httpSession.setAttribute("emp",maps);
+    }
     /**
      * 手机登陆跳转首页
      * @param model
      * @return
      */
     @RequestMapping("/toPhoneLogin")
-    public String toPhoneLogin(@RequestParam Map map, Model model) {
+    public String toPhoneLogin(@RequestParam Map map, Model model,HttpSession httpSession) {
+        setPhoneSession(map,httpSession);//将当前手机号登陆的emp查询的emp信息放到session中
         int size = empService.selectEmpByPhone(map).size();
         if (size == 0) {
             model.addAttribute("msg","手机号不存在");
@@ -128,35 +138,47 @@ public class PowerController {
         }
     }
     /**
+     * 通过用户名密码登陆查询的登陆用户放到session中
+     *
+     */
+    public void setUserSession(String userName,HttpSession session){
+        List<Map> maps = empService.selectEmp(userName);
+        session.setAttribute("emp",maps.get(0));
+    }
+    /**
      * 用户名密码跳转欢迎页面
      *
      * @return
      */
     @RequestMapping("/toLogin")
     public String toLogin(String userName, String passWord, Model model, HttpSession httpSession) {
-        //将用户放到session中
-        httpSession.setAttribute("userName",userName);
-        //shiro的关键代码，执行认证功能
-        // 1.获取subject
-        Subject subject = SecurityUtils.getSubject();
-        //2.封装用户数据
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName, passWord);
-        //3.执行登陆方法
-        try {
-            //登陆成功
-            subject.login(usernamePasswordToken);
-            model.addAttribute("msg","登陆成功");
-            //跳到欢迎页面
-            return "tree/index";
-        } catch (UnknownAccountException e) {
-            //用户名不存在的异常
-            model.addAttribute("msg","用户名不存在");
-            return "back/userLogin";
-        } catch (IncorrectCredentialsException e) {
-            //用户名不存在的异常
-            model.addAttribute("msg","用户名和密码错误");
-            return "back/userLogin";
+        if (userName!=null&&userName!=""){
+            //将用户放到session中
+            httpSession.setAttribute("userName",userName);
+            setUserSession(userName,httpSession);//通过用户名登陆的emp信息放到session中
+            //shiro的关键代码，执行认证功能
+            // 1.获取subject
+            Subject subject = SecurityUtils.getSubject();
+            //2.封装用户数据
+            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(userName, passWord);
+            //3.执行登陆方法
+            try {
+                //登陆成功
+                subject.login(usernamePasswordToken);
+                model.addAttribute("msg","登陆成功");
+                //跳到欢迎页面
+                return "tree/index";
+            } catch (UnknownAccountException e) {
+                //用户名不存在的异常
+                model.addAttribute("msg","用户名不存在");
+                return "back/userLogin";
+            } catch (IncorrectCredentialsException e) {
+                //用户名不存在的异常
+                model.addAttribute("msg","用户名和密码错误");
+                return "back/userLogin";
+            }
         }
+        return "back/userLogin";
     }
 
 

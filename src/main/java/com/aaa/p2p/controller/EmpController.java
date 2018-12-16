@@ -34,6 +34,11 @@ public class EmpController {
         return "back/emp";
     }
 
+    /**
+     * 获取员工信息
+     * @param map
+     * @return
+     */
     @RequestMapping("/getEmpList")
     @ResponseBody
     public Object getEmpList(@RequestBody Map map) {

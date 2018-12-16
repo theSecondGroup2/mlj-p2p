@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../js/jquery.min.js"></script>
 </head>
 <body>
 <div id="app">
@@ -162,7 +163,7 @@
     <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
             <el-form-item label="投标ID" prop="ID"  disabled="true">
-                <el-input v-model="editForm.BIDID" auto-complete="off" readonly="readonly"></el-input>
+                <el-input v-model="editForm.BIDID"  auto-complete="off" :disabled="eaa"></el-input>
             </el-form-item>
             <template>
                <!-- <el-radio v-model="editForm.BIDSTATUS" label="待审核">待审核</el-radio>-->
@@ -172,6 +173,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click.native="editFormVisible = false">取消</el-button>
+            <el-button @click.native="dianwo">点我</el-button>
             <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
         </div>
     </el-dialog>
@@ -206,6 +208,7 @@
                 borrowMethod: '',
                 bidStatus:''
             },
+            eaa:true,
             //多选值
             multipleSelection: [],
             //当前页
@@ -363,6 +366,9 @@
                     }
                 })
               //  console.info(this.editForm);
+            },
+            dianwo:function () {
+                this.eaa=false;
             }
         }
 

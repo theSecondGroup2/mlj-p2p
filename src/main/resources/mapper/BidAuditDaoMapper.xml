@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.p2p.dao.BidAudit">
+   <insert id="insertBid">
+       insert into TB_BID_AUDIT (id,userID,bidID,auditID,auditTime,auditResult,auditRemarks,applyTime)
+        values (TB_BID_AUDIT_ID.nextval,#{USERID},#{ID},#{EMPID},sysdate,#{BIDSTATUS},
+       #{ADVICE},to_date(#{DATES},'yyyy-mm-dd hh24:mi:ss'))
+   </insert>
+</mapper>
