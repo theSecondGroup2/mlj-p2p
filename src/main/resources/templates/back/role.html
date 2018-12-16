@@ -111,6 +111,24 @@
         </div>
     </el-dialog>
 
+
+    <!--授权界面-->
+    <el-dialog title="授权" :visible.sync="shouquan" :close-on-click-modal="false">
+        <el-tree
+                :data="data2"
+                show-checkbox
+                default-expand-all
+                node-key="id"
+                ref="tree"
+                highlight-current
+                :props="defaultProps">
+        </el-tree>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click.native="shouquan = false">取消</el-button>
+            <el-button type="primary" @click.native="shouquanSub" :loading="editLoading">提交</el-button>
+        </div>
+    </el-dialog>
+
 </div>
 
 
@@ -124,6 +142,9 @@
     var tableView = new Vue({
         el: '#tableView',
         data: {
+            roleId:1,//角色id
+            //菜单树
+            data2:[],
             //部门下拉框框
             options:[],
             //角色下拉框
@@ -148,6 +169,7 @@
             deleteVisible:false,
             //编辑界面是否显示
             editFormVisible: false,
+            shouquan:false,
             editLoading: false,
             goUrl:'',
             editFormRules: {
@@ -172,6 +194,9 @@
             axios.post('/role/getRoleList').then(function(response){
                 self.options = response.data;
             });
+            axios.post('/power/getPList').then(function (response) {
+                self.data2 = response.data;
+            })
         },
         methods:{
             //清空表格数据
@@ -224,18 +249,6 @@
                     if(e != "cancel")
                         console.log("出现错误：" + e);
                 });
-            },
-            //新建事件
-            addClick:function() {
-                this.goUrl="/role/insertAdd";
-                var _self = this;
-                //清空url，解决先点更新，点取消，后点添加的是带这条数据的Bug
-                this.editForm= {
-                        //ID:'',
-                        ROLE:''
-                }
-                this.editFormVisible = true;
-                _self.loadingData();//重新加载数据
             },
             //表格查询事件
             searchClick:function() {
@@ -312,6 +325,26 @@
                      }
                 })
                 console.info(this.editForm);
+            },
+            //授权事件
+            addClick:function(row) {
+                //row.ID//角色id
+                this.roleId = row.ID;
+                this.shouquan = true;
+                _self.loadingData();//重新加载数据
+            },
+            //点击授权的保存
+            shouquanSub:function () {
+                let al = this.$refs.tree.getCheckedKeys();//树节点的id-----[2,4,7]
+                var roleId = this.roleId;//角色id
+                axios.post('/power/onPower',{'powerId':al,'roleId':roleId}).then(function (response) {
+                    if (response.data == 1) {
+                        alert('授权成功！');
+                    } else {
+                        alert('授权失败！');
+                    }
+                })
+                this.shouquan = false;
             }
         }
 

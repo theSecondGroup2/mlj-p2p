@@ -10,17 +10,12 @@
             color: #333;
         }
 
-        .el-aside {
-            color: #333;
-        }
-
         /*头部的背景图片*/
         #hd {
-            position: relative;
-            width: 100%;
-            height: 114px;
-            background: url(../imgs/topbg.png) repeat-x;
-            z-index: 2;
+            background-color:dodgerblue;
+        }
+        #ma {
+            padding:0px;
         }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/element-ui@2.4.11/lib/theme-chalk/index.css">
@@ -36,12 +31,8 @@
 
 
         <!--整体头部-->
-        <el-header id="hd" style="text-align: right; font-size: 30px; height: 100px">
-            <ul>
-                <li>
-                    用户名：{{userName}}
-                </li>
-            </ul>
+        <el-header id="hd" style="text-align: right; font-size: 30px; height: 100px; font-family: Consolas">
+                <span>用户名：{{userName}}</span>
         </el-header>
 
 
@@ -49,16 +40,22 @@
         <el-container>
 
             <!--左侧菜单栏-->
-            <el-aside width="250px" style="background-color: rgb(255,255,255)">
+            <el-aside width="250px" style="background-color: rgb(255,255,255);">
                 <!--accordion是否每次只打开一个同级节点  highlight-current高亮-->
-                <el-tree :default-expand-all="false" :icon-class="icon" :highlight-current="true" :data="treeData"
+                <el-tree node-key="id" :default-expand-all="false" :icon-class="icon" :highlight-current="true" :data="treeData"
                          :props="defaultProps" :accordion="true" @node-click="handleNodeClick">
+                    <span class="custom-tree-node" slot-scope="{ node, data }">
+                        <span>
+                            <i :class="node.icon">
+                            </i>{{ node.label }}
+                        </span>
+				    </span>
                 </el-tree>
             </el-aside>
 
 
             <!--右侧表单-->
-            <el-main>
+            <el-main id="ma">
                 <el-tabs v-model="editableTabsValue2" type="card" closable @tab-remove="removeTab">
                     <el-tab-pane
                             v-for="(item, index) in editableTabs2"
@@ -66,7 +63,8 @@
                             :label="item.title"
                             :name="item.name"
                     >
-                        <iframe scrolling="auto" frameborder="0" :src="item.url" style="width:100%;height:600px;"></iframe>
+                        <iframe scrolling="auto" frameborder="0" :src="item.url"
+                                style="width:100%;height:600px;"></iframe>
                     </el-tab-pane>
                 </el-tabs>
 
@@ -94,25 +92,25 @@
                 url: '/power/wel'
             }],
             tabIndex: 2,
-            userName:''
+            userName: ''
         },
         methods: {
             handleNodeClick(data) {
                 //父标签点击不会显示
                 if (data.url != null && data.url != 'null' && data.url != '')
-                this.addTab(data.label,data.url);
+                    this.addTab(data.label, data.url);
             },
-            addTab:function(targetName,url) {
+            addTab: function (targetName, url) {
                 var newTabName = targetName;
                 if (JSON.stringify(this.editableTabs2).indexOf(newTabName) == -1) {
                     this.editableTabs2.push({
                         title: targetName,
-                        name: newTabName,                        url: url
+                        name: newTabName, url: url
                     });
                 }
                 this.editableTabsValue2 = newTabName;
             },
-            removeTab:function(targetName) {
+            removeTab: function (targetName) {
                 let tabs = this.editableTabs2;
                 let activeName = this.editableTabsValue2;
                 if (activeName === targetName) {

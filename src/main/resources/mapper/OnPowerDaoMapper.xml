@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.p2p.dao.OnPowerDao">
+   <insert id="onPower">
+       insert into TB_ROLE_POWER (id,POWERID,ROLEID)values (TB_ROLE_POWER_ID.nextval,#{param1},#{param2})
+   </insert>
+    <delete id="deleteOnPower">
+        delete from TB_ROLE_POWER where ROLEID = #{param1}
+    </delete>
+</mapper>

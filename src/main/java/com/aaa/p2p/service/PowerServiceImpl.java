@@ -5,6 +5,7 @@ import com.aaa.p2p.entity.TreeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +21,22 @@ public class PowerServiceImpl implements PowerService {
     @Autowired
     private PowerDao powerDao;
 
-    public List<TreeNode> getList(){
+    /**
+     * 获取员工的角色id
+     * @param httpSession
+     * @return
+     */
+    public Integer getRoleId(HttpSession httpSession) {
+        Map map = (Map)httpSession.getAttribute("emp");
+        return Integer.valueOf(map.get("ROLEID")+"");
+    }
+
+    public List<TreeNode> getList(HttpSession httpSession){
+        //获取员工的角色id
+        Integer roleId = getRoleId(httpSession);
         //查询数据
-        List<Map> powerMapList = powerDao.getPowerList();
+        List<Map> powerMapList = powerDao.getPowerList(roleId);
+        System.out.println(powerMapList);
         //定义返回列表
         List<TreeNode> powerList = new ArrayList<TreeNode>();
         //判断是否为空
@@ -42,10 +56,12 @@ public class PowerServiceImpl implements PowerService {
         return powerList;
     }
 
+
     @Override
-    public List<TreeNode> getPowerList() {
+    public List<TreeNode> getPowerList(HttpSession session) {
+
         // TODO Auto-generated method stub
-        List<TreeNode> powerAllList = getList();
+        List<TreeNode> powerAllList = getList(session);
         //临时的powerList
         List<TreeNode> powerTempList = new ArrayList<TreeNode>();
         //判断是否为空
@@ -81,6 +97,59 @@ public class PowerServiceImpl implements PowerService {
                 bindChirldren(chirldrenTreeNode,powerAllList);
             }
         }
+    }
+
+
+
+    /**
+     * 毫无理由
+     * @return
+     */
+    @Override
+    public List<TreeNode> getPList(){
+        //查询数据
+        List<Map> powerMapList = powerDao.getPList();
+        //定义返回列表
+        List<TreeNode> powerList = new ArrayList<TreeNode>();
+        //判断是否为空
+        if(powerMapList!=null&&powerMapList.size()>0){
+            TreeNode treeNode = null;
+            //循环遍历，构造TreeNode对象，加入powerList
+            for(Map powerMap:powerMapList){
+                // treeNode = new TreeNode(id, text, parentId, state, iconCls, url);
+                //if (powerMap.get("id") != null && powerMap.get("parentid") != null) {
+                treeNode = new TreeNode(Integer.valueOf(powerMap.get("ID")+""), powerMap.get("NAME")+"",
+                        Integer.valueOf(powerMap.get("PARENTID")+""), powerMap.get("STATE")+""
+                        , powerMap.get("ICONCLS")+"", powerMap.get("URL")+"");
+                //}
+                powerList.add(treeNode);
+            }
+        }
+        return powerList;
+    }
+
+    /**
+     * 毫无理由
+     * @return
+     */
+    @Override
+    public List<TreeNode> getPPowerList() {
+
+        // TODO Auto-generated method stub
+        List<TreeNode> powerAllList = getPList();
+        //临时的powerList
+        List<TreeNode> powerTempList = new ArrayList<TreeNode>();
+        //判断是否为空
+        if(powerAllList!=null&&powerAllList.size()>0){
+            for(TreeNode ptreeNode:powerAllList){
+                if(ptreeNode.getParentId()==0){//如果等于0,说明是一级节点
+                    powerTempList.add(ptreeNode);
+                    //递归绑定子节点,ptreeNode是所有的父节点
+                    bindChirldren(ptreeNode,powerAllList);
+                }
+            }
+        }
+        return powerTempList;
     }
 
     /**

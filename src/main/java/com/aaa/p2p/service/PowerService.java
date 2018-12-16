@@ -2,6 +2,7 @@ package com.aaa.p2p.service;
 
 import com.aaa.p2p.entity.TreeNode;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,14 @@ public interface PowerService {
      * 获取权限列表
      * @return
      */
-    List<TreeNode> getPowerList();
+    List<TreeNode> getPowerList(HttpSession session);
+    /**
+     * 毫无理由的查权限树
+     * @return
+     */
+    List<TreeNode> getPList();
+    List<TreeNode> getPPowerList();
+
     /**
      * 通过pid获取权限列表
      * @return

@@ -3,7 +3,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.p2p.dao.PowerDao">
     <select id="getPowerList" resultType="map">
-        select * from tb_power
+        select p.*
+from TB_POWER p
+join (select *
+    from TB_ROLE_POWER
+    where ROLEID = #{param1}) e
+    on p.ID = e.POWERID
+    </select>
+    <select id="getPList" resultType="map">
+        select * from TB_POWER
+    </select>
+    <select id="getFid" resultType="map">
+        select POWERID from TB_ROLE_POWER where ROLEID = #{param1}
     </select>
 
     <select id="selectTreeByPid" resultType="map">
@@ -19,4 +30,7 @@
     <delete id="deleteTree">
         delete from TB_POWER where ID = #{ID}
     </delete>
+    <select id="selectFid" resultType="map">
+        select PARENTID from TB_POWER where ID = #{param1}
+    </select>
 </mapper>

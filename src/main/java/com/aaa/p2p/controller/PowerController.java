@@ -2,6 +2,7 @@ package com.aaa.p2p.controller;
 
 import com.aaa.p2p.entity.TreeNode;
 import com.aaa.p2p.service.EmpService;
+import com.aaa.p2p.service.OnPowerService;
 import com.aaa.p2p.service.PowerService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +37,8 @@ public class PowerController {
     private PowerService powerService;
     @Autowired
     private EmpService empService;
+    @Autowired
+    private OnPowerService onPowerService;
 
     /**
      * 获取权限菜单树
@@ -43,12 +47,35 @@ public class PowerController {
      */
     @ResponseBody
     @RequestMapping("/tree")
-    public Object getTree() {
-        List<TreeNode> powerList = powerService.getPowerList();
+    public Object getTree(HttpSession session) {
+        List<TreeNode> powerList = powerService.getPowerList(session);
         return powerList;
     }
-
-
+    /**
+     * 毫无理由获取权限菜单树
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getPList")
+    public Object getPList() {
+        List<TreeNode> powerList = powerService.getPPowerList();
+        return powerList;
+    }
+    /**
+     * 授权
+     */
+    @ResponseBody
+    @RequestMapping("/onPower")
+    public Object onPower(@RequestBody Map map){
+        if (map.get("powerId")!=null){
+            List powerIds = (ArrayList) map.get("powerId");
+            Integer roleId = Integer.valueOf(map.get("roleId")+"");
+            return onPowerService.onPower(powerIds,roleId);
+        }else {
+            return 0;
+        }
+    }
 
     /**
      * 在session中获取用户
