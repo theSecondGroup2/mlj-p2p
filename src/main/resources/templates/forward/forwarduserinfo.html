@@ -24,7 +24,7 @@
 </head>
 <body>
 
-    <div style="margin-left:100px;margin-top:50px;width:700px">
+    <div style="margin-left:400px;margin-top:50px;width:700px">
         <h1>个人基本信息</h1>
         <table class="table table-striped" style="height:500px;">
             <tr class="success">
@@ -200,7 +200,7 @@
         //修改邮箱
         $("#chgFve").click(function () {
             subUrl = "changeEmail";
-            regTest = /^$/;
+            regTest = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
             $('#infoModal').modal('show');
             $("#fstStep").css("display","block");
             $("#nextStep").css("display","block");
@@ -325,6 +325,7 @@
             });
             $("#headModal").modal('hide');
         });
+        //显示图片
         $("#picFile").change(function(){
             $(".img-circle").attr("src",URL.createObjectURL($(this)[0].files[0]));
         });

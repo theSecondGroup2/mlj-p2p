@@ -4,6 +4,7 @@ import com.aaa.p2p.dao.ForwardInfoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,6 +47,26 @@ public class ForwardInfoServiceImpl implements ForwardInfoService {
     @Override
     public int changeEmail(Map map) {
         return fInfoDao.changeEmail(map);
+    }
+
+    @Override
+    public int getStation(int userId) {
+        return fInfoDao.getStation(userId);
+    }
+
+    @Override
+    public List<Map> getProvince() {
+        return fInfoDao.getProvince();
+    }
+
+    @Override
+    public List<Map> getCity(Map map) {
+        return fInfoDao.getCity(map);
+    }
+
+    @Override
+    public List<Map> getArea(Map map) {
+        return fInfoDao.getArea(map);
     }
 
 }

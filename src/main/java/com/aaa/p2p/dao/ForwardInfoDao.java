@@ -1,5 +1,6 @@
 package com.aaa.p2p.dao;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,5 +53,31 @@ public interface ForwardInfoDao {
      */
     int changeEmail(Map map);
 
+    /**
+     * 获取用户状态
+     * @param userId
+     * @return
+     */
+    int getStation(int userId);
+
+    /**
+     * 获取省份
+     * @return
+     */
+    List<Map> getProvince();
+
+    /**
+     * 获取城市
+     * @param map
+     * @return
+     */
+    List<Map> getCity(Map map);
+
+    /**
+     * 获取地区
+     * @param map
+     * @return
+     */
+    List<Map> getArea(Map map);
 
 }

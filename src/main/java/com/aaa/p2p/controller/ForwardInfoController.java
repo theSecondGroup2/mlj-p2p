@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -86,6 +87,56 @@ public class ForwardInfoController {
     @RequestMapping("/changeEmail")
     public int changeEmail(@RequestParam Map map) {
         return fUserService.changeEmail(map);
+    }
+
+    /**
+     * 跳转实名认证
+     * @return
+     */
+    @RequestMapping("/toUserReal")
+    public String toUserReal() {
+        return "forward/forwarduserreal";
+    }
+
+    /**
+     * 获取用户状态
+     * @param userId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getStation")
+    public int getStation(int userId) {
+        return fUserService.getStation(userId);
+    }
+
+    /**
+     * 获取省份
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getProvince")
+    public List<Map> getProvince() {
+        return fUserService.getProvince();
+    }
+
+    /**
+     * 获取城市
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getCity")
+    public List<Map> getCity(@RequestParam Map map) {
+        return fUserService.getCity(map);
+    }
+
+    /**
+     * 获取地区
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getArea")
+    public List<Map> getArea(@RequestParam Map map) {
+        return fUserService.getArea(map);
     }
 
 }
