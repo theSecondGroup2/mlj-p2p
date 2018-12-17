@@ -36,7 +36,17 @@ public class ForwardUserServiceImpl implements ForwardUserService {
 
     @Override
     public int addForwardUser(Map map) {
-        return fUserDao.addForwardUser(map);
+        //插入到表TB_FWDLOGIN
+        int addLogin = fUserDao.addForwardUser(map);
+        //查询对应的userId
+        String userName = (String)map.get("userName");
+        int userId = fUserDao.selectId(userName);
+        //插入到表TB_FWDINFO
+        int addToInfo = fUserDao.addToInfo(userId);
+        if (addLogin == 1 && addToInfo == 1) {
+            return 1;
+        }
+        return 0;
     }
 
     /**
@@ -80,6 +90,11 @@ public class ForwardUserServiceImpl implements ForwardUserService {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpSession session = attr.getRequest().getSession();
         session.invalidate();
+    }
+
+    @Override
+    public int chgHead(Map map) {
+        return fUserDao.chgHead(map);
     }
 
 }

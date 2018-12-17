@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基本信息</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title>用户登录</title>
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/fontello.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/animsition.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Merriweather:300,300i,400,400i,700,700i" rel="stylesheet">
+    <!-- owl Carousel Css -->
+    <link href="../css/owl.carousel.css" rel="stylesheet">
+    <link href="../css/owl.theme.css" rel="stylesheet">
+</head>
+<body>
+
+    <div style="margin-left:100px;margin-top:50px;width:700px">
+        <h1>个人基本信息</h1>
+        <table class="table table-striped" style="height:500px;">
+            <tr class="success">
+                <td>头像</td>
+                <td><div style="width:100px;height:100px;"><span class="picSpan"></span></div>
+                    <a href="#" id="chgZro">修改头像</a></td>
+            </tr>
+            <tr class="info">
+                <td>登录密码</td>
+                <td><span id="spanOne">******</span>
+                    <a href="#" id="chgOne">修改</a></td>
+            </tr>
+            <tr class="warning">
+                <td>支付密码</td>
+                <td><span id="spanTwo"></span>
+                    <a href="#" id="chgTwo">修改</a></td>
+            </tr>
+            <tr class="danger">
+                <td>手机号</td>
+                <td><span id="spanThr"></span>
+                    <a href="#" id="chgThr">修改</a></td>
+            </tr>
+            <tr class="info">
+                <td>银行卡号</td>
+                <td><span id="spanFur"></span>
+                    <a href="#" id="chgFur">修改</a></td>
+            </tr>
+            <tr class="success">
+                <td>邮箱</td>
+                <td><span id="spanFve"></span>
+                    <a href="#" id="chgFve">修改</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">修改基本信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="fstStep">
+                        <div class="form-group">
+                            <label>手机号：<span id="telSpan"></span></label>
+                        </div>
+                        <div class="form-group">
+                            <input type="button" class="btn btn-primary btn-sm" id="sendCode" value="发送验证码">
+                            &nbsp;&nbsp;&nbsp;<span id="codSpan"></span>
+                            <input type="text" class="form-control" id="checkCode" placeholder="请输入验证码">
+                        </div>
+                    </div>
+                    <div id="sndStep" style="display:none;">
+                        <div class="form-group">
+                            <label>请输入新的<span id="difSpan"></span>：
+                                &nbsp;&nbsp;&nbsp;<span id="difWarn"></span></label>
+                            <input type="text" class="form-control" id="difInp">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="nextStep" style="float:right">下一步</button>
+                    <button type="button" class="btn btn-primary" id="chgSub" disabled="true">提交更改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="headModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myHeadModalLabel">修改头像</h4>
+                </div>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div style="width:100px;height:100px;"><span class="picSpan"></span></div>
+                        <input type="file" id="picFile" name="filePic">
+                        <input type="hidden" id="hideUserId" name="userId">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="chgHead">提交更改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- back to top icon -->
+    <a href="#0" class="cd-top" title="Go to top">Top</a>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/menumaker.js"></script>
+    <!-- animsition -->
+    <script type="text/javascript" src="../js/animsition.js"></script>
+    <script type="text/javascript" src="../js/animsition-script.js"></script>
+    <!-- sticky header -->
+    <script type="text/javascript" src="../js/jquery.sticky.js"></script>
+    <script type="text/javascript" src="../js/sticky-header.js"></script>
+    <!-- slider script -->
+    <script type="text/javascript" src="../js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="../js/slider-carousel.js"></script>
+    <script type="text/javascript" src="../js/service-carousel.js"></script>
+    <!-- Back to top script -->
+    <script src="../js/back-to-top.js" type="text/javascript"></script>
+    <script>
+        //获取session
+        var userId = 0;
+        $(function () {
+            $.post("/forwardUser/getSession", function (data) {
+                $("#spanThr").html(data.USERTEL);
+                $("#telSpan").html(data.USERTEL);
+                userId = data.USERID;
+                $("#hideUserId").val(data.USERID);
+                $.post("/forwardInfo/getSesInfo", {
+                    userId:data.USERID
+                }, function (dataS) {
+                    $("#spanTwo").html(dataS.USERPAYPSW);
+                    $("#spanFur").html(dataS.USERBANKNUM);
+                    $("#spanFve").html(dataS.USEREMAIL);
+                    $(".picSpan").html("<img src='/forwardUser/showPic?fileName="+dataS.USERHEAD+"' class='img-circle'>");
+                });
+            });
+        });
+        var regTest = null;
+        var subUrl = null;
+        //修改登录密码
+        $("#chgOne").click(function () {
+            subUrl = "changeLogPsw";
+            regTest = /^\w{6}$/;
+            $('#infoModal').modal('show');
+            $("#fstStep").css("display","block");
+            $("#nextStep").css("display","block");
+            $("#sndStep").css("display","none");
+            $("#difSpan").html("登录密码（密码长度6位）");
+        });
+        //修改支付密码
+        $("#chgTwo").click(function () {
+            subUrl = "changePayPsw";
+            regTest = /^[0-9]{6}$/;
+            $('#infoModal').modal('show');
+            $("#fstStep").css("display","block");
+            $("#nextStep").css("display","block");
+            $("#sndStep").css("display","none");
+            $("#difSpan").html("支付密码（6位数字）");
+        });
+        //修改手机号
+        $("#chgThr").click(function () {
+            subUrl = "changeTel";
+            regTest = /^1[3-9][0-9]{9}$/;
+            $('#infoModal').modal('show');
+            $("#fstStep").css("display","block");
+            $("#nextStep").css("display","block");
+            $("#sndStep").css("display","none");
+            $("#difSpan").html("手机号");
+        });
+        //修改银行卡号
+        $("#chgFur").click(function () {
+            subUrl = "changeBankNum";
+            regTest = /^[0-9]{19}$/;
+            $('#infoModal').modal('show');
+            $("#fstStep").css("display","block");
+            $("#nextStep").css("display","block");
+            $("#sndStep").css("display","none");
+            $("#difSpan").html("银行卡号");
+        });
+        //修改邮箱
+        $("#chgFve").click(function () {
+            subUrl = "changeEmail";
+            regTest = /^$/;
+            $('#infoModal').modal('show');
+            $("#fstStep").css("display","block");
+            $("#nextStep").css("display","block");
+            $("#sndStep").css("display","none");
+            $("#difSpan").html("邮箱");
+        });
+        //发送手机验证码
+        var realCode = 123;
+        $("#sendCode").click(function() {
+            /*$.post("/forwardUser/sendCode", {
+
+            }, function (data) {
+                realCode = data;
+            });*/
+            //按钮倒计时
+            var time = 15;
+            var t = setInterval(function() {
+                $("#sendCode").prop("disabled", true);
+                $("#sendCode").val((time--)+"秒后重新发送");
+                if (time == 0) {
+                    $("#sendCode").prop("disabled", false);
+                    $("#sendCode").val("发送验证码");
+                    clearInterval(t);
+                }
+            }, 1000);
+        });
+        //手机验证码校验
+        $("#checkCode").blur(function () {
+            if ($("#checkCode").val() == realCode) {
+                $("#codSpan").html("验证码正确！");
+            } else {
+                $("#codSpan").html("验证码错误！");
+            }
+        });
+        //下一步
+        $("#nextStep").click(function () {
+            if ($("#codSpan").html() == "验证码正确！") {
+                $("#chgSub").prop("disabled",false);
+                $("#fstStep").css("display","none");
+                $("#nextStep").css("display","none");
+                $("#sndStep").css("display","block");
+                $("#checkCode").val("");
+                $("#codSpan").html("");
+            }
+        });
+        //提交修改
+        $("#difInp").blur(function () {
+            if (!regTest.test($("#difInp").val())) {
+                $("#difWarn").html("格式不正确！");
+            } else {
+                $("#difWarn").html("格式正确！");
+            }
+        });
+        $("#chgSub").click(function () {
+            if ($("#difWarn").html() == "格式正确！") {
+                $.post("/forwardInfo/"+subUrl, {
+                    chgData:$("#difInp").val(),
+                    userId:userId
+                }, function (data) {
+                    if (data > 0) {
+                        alert("修改成功！");
+                        $.post("/forwardUser/getSession", function (data) {
+                            $("#spanThr").html(data.USERTEL);
+                            $("#telSpan").html(data.USERTEL);
+                        });
+                        $.post("/forwardInfo/getSesInfo", {
+                            userId:userId
+                        }, function (data) {
+                            $("#spanTwo").html(data.USERPAYPSW);
+                            $("#spanFur").html(data.USERBANKNUM);
+                            $("#spanFve").html(data.USEREMAIL);
+                        });
+                        $("#chgSub").prop("disabled",true);
+                        $("#difInp").val("");
+                        $("#difWarn").html("");
+                        $('#infoModal').modal('hide');
+                    } else {
+                        alert("修改失败！");
+                    }
+                });
+            }
+        });
+        //修改头像
+        $("#chgZro").click(function () {
+            $("#headModal").modal('show');
+        });
+        $("#chgHead").click(function () {
+            var formData = new FormData($("#uploadForm")[0]);
+            console.log(formData);
+            $.ajax({
+                url: '/forwardUser/chgHead',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data > 0) {
+                        alert("修改成功");
+                        $.post("/forwardUser/getSession", function (data) {
+                            $("#spanThr").html(data.USERTEL);
+                            $("#telSpan").html(data.USERTEL);
+                            userId = data.USERID;
+                            $("#hideUserId").val(data.USERID);
+                            $.post("/forwardInfo/getSesInfo", {
+                                userId:data.USERID
+                            }, function (dataS) {
+                                $("#spanTwo").html(dataS.USERPAYPSW);
+                                $("#spanFur").html(dataS.USERBANKNUM);
+                                $("#spanFve").html(dataS.USEREMAIL);
+                                $(".picSpan").html("<img src='/forwardUser/showPic?fileName="+dataS.USERHEAD+"' class='img-circle'>");
+                            });
+                        });
+                    }
+                },
+                error: function (data) {
+                    if (data < 0) {
+                        alert("修改失败");
+                    }
+                }
+            });
+            $("#headModal").modal('hide');
+        });
+        $("#picFile").change(function(){
+            $(".img-circle").attr("src",URL.createObjectURL($(this)[0].files[0]));
+        });
+    </script>
+
+</body>
+</html>

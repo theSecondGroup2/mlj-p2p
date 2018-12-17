@@ -39,4 +39,25 @@ public interface ForwardUserDao {
      */
     List<Map> checkNamePsw(Map map);
 
+    /**
+     * 查询对应的userId
+     * @param userName
+     * @return
+     */
+    int selectId(String userName);
+
+    /**
+     * 插入到表TB_FWDINFO
+     * @param userId
+     * @return
+     */
+    int addToInfo(int userId);
+
+    /**
+     * 修改头像
+     * @param map
+     * @return
+     */
+    int chgHead(Map map);
+
 }

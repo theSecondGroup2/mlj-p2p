@@ -18,4 +18,16 @@
     <select id="checkNamePsw" resultType="map">
         select * from TB_FWDLOGIN where USERNAME = #{userName} and USERPSW = #{userPsw}
     </select>
+    <!--查询对应的userId-->
+    <select id="selectId" resultType="int">
+        select userId from TB_FWDLOGIN where USERNAME = #{userName}
+    </select>
+    <!--插入到表TB_FWDINFO-->
+    <insert id="addToInfo" parameterType="int">
+        insert into TB_FWDINFO (FWDINFOID, USERID, USERHEAD) values (TB_FWDINFO_ID.nextval, #{userId}, 'defaulthead.jpg')
+    </insert>
+    <!--修改头像-->
+    <update id="chgHead" parameterType="map">
+        update TB_FWDINFO set USERHEAD = #{userHead} where USERID = #{userId}
+    </update>
 </mapper>
