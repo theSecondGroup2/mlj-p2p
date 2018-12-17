@@ -83,7 +83,7 @@
                     @size-change="pageSizeChange"
                     @current-change="currentPageChange"
                     :current-page="currentPage"
-                    :page-sizes="[1, 2, 3, 4, 5, 10]"
+                    :page-sizes="[ 5, 10]"
                     :page-size="pageSize"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="total">
@@ -103,8 +103,20 @@
             <el-form-item label="部门简介" prop="DES">
                 <el-input v-model="editForm.DES" auto-complete="off"></el-input>
             </el-form-item>
-            <el-form-item label="部门状态" prop="STATE">
+            <!--<el-form-item label="部门状态" prop="STATE">
                 <el-input v-model="editForm.STATE" auto-complete="off"></el-input>
+            </el-form-item>-->
+            <el-form-item label="部门状态">
+                <template>
+                    <el-select v-model="editForm.STATE" clearable placeholder="请选择">
+                        <el-option
+                                v-for="item in deptnos"
+                                :key="item.ID"
+                                :label="item.STATE"
+                                :value="item.STATE">
+                        </el-option>
+                    </el-select>
+                </template>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -126,7 +138,9 @@
     var tableView = new Vue({
         el: '#tableView',
         data: {
-            //部门下拉框框
+            //部门状态下拉框
+            deptnos:[],
+            //部门下拉框
             options:[],
             //角色下拉框
             roles:[],
@@ -143,7 +157,7 @@
             //当前页
             currentPage:1,
             //分页大小
-            pageSize:1,
+            pageSize:5,
             //总条数
             total:800,
             //删除的弹出框
@@ -178,6 +192,9 @@
             axios.post('/dept/getDeptListBy',{'pageNo':self.currentPage,'pageSize':self.pageSize}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.pageData;
+            })
+            axios.post('/dept/getDeptList').then(function (response) {
+                self.deptnos = response.data;
             })
         },
         methods:{
