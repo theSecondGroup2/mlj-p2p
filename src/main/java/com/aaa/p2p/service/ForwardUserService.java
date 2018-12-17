@@ -47,4 +47,11 @@ public interface ForwardUserService {
      */
     void userLogOut();
 
+    /**
+     * 修改头像
+     * @param map
+     * @return
+     */
+    int chgHead(Map map);
+
 }

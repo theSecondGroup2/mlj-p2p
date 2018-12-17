@@ -1,6 +1,7 @@
 package com.aaa.p2p.controller;
 
 import com.aaa.p2p.service.ForwardUserService;
+import com.aaa.p2p.util.FileUtil;
 import com.aaa.p2p.util.ImgCheckUtil;
 import com.aaa.p2p.util.PhoneMsgUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -139,9 +141,13 @@ public class ForwardUserController {
         return fUserService.checkNamePsw(map);
     }
 
-    @RequestMapping("/toSessionTest")
-    public String toSessionTest() {
-        return "forward/sessiontest";
+    /**
+     * 跳转我的账户
+     * @return
+     */
+    @RequestMapping("/toUserMain")
+    public String toUserMain() {
+        return "forward/forwardusermain";
     }
 
     /**
@@ -152,6 +158,41 @@ public class ForwardUserController {
     @RequestMapping("/getSession")
     public Map getSession() {
         return fUserService.getSession();
+    }
+
+    /**
+     * 用户注销
+     */
+    @ResponseBody
+    @RequestMapping("/userLogOut")
+    public void userLogOut() {
+        fUserService.userLogOut();
+    }
+
+    /**
+     * 跳转账户基本信息
+     * @return
+     */
+    @RequestMapping("/toUserInfo")
+    public String toUserInfo() {
+        return "forward/forwarduserinfo";
+    }
+
+    /**
+     * 修改头像
+     * @param map
+     * @param filePic
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/chgHead")
+    public int chgHead(@RequestParam MultipartFile filePic,@RequestParam Map map) {
+        if (filePic != null) {
+            String newFileName = FileUtil.uploadFile(uploadPath, filePic);
+            map.put("userHead", newFileName);
+        }
+        //System.out.println(map);
+        return fUserService.chgHead(map);
     }
 
 }
