@@ -153,70 +153,76 @@
 
     <!--编辑界面-->
     <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
-        <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
-            <el-form-item label="ID" prop="ID" disabled="true">
-                <el-input v-model="editForm.ID" auto-complete="off" readonly="readonly"></el-input>
-            </el-form-item>
-            <el-form-item label="账号" prop="USERNAME">
-                <el-input v-model="editForm.USERNAME" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="密码" prop="PASSWORD">
-                <el-input v-model="editForm.PASSWORD" auto-complete="off" type="password"></el-input>
-            </el-form-item>
-            <el-form-item label="角色" prop="ROLE">
-                <template>
-                    <el-select v-model="editForm.ROLE" placeholder="请选择">
-                        <el-option
-                                v-for="item in roles"
-                                :key="item.ID"
-                                :label="item.ROLE"
-                                :value="item.ID">
-                        </el-option>
-                    </el-select>
-                </template>
-            </el-form-item>
-            <el-form-item label="姓名" prop="EMPNAME">
-                <el-input v-model="editForm.EMPNAME" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="部门" prop="DNAME">
-                <template>
-                    <el-select v-model="editForm.DNAME" placeholder="请选择">
-                        <el-option
-                                v-for="item in options"
-                                :key="item.ID"
-                                :label="item.DNAME"
-                                :value="item.ID">
-                        </el-option>
-                    </el-select>
-                </template>
-            </el-form-item>
-            <el-form-item label="性别" prop="SEX">
-                <el-radio-group v-model="editForm.SEX">
-                    <el-radio class="radio" label="男">男</el-radio>
-                    <el-radio class="radio" label="女">女</el-radio>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item label="雇佣日期" prop="HIREDATE">
-                <el-date-picker
-                        type="date"
-                        placeholder="选择日期"
-                        value-format="yyyy-MM-dd"
-                        v-model="editForm.HIREDATE"
-                >
-                </el-date-picker>
-            </el-form-item>
-            <el-form-item label="薪水(元)" prop="SAL">
-                <el-input v-model.number="editForm.SAL" auto-complete="off" type="number"></el-input>
-            </el-form-item>
-            <el-form-item label="奖金(元)" prop="COMM">
-                <el-input v-model.number="editForm.COMM" auto-complete="off" type="number"></el-input>
-            </el-form-item>
-            <el-form-item label="身份证号" prop="IDCARD">
-                <el-input v-model.number="editForm.IDCARD" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="电话号" prop="TEL">
-                <el-input v-model.number="editForm.TEL" auto-complete="off"></el-input>
-            </el-form-item>
+        <el-form :model="editForm" label-width="80px"  :rules="editFormRules" ref="editForm">
+            <el-row :gutter="5">
+                <el-col :span="8">
+                    <el-form-item label="ID" prop="ID" disabled="true">
+                        <el-input v-model="editForm.ID" auto-complete="off" readonly="readonly"></el-input>
+                    </el-form-item>
+                    <el-form-item label="账号" prop="USERNAME">
+                        <el-input v-model="editForm.USERNAME" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" prop="PASSWORD">
+                        <el-input v-model="editForm.PASSWORD" auto-complete="off" type="password"></el-input>
+                    </el-form-item>
+                    <el-form-item label="角色" prop="ROLE">
+                        <template>
+                            <el-select v-model="editForm.ROLE" placeholder="请选择">
+                                <el-option
+                                        v-for="item in roles"
+                                        :key="item.ID"
+                                        :label="item.ROLE"
+                                        :value="item.ID">
+                                </el-option>
+                            </el-select>
+                        </template>
+                    </el-form-item>
+                    <el-form-item label="姓名" prop="EMPNAME">
+                        <el-input v-model="editForm.EMPNAME" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="部门" prop="DNAME">
+                        <template>
+                            <el-select v-model="editForm.DNAME" placeholder="请选择">
+                                <el-option
+                                        v-for="item in options"
+                                        :key="item.ID"
+                                        :label="item.DNAME"
+                                        :value="item.ID">
+                                </el-option>
+                            </el-select>
+                        </template>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="性别" prop="SEX">
+                        <el-radio-group v-model="editForm.SEX">
+                            <el-radio class="radio" label="男">男</el-radio>
+                            <el-radio class="radio" label="女">女</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label="雇佣日期" prop="HIREDATE">
+                        <el-date-picker
+                                type="date"
+                                placeholder="选择日期"
+                                value-format="yyyy-MM-dd"
+                                v-model="editForm.HIREDATE"
+                        >
+                        </el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="薪水(元)" prop="SAL">
+                        <el-input v-model.number="editForm.SAL" auto-complete="off" type="number"></el-input>
+                    </el-form-item>
+                    <el-form-item label="奖金(元)" prop="COMM">
+                        <el-input v-model.number="editForm.COMM" auto-complete="off" type="number"></el-input>
+                    </el-form-item>
+                    <el-form-item label="身份证号" prop="IDCARD">
+                        <el-input v-model.number="editForm.IDCARD" auto-complete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话号" prop="TEL">
+                        <el-input v-model.number="editForm.TEL" auto-complete="off"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click.native="editFormVisible = false">取消</el-button>

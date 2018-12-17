@@ -14,13 +14,7 @@ import java.util.Map;
  * discription:
  * author:luRuiHua
  * createTime:2018-11-30 14:36
- * 拦截器作用：如果没登陆或者用户名密码输错，登陆index.html失败，跳转到login.html
- *              如果登陆成功，可以访问index.html
- *              不能直接访问user/student----------student授权
- *                          user/teacher---------teacher授权
- *                          user/index
- *              可以访问user/login
- *                      user/toLogin
+ * 拦截器作用：
  *
  */
 @Configuration//配置类
@@ -47,7 +41,13 @@ public class ShiroConfig {
 
         //必须登陆才可以访问
         //设置哪些页面必须授权后才可以登陆
-        //filterMap.put("/emp/toList","authc");//
+        filterMap.put("/power/wel","authc");//欢迎页面
+        filterMap.put("/tree/goTreeList","authc");//欢迎页面
+        filterMap.put("/emp/toList","authc");//欢迎页面
+        filterMap.put("/dept/toDept","authc");//欢迎页面
+        filterMap.put("/emp/updatePassWord","authc");//欢迎页面
+        filterMap.put("/bid/toCheckBid","authc");//欢迎页面
+
         //filterMap.put("/poewr/","authc");//
         //filterMap.put("/user/index","authc");//首页
 

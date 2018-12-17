@@ -36,7 +36,6 @@ public class PowerServiceImpl implements PowerService {
         Integer roleId = getRoleId(httpSession);
         //查询数据
         List<Map> powerMapList = powerDao.getPowerList(roleId);
-        System.out.println(powerMapList);
         //定义返回列表
         List<TreeNode> powerList = new ArrayList<TreeNode>();
         //判断是否为空

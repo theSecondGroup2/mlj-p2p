@@ -139,6 +139,7 @@ public class PowerController {
      *
      */
     public void setPhoneSession(Map map,HttpSession httpSession){
+        httpSession.setMaxInactiveInterval(60*60);//以秒为单位，即在没有活动30分钟后，session将失效
         List<Map> maps = empService.selectEmpByPhone(map);
         httpSession.setAttribute("emp",maps);
     }
@@ -169,6 +170,7 @@ public class PowerController {
      *
      */
     public void setUserSession(String userName,HttpSession session){
+        session.setMaxInactiveInterval(60*60);//以秒为单位，即在没有活动60分钟后，session将失效
         List<Map> maps = empService.selectEmp(userName);
         session.setAttribute("emp",maps.get(0));
     }

@@ -95,7 +95,7 @@
     <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
             <el-form-item label="ID" prop="ID"  disabled="true">
-                <el-input v-model="editForm.ID" auto-complete="off" readonly="readonly"></el-input>
+                <el-input v-model="editForm.ID" auto-complete="off" readonly="readonly" disabled ></el-input>
             </el-form-item>
             <el-form-item label="部门名称" prop="DNAME">
                 <el-input v-model="editForm.DNAME" auto-complete="off"></el-input>
@@ -109,7 +109,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button @click.native="editFormVisible = false">取消</el-button>
-            <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
+            <el-button type="primary" @click.native="editSubmit('editForm')" :loading="editLoading">提交</el-button>
         </div>
     </el-dialog>
 
@@ -153,8 +153,14 @@
             editLoading: false,
             goUrl:'',
             editFormRules: {
-                name: [
-                    { required: true, message: '请输入姓名', trigger: 'blur' }
+                DNAME:[
+                    {required: true, message: '请填写部门名称', trigger: 'blur'}
+                ],
+                DES:[
+                    {required: true, message: '请添加部门描述', trigger: 'blur'}
+                ],
+                STATE:[
+                    {required: true, message: '请选择状态', trigger: 'change'}
                 ]
             },
             //编辑界面数据
@@ -312,21 +318,28 @@
                 _self.loadingData();//重新加载数据
             },
             //保存点击事件
-            editSubmit:function(){
-                var _self = this;
-                _self.loading = true;
-                var formData =this.editForm;
-                var goUrl=this.goUrl;
-                axios.post(goUrl,formData).then(function(response){
-                   // alert(JSON.stringify(formData));
-                   // alert(formData);
-                     if(response.data>0){
-                         _self.editFormVisible = false;
+            editSubmit:function(editForm){
+                this.$refs[editForm].validate((valid) => {
+                    if (valid) {
+                        var _self = this;
+                        _self.loading = true;
+                        var formData =this.editForm;
+                        var goUrl=this.goUrl;
+                        axios.post(goUrl,formData).then(function(response){
+                            // alert(JSON.stringify(formData));
+                            // alert(formData);
+                            if(response.data>0){
+                                _self.editFormVisible = false;
 
-                     }
-                    _self.loadingData();//重新加载数据
+                            }
+                            _self.loadingData();//重新加载数据
+                        })
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
                 })
-                console.info(this.editForm);
+
             }
         }
 
