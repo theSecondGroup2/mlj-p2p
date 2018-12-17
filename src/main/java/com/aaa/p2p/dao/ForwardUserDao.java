@@ -60,4 +60,10 @@ public interface ForwardUserDao {
      */
     int chgHead(Map map);
 
+    /**
+     * 修改状态（可实名认证）
+     * @return
+     */
+    int chgExist(Map map);
+
 }

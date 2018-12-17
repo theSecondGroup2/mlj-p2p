@@ -34,6 +34,14 @@ public class ForwardUserServiceImpl implements ForwardUserService {
         return mapList.size();
     }
 
+    /**
+     * 前台用户注册业务
+     * 1、将前台传过来的map插入到登录表
+     * 2、获取对应的userID
+     * 3、依次插入到信息表，实名表，视频表
+     * @param map
+     * @return
+     */
     @Override
     public int addForwardUser(Map map) {
         //插入到表TB_FWDLOGIN
@@ -59,7 +67,7 @@ public class ForwardUserServiceImpl implements ForwardUserService {
      */
     @Override
     public int checkNamePsw(Map map) {
-        int code = 0;
+        int code;
         List<Map> mapList = fUserDao.checkNamePsw(map);
         if (mapList.size() == 0) {
             code = 300;
@@ -92,9 +100,20 @@ public class ForwardUserServiceImpl implements ForwardUserService {
         session.invalidate();
     }
 
+    /**
+     * 1、设置（修改）头像
+     * 2、可以进行实名认证
+     * @param map
+     * @return
+     */
     @Override
     public int chgHead(Map map) {
-        return fUserDao.chgHead(map);
+        int fst = fUserDao.chgExist(map);
+        int snd = fUserDao.chgHead(map);
+        if (fst == 1 && snd ==1) {
+            return 1;
+        }
+        return 0;
     }
 
 }

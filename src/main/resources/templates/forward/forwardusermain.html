@@ -73,7 +73,25 @@
         </div>
     </div>
 
-
+    <ul id="myTab" class="nav nav-tabs">
+        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+        <li class="active"><a href="#main" data-toggle="tab">账户总览</a></li>
+        <li><a href="#mainInfo" data-toggle="tab">基本信息</a></li>
+        <li><a href="#mainReal" data-toggle="tab">实名认证</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="main">
+            <iframe src="" width="100%" height="450px"></iframe>
+        </div>
+        <div class="tab-pane fade" id="mainInfo">
+            <iframe src="/forwardUser/toUserInfo" width="100%" height="450px"></iframe>
+        </div>
+        <div class="tab-pane fade" id="mainReal">
+            <iframe src="/forwardInfo/toUserReal" width="100%" height="450px"></iframe>
+        </div>
+    </div>
 
     <!-- /.footer -->
     <div class="tiny-footer">
@@ -90,8 +108,6 @@
         </div>
     </div>
     <!-- /.tiny footer -->
-
-
 
     <!-- back to top icon -->
     <a href="#0" class="cd-top" title="Go to top">Top</a>
@@ -115,8 +131,18 @@
 
     <script>
         $(function () {
-            $.post("/ForwardUser/getSession", function (data) {
+            $.post("/forwardUser/getSession", function (data) {
                 $("#getSession").html(data.USERNAME);
+            });
+        });
+        $(function(){
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                // 获取已激活的标签页的名称
+                var activeTab = $(e.target).text();
+                // 获取前一个激活的标签页的名称
+                var previousTab = $(e.relatedTarget).text();
+                $(".active-tab span").html(activeTab);
+                $(".previous-tab span").html(previousTab);
             });
         });
     </script>

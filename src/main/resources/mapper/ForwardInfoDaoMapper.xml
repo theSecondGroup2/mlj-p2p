@@ -26,4 +26,20 @@
     <update id="changeEmail" parameterType="map">
         update TB_FWDINFO set USEREMAIL = #{chgData} where USERID = #{userId}
     </update>
+    <!--获取用户状态-->
+    <select id="getStation" resultType="int">
+        select USEREXIST from TB_FWDLOGIN where USERID = #{userId}
+    </select>
+    <!--获取省份-->
+    <select id="getProvince" resultType="map">
+        select * from PROVINCE
+    </select>
+    <!--获取城市-->
+    <select id="getCity" resultType="map">
+        select * from CITY where PID = #{pid}
+    </select>
+    <!--获取地区-->
+    <select id="getArea" resultType="map">
+        select * from AREA where CID = #{cid}
+    </select>
 </mapper>

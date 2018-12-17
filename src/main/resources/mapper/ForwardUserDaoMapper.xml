@@ -30,4 +30,8 @@
     <update id="chgHead" parameterType="map">
         update TB_FWDINFO set USERHEAD = #{userHead} where USERID = #{userId}
     </update>
+    <!--修改状态（可实名认证）-->
+    <update id="chgExist" parameterType="map">
+        update TB_FWDLOGIN set USEREXIST = 2 where USERID = #{userId}
+    </update>
 </mapper>
