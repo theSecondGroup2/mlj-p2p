@@ -2,19 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>借款操作</title>6
-    <script type="javascript" src="/js/jquery-1.8.3.js"></script>
+    <title>借款操作</title>
+    <script src="../js/jquery-1.8.3.js"></script>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 </head>
 <body>
 <style>
-
+    body{
+        background-color: #b9def0;
+    }
     span{
-        border: 1px;
         font-size: 30px;
         color:red;
     }
     div{
-        border:1px solid red;
         overflow:auto;
     }
     #shangBian{
@@ -47,40 +49,48 @@
         通过后，根据抵押物的价值融资。</p>
 </div>
 <div id="youBian">
-    <table>
-        <form id="formA">
-        <tr>
-            <td><label for="borrowUserName">贷款人姓名</label></td><td><input type="text" id="borrowUserName" name="borrowUserName"/></td>
-        </tr>
-        <tr><td><label for="input">收入</label></td><td><input type="text" id="input" name="input"/></td>
-        </tr>
-        <tr><td><label for="input">贷款方式</label></td><td><select id="borrowMethod" name="borrowMethod">
-            <option>信用贷</option>
-            <option>车辆贷</option>
-            <option>房屋贷</option>
+    <table class="table table-striped">
+        <form id="formA" >
+            <tr class="success">
+                <td><label for="bidAmount">贷款金额</label></td><td><input type="text" id="bidAmount" name="bidAmount"/><span style="font-size: small;color: #5cb85c">单位为元</span></td>
+            </tr>
+            <tr class="success">
+                <td><label for="bidRepaymentMethod">还款方式</label></td><td><input type="text" id="bidRepaymentMethod" name="bidRepaymentMethod" value="等额本息"/><span style="font-size: small;color: #5cb85c">现仅支持等额本息</span></td>
+            </tr>
+            <tr class="warning"><td><label for="bidType">标的类型</label></td><td><select id="bidType" name="bidType">
+                <option>信用贷</option>
+                <option>房屋贷</option>
+                <option>车辆贷</option>
+            </select></td>
+            </tr>
+            <tr class="success"><td><label for="bidDeadline">还款期限</label></td><td><select id="bidDeadline" name="bidDeadline">
+                <option value="1">1个月</option>
+                <option value="3">3个月</option>
+                <option value="6">6个月</option>
+            </select></td>
+            </tr><tr class="info"><td><label for="bidDeadDay">招标天数</label></td><td><select id="bidDeadDay" name="bidDeadDay">
+            <option value="3">3天</option>
+            <option value="6">6天</option>
+            <option value="9">9天</option>
         </select></td>
         </tr>
-        <tr><td><label for="methodDescribe">贷款方式描述</label></td><td><textarea id="methodDescribe" name="methodDescribe"/></textarea></td>
-        </tr>
-        <tr><td><label for="borrowMoney">贷款金额</label></td><td><input type="text" id="borrowMoney" name="borrowMoney"/></td>
-        </tr>
-        <tr><td><label for="repayTime">还款期限</label></td><td><select id="repayTime" name="repayTime">
-            <option>6个月</option>
-            <option>一年</option>
-            <option>两年</option>
-        </select></td>
-        </tr><tr><td><label for="bidTime">投标期限</label></td><td><select id="bidTime" name="bidTime">
-        <option>3天</option>
-        <option>6天</option>
-        <option>9天</option>
-    </select></td>
-    </tr>
-        <tr><td><label for="borrowTime">借款时间</label></td><td><input type="date" id="borrowTime" name="borrowTime" /></td>
-        </tr>
-        <tr><td><label for="bidDescribe">投标描述</label></td><td><textarea  id="bidDescribe" name="bidDescribe"/></textarea></td>
-        </tr>
+            <tr class="warning">
+                <td><label for="bidRate">还款月利率</label></td><td><input type="text" id="bidRate" name="bidRate" value="2"/><span style="font-size: small;color: #5cb85c">单位为%</span></td>
+            </tr>
+            <tr class="success">
+                <td><label for="bidApplyDate">申请时间</label></td><td><input type="date" id="bidApplyDate" name="bidApplyDate" readonly="readonly" /></td>
+            </tr>
+            <!--<tr class="warning">
+                <td><label for="bidDeadDate">结束时间</label></td><td><input type="date" id="bidDeadDate" name="bidDeadDate" readonly="readonly" /></td>
+            </tr>-->
+            <tr class="info">
+                <td><label for="bidDesc">借款描述</label></td><td><textarea id="bidDesc" name="bidDesc"/></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="button" value="提交" onclick="toInsert()"/></td>
+            </tr>
         </form>
-        <input type="button" value="提交" onclick="toInsert()"/>
+
     </table>
 </div>
 <script>
@@ -100,30 +110,83 @@
     var month=myDate.getMonth()+1;
     //获取当前日
     var date=myDate.getDate();
+    //获取当前日加3
+   // var date1=myDate.getDate()+3;
     var h=myDate.getHours();       //获取当前小时数(0-23)
     var m=myDate.getMinutes();     //获取当前分钟数(0-59)
     var s=myDate.getSeconds();
     //带时分秒的
     //var now=year+'-'+getNow(month)+"-"+getNow(date)+" //"+getNow(h)+':'+getNow(m)+":"+getNow(s);
     //不带时分秒
-    var now=year+'-'+getNow(month)+"-"+getNow(date)
-    $("#borrowTime").val(now);
-   //提交方法
-   function toInsert(){
+    var now=year+'-'+getNow(month)+"-"+getNow(date);
+    //var now1=year+'-'+getNow(month)+"-"+getNow(date1)
+    $("#bidApplyDate").val(now);
+   // $("#bidDeadDate").val(now1);
 
-       $.ajax({
-           url:"/borrow/insert",
-           data:$("#formA").serialize(),
-           type:"post",
-           dataType:"json",
-           success:function(data) {
 
-           },
+    //提交方法
+    function toInsert(){
+        alert(1);
+        $.ajax({
+            url:"/borrow/insert",
+            data:$("#formA").serialize(),
+            type:"post",
+            dataType:"json",
+            success:function(data) {
+
+            },
+             error:function () {
+
+             }
+        });
+     }
+
+    //姓名校验
+    /*$("#borrowUserName").blur(function() {
+        alert(1);
+        var name=$("#borrowUserName").val();
+        var regName =/^[u4e00-u9fa5]{2,4}$/;
+        if(!regName.test(name)){
+            $("#userName").html("姓名格式错误").css("color","blue");
+        }
+    });*/
+    //招标天数
+    $("#bidDeadDay").change(function () {
+
+        var bidDeadDay = $("#bidDeadDay").val();
+        var myDate = new Date();
+        //获取当前年
+        var year=myDate.getFullYear();
+        //获取当前月
+        var month=myDate.getMonth()+1;
+        //获取当前日  加上投标天数
+        var a=parseInt(bidDeadDay);
+        var date=myDate.getDate()+a;
+        //alert(date);
+        var h=myDate.getHours();       //获取当前小时数(0-23)
+        var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+        var s=myDate.getSeconds();
+        //不带时分秒
+        var now=year+'-'+getNow(month)+"-"+getNow(date);
+        //alert(now);
+        $("#bidDeadDate").val(now);
+
+    });
+
+    //页面数据初始化
+    /*$(function () {
+        $.ajax({
+            url:"/borrow/select",
+            type:"post",
+            //dataType:"json",
+            success:function(data){
+                alert(data);
+            },
             error:function () {
 
             }
-       });
-    }
+        });
+    });*/
 </script>
 </body>
 </html>
