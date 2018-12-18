@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/userAccount")
 public class UserAccountController {
     /**
-     * 跳往个人中心首页
+     * 跳往个人中心首页(我的账户)
      * @return
      */
     @RequestMapping("/Account")
@@ -26,7 +26,7 @@ public class UserAccountController {
      */
     @RequestMapping("/zjjl")
     public String zjjl(){
-        return "yrd/个人中心-资金记录 ";
+        return "yrd/个人中心-资金记录";
     }
     /**
      * 跳往资金记录
@@ -210,7 +210,7 @@ public class UserAccountController {
      */
     @RequestMapping("/borrow")
     public String borrow(){
-        return "yrd/borow";
+        return "yrd/borrow";
     }
     /**
      * index.html

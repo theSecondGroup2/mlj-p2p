@@ -65,25 +65,25 @@ $(document).ready(function() {
         <li class="c_4"><a href="#" target="_blank" title="新浪微博" alt="新浪微博"><b class="ico_head_sina"></b></a></li>
       </ul>
       <ul class="fn-right header-top-ul">
-        <li> <a href="index.html" class="app">返回首页</a> </li>
+        <li> <a href="/userAccount/index" class="app">返回首页</a> </li>
         <li>
-          <div class=""><a href="register.html" class="c-orange" title="免费注册">免费注册</a></div>
+          <div class=""><a href="/forwardUser/toForwardUserReg" class="c-orange" title="免费注册">免费注册</a></div>
         </li>
         <li>
-          <div class=""><a href="login.html" class="js-login" title="登录">登录</a></div>
+          <div class=""><a href="/forwardUser/toForwardUserLogin" class="js-login" title="登录">登录</a></div>
         </li>
       </ul>
     </div>
   </div>
   <div class="header min-width">
     <div class="container">
-      <div class="fn-left logo"> <a class="" href="index.html"> <img src="/images/logo.png" title=""> </a> </div>
+      <div class="fn-left logo"> <a class="" href="/userAccount/index"> <img src="../images/logo.png" title=""> </a> </div>
       <ul class="top-nav fn-clear">
-        <li class="on"> <a href="index.html">首页</a> </li>
-        <li> <a href="list.html" class="">我要投资</a> </li>
-        <li> <a href="帮助中心.html">安全保障</a> </li>
+        <li class="on"> <a href="/userAccount/index">首页</a> </li>
+        <li> <a href="/userAccount/list" class="">我要投资</a> </li>
+        <li> <a href="/userAccount/bzzx">安全保障</a> </li>
         <li class="top-nav-safe"> <a href="/userAccount/Account">我的账户</a> </li>
-        <li> <a href="公司简介.html">关于我们</a> </li>
+        <li> <a href="/userAccount/gsjj">关于我们</a> </li>
       </ul>
     </div>
   </div>
@@ -91,14 +91,14 @@ $(document).ready(function() {
 <!--banner-->
 <div class="flexslider">
   <ul class="slides">
-    <li style="background-image: url(/images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="#" target="_blank"></a></li>
-    <li style="background-image: url(/images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="#" target="_blank"></a></li>
-    <li style="background-image: url(/images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="#" target="_blank"></a></li>
-    <li style="background-image: url(/images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="# " target="_blank"></a></li>
-    <li style="background-image: url(/images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="#" target="_blank"></a></li>
+    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="#" target="_blank"></a></li>
+    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="#" target="_blank"></a></li>
+    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="#" target="_blank"></a></li>
+    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="# " target="_blank"></a></li>
+    <li style="background-image: url(../images/banner.jpg); width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; display: block; z-index: 1; background-position: 50% 0px; background-repeat: no-repeat no-repeat;" class=""><a href="#" target="_blank"></a></li>
   </ul>
 </div>
-<script src="/script/jquery.flexslider-min.js"></script>
+<script src="../script/jquery.flexslider-min.js"></script>
 <script>
 $(function(){
     $('.flexslider').flexslider({
@@ -140,20 +140,8 @@ $(function(){
             }
         }
     });
-    //alert(pLength);
 });
 </script>
-<!--注册登陆模块-->
-<!--<div class="login_float">
-  <div class="index_login">
-    <div class="login_name">亿人宝年化收益率</div>
-    <div class="login_num">10<font>%</font>~17<font>%</font></div>
-    <div class="login_info"> <span class="login_info1"><font>3~4倍</font>定期存款收益</span> <span class="login_info2"><font>30倍</font>活期存款收益</span> </div>
-    <div class="clear"></div>
-    <div class="login_btn"><a href="register.html">立即注册</a></div>
-    <p class="login_reg">已有账号，<a href="login.html">立即登录</a></p>
-  </div>
-</div>-->
 <script type="text/javascript">
 var gaintop;
 $(function(){
@@ -175,8 +163,8 @@ $(function(){
   <div class="new-announcement-content">
     <div id="scrollDiv">
       <ul style="margin-top: 0px;">
-        <li><a class="black-link" href="公司公告详细.html" target="_blank"> 2015年9月8日还款公告</a></li>
-        <li><a class="black-link" href="公司公告详细.html" target="_blank"> 2015年纪念抗日战争胜利放假公告</a></li>
+        <li><a class="black-link" href="/userAccount/gsggxq" target="_blank"> 2015年9月8日还款公告</a></li>
+        <li><a class="black-link" href="/userAccount/gsggxq" target="_blank"> 2015年纪念抗日战争胜利放假公告</a></li>
       </ul>
     </div>
   </div>
@@ -205,11 +193,11 @@ $(function(){
           <div class="fn-right f14 c-888">常规发标时间每天<span class="c-555">10:00，13:00和20:00</span>，其余时间根据需要随机发</div>
         </div>
         <div class="bd">
-          <div class="des"><span class="fn-left">期限1-29天，期限短，收益见效快</span><a href="list.html" class="fn-right">查看更多&gt;&gt;</a></div>
+          <div class="des"><span class="fn-left">期限1-29天，期限短，收益见效快</span><a href="/userAccount/list" class="fn-right">查看更多&gt;&gt;</a></div>
           <div class="borrow-list">
             <ul>
               <li>
-                <div class="title"><a href="infor.html" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a><a href="infor.html" class="f18" title="金女士债权质押借款1万元" target="_blank">金女士债权质押借款1万元</a></div>
+                <div class="title"><a href="/userAccount/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a><a href="/userAccount/infor" class="f18" title="金女士债权质押借款1万元" target="_blank">金女士债权质押借款1万元</a></div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
@@ -229,7 +217,7 @@ $(function(){
                 </table>
               </li>
               <li>
-                <div class="title"><a href="infor.html" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a><a href="infor.html" class="f18" title="周先生债权质押借款0.1万元" target="_blank">周先生债权质押借款0.1万元</a></div>
+                <div class="title"><a href="/userAccount/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a><a href="/userAccount/infor" class="f18" title="周先生债权质押借款0.1万元" target="_blank">周先生债权质押借款0.1万元</a></div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
@@ -258,11 +246,11 @@ $(function(){
           <div class="fn-right f14 c-888">参与人次：<span class="c-555">61.37万次</span>&nbsp;&nbsp;&nbsp;平均满标时间：<span class="c-555">1小时24分11秒</span> </div>
         </div>
         <div class="bd">
-          <div class="des"><span class="fn-left">期限1-12月，收益更高</span><a href="list.html" class="fn-right">查看更多&gt;&gt;</a></div>
+          <div class="des"><span class="fn-left">期限1-12月，收益更高</span><a href="/userAccount/list" class="fn-right">查看更多&gt;&gt;</a></div>
           <div class="borrow-list">
             <ul>
               <li>
-                <div class="title"><a href="#" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><a href="infor.html" class="f18" title="毕先生宝马320汽车质押贷款10万元" target="_blank">毕先生宝马320汽车质押贷款10万元</a></div>
+                <div class="title"><a href="#" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><a href="/userAccount/infor" class="f18" title="毕先生宝马320汽车质押贷款10万元" target="_blank">毕先生宝马320汽车质押贷款10万元</a></div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
@@ -285,7 +273,7 @@ $(function(){
                 </table>
               </li>
               <li>
-                <div class="title"><a href="infor.html" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><a href="#" class="f18" title="王先生克莱斯勒300C汽车质押贷款15万元" target="_blank">王先生克莱斯勒300C汽车质押贷款15万元</a></div>
+                <div class="title"><a href="/userAccount/infor" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><a href="#" class="f18" title="王先生克莱斯勒300C汽车质押贷款15万元" target="_blank">王先生克莱斯勒300C汽车质押贷款15万元</a></div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
@@ -317,11 +305,11 @@ $(function(){
           <div class="fn-right f14 c-888">参与人次：<span class="c-555">8.35万次</span>&nbsp;&nbsp;&nbsp;平均满标时间：<span class="c-555">1小时41分19秒</span> </div>
         </div>
         <div class="bd">
-          <div class="des"> <span class="fn-left">期限12-60月，打理更加容易</span><a href="list.html" class="fn-right">查看更多&gt;&gt;</a></div>
+          <div class="des"> <span class="fn-left">期限12-60月，打理更加容易</span><a href="/userAccount/list" class="fn-right">查看更多&gt;&gt;</a></div>
           <div class="borrow-list">
             <ul>
               <li>
-                <div class="title"><a href="infor.html" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><a href="infor.html" class="f18" title="朱先生比亚迪S6汽车抵押贷款4.5万元" target="_blank">朱先生比亚迪S6汽车抵押贷款4.5万元</a></div>
+                <div class="title"><a href="/userAccount/infor" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><a href="/userAccount/infor" class="f18" title="朱先生比亚迪S6汽车抵押贷款4.5万元" target="_blank">朱先生比亚迪S6汽车抵押贷款4.5万元</a></div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
@@ -344,7 +332,7 @@ $(function(){
                 </table>
               </li>
               <li>
-                <div class="title"><a href="infor.html" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><a href="infor.html" class="f18" title="朱先生别克英朗汽车抵押贷款5万元" target="_blank">朱先生别克英朗汽车抵押贷款5万元</a></div>
+                <div class="title"><a href="/userAccount/infor" target="_blank"><i class="icon icon-che" title="车易贷"></i></a><a href="/userAccount/infor" class="f18" title="朱先生别克英朗汽车抵押贷款5万元" target="_blank">朱先生别克英朗汽车抵押贷款5万元</a></div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
@@ -376,11 +364,11 @@ $(function(){
           <div class="fn-right f14 c-888">参与人次：<span class="c-555">8.06万次</span> &nbsp;&nbsp;&nbsp;平均转让用时：<span class="c-555">03小时06分22秒</span> </div>
         </div>
         <div class="bd">
-          <div class="des"><span class="fl">其他投资人折价转让，转让项目会随时更新，惊喜不断</span><a href="list.html" class="fn-right">查看更多&gt;&gt;</a></div>
+          <div class="des"><span class="fl">其他投资人折价转让，转让项目会随时更新，惊喜不断</span><a href="/userAccount/list" class="fn-right">查看更多&gt;&gt;</a></div>
           <div class="borrow-list">
             <ul>
               <li>
-                <div class="title"><a href="infor.html" target="_blank"><i class="icon icon-zhuan" title="债权转让"></i></a><a href="infor.html" title="汪女士债权质押借款1万元" class="f18" target="_blank">汪女士债权质押借款1万元</a></div>
+                <div class="title"><a href="/userAccount/infor" target="_blank"><i class="icon icon-zhuan" title="债权转让"></i></a><a href="/userAccount/infor" title="汪女士债权质押借款1万元" class="f18" target="_blank">汪女士债权质押借款1万元</a></div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
@@ -399,11 +387,11 @@ $(function(){
       </div>
     </div>
     <div class="page-right fn-right" style="top: 0px;">
-      <div class="mod-risk-tip"><i class="icon icon-tip"></i><a href="/bxbz/index.html" class="c-orange">收益与风险并存，请理性选择平台</a></div>
+      <div class="mod-risk-tip"><i class="icon icon-tip"></i><a href="#" class="c-orange">收益与风险并存，请理性选择平台</a></div>
       <div class="mod mod-notice mrt20">
         <div class="hd">
           <h3>网站公告</h3>
-          <a href="/gonggao/news/index.html" class="fn-right">更多&gt;</a></div>
+          <a href="/userAccount/wzgg" class="fn-right">更多&gt;</a></div>
         <div class="bd">
           <div class="article-list clearfix">
             <ul>
@@ -461,7 +449,7 @@ $(function(){
         <div class="bd">
           <div class="ui-tab-cont">
             <div class="ui-tab-item active">
-              <div class="headlines"> <img src="images/news.jpg"> <a title="平台遭遇P2P滑稽抄袭" target="_blank" href="#">平台遭遇P2P滑稽抄袭</a><br>
+              <div class="headlines"> <img src="../images/news.jpg"> <a title="平台遭遇P2P滑稽抄袭" target="_blank" href="#">平台遭遇P2P滑稽抄袭</a><br>
                 <span class="des">抄袭者居然把被抄袭者的名字一起抄下来，这样的乌龙抄袭你见过没...</span> </div>
               <div class="article-list">
                 <ul>
@@ -486,11 +474,11 @@ $(function(){
           </div>
         </div>
       </div>
-      <div class="mrt20 mod"> <a href="#"><img src="images/pic_home_js.jpg" width="300" height="80" alt="收益计算器" class="pic"></a></div>
+      <div class="mrt20 mod"> <a href="#"><img src="../images/pic_home_js.jpg" width="300" height="80" alt="收益计算器" class="pic"></a></div>
     </div>
   </div>
 </div>
-<script src="script/index.js"></script>
+<script src="../script/index.js"></script>
 <div class="partners wrap clearfix mrb30">
   <div class="partners-inner ui-tab">
     <div class="hd">
@@ -507,12 +495,12 @@ $(function(){
           <div class="img-scroll">
             <div class="container">
               <ul>
-                <li><img src="images/logo_sbcvc.png" width="152" height="52" alt="软银"></li>
-                <li><img src="images/logo_abc.png" width="152" height="52" alt="农业银行"></li>
-                <li><img src="images/logo_wdzj.png" width="152" height="52" alt="网贷之家"></li>
-                <li><img src="images/logo_baidu.png" width="152" height="52" alt="百度"></li>
-                <li><img src="images/logo_aqb.png" width="152" height="52" alt="安全宝"></li>
-                <li><img src="images/logo_gds.png" width="152" height="52" alt="万国数据"></li>
+                <li><img src="../images/logo_sbcvc.png" width="152" height="52" alt="软银"></li>
+                <li><img src="../images/logo_abc.png" width="152" height="52" alt="农业银行"></li>
+                <li><img src="../images/logo_wdzj.png" width="152" height="52" alt="网贷之家"></li>
+                <li><img src="../images/logo_baidu.png" width="152" height="52" alt="百度"></li>
+                <li><img src="../images/logo_aqb.png" width="152" height="52" alt="安全宝"></li>
+                <li><img src="../images/logo_gds.png" width="152" height="52" alt="万国数据"></li>
               </ul>
             </div>
           </div>
@@ -530,19 +518,19 @@ $(function(){
     <div class="ft-helper clearfix">
       <dl>
         <dt>关于我们</dt>
-        <dd><a href="公司简介.html">公司简介</a><a href="管理团队.html">管理团队</a><a href="网站公告.html">网站公告</a></dd>
+        <dd><a href="/userAccount/gsjj">公司简介</a><a href="/userAccount/gltd">管理团队</a><a href="/userAccount/wzgg">网站公告</a></dd>
       </dl>
       <dl>
         <dt>相关业务</dt>
-        <dd><a href="list.html">我要投资</a><a href="我要借款.html">我要借款</a></dd>
+        <dd><a href="/userAccount/list">我要投资</a><a href="/borrow/toBorrow">我要借款</a></dd>
       </dl>
       <dl>
         <dt>帮助中心</dt>
-        <dd><a href="帮助中心.html">新手入门</a><a href="个人中心首页.html">我的账户</a><a href="list.html">债权转让</a></dd>
+        <dd><a href="/userAccount/bzzx">新手入门</a><a href="/userAccount/Account">我的账户</a><a href="/userAccount/list">债权转让</a></dd>
       </dl>
       <dl>
         <dt>联系我们</dt>
-        <dd><a href="联系我们.html">联系我们</a></dd>
+        <dd><a href="/userAccount/xiwm">联系我们</a></dd>
       </dl>
     </div>
     <div class="ft-service">
@@ -560,7 +548,7 @@ $(function(){
     <div class="ft-wap clearfix">
       <dl>
         <dt>官方二维码</dt>
-        <dd><span class="icon-ft-erweima"><img src="images/code.png" style="display: inline;"></span></dd>
+        <dd><span class="icon-ft-erweima"><img src="../images/code.png" style="display: inline;"></span></dd>
       </dl>
     </div>
   </div>
