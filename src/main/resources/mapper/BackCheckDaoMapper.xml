@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.p2p.dao.BackCheckDao">
+    <!--带参分页查询-->
+    <select id="getPagesByParam" resultType="map">
+        select realname,sex,address,idnumber,academic,housed,marriage,income,idimagefountvar,idimagebackvar,to_char(audittime,'yyyy-mm-dd') as audittime,auditresult,auditremarks from
+        (select rownum rn,realname,sex,address,idnumber,academic,housed,marriage,income,idimagefountvar,idimagebackvar,audittime,auditresult,auditremarks from tb_userreal where rownum &lt; #{end}) a where a.rn &gt; #{start}
+        <if test="REALNAME != null and REALNAME != ''">
+            and REALNAME like '%'||#{REALNAME}||'%'
+        </if>
+        <if test="AUDITRESULT != null and AUDITRESULT != ''">
+            and AUDITRESULT = #{AUDITRESULT}
+        </if>
+    </select>
+    <!--查询分页总数量-->
+    <select id="getPageCount" resultType="int">
+        select count(*) from tb_userreal
+        <where>
+            <if test="REALNAME != null and REALNAME != ''">
+                and REALNAME like '%'||#{REALNAME}||'%'
+            </if>
+            <if test="AUDITRESULT != null and AUDITRESULT != ''">
+                and AUDITRESULT = #{AUDITRESULT}
+            </if>
+        </where>
+    </select>
+</mapper>

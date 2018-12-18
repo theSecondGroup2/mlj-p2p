@@ -42,4 +42,28 @@
     <select id="getArea" resultType="map">
         select * from AREA where CID = #{cid}
     </select>
+    <!--省份名-->
+    <select id="getPro" resultType="String">
+        select PNAME from PROVINCE where PID = #{theProvince}
+    </select>
+    <!--城市名-->
+    <select id="getCty" resultType="String">
+        select CNAME from CITY where CID = #{theCity}
+    </select>
+    <!--地区名-->
+    <select id="getAra" resultType="String">
+        select ANAME from AREA where AID = #{theArea}
+    </select>
+    <!--提交实名认证-->
+    <insert id="subReal" parameterType="map">
+        insert into TB_USERREAL (id,userid,realname,sex,address,idnumber,academic,housed,marriage,income,IDIMAGEFOUNTVAR,IDIMAGEBACKVAR,AUDITRESULT)
+        values (TB_USERREAL_ID.nextval,#{userId},#{realName},#{sex},#{address},#{idNumber},#{academic},#{housed},#{marriage},#{income},#{forwardPic},#{backPic},'未审核')
+    </insert>
+    <update id="chgExist" parameterType="map">
+        update TB_FWDLOGIN set USEREXIST = 3 where USERID = #{userId}
+    </update>
+    <!--获取审核状态-->
+    <select id="getChkSta" resultType="String">
+        select AUDITRESULT from TB_USERREAL where USERID = #{userId}
+    </select>
 </mapper>
