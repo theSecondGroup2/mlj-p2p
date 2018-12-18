@@ -111,7 +111,7 @@
                     <el-select v-model="editForm.STATE" clearable placeholder="请选择">
                         <el-option
                                 v-for="item in deptnos"
-                                :key="item.ID"
+                                :key="item.STATE"
                                 :label="item.STATE"
                                 :value="item.STATE">
                         </el-option>
@@ -139,7 +139,7 @@
         el: '#tableView',
         data: {
             //部门状态下拉框
-            deptnos:[],
+            deptnos:[{STATE:"开启"},{STATE:"关闭"}],
             //部门下拉框
             options:[],
             //角色下拉框
@@ -192,9 +192,6 @@
             axios.post('/dept/getDeptListBy',{'pageNo':self.currentPage,'pageSize':self.pageSize}).then(function(response){
                 self.total=response.data.total;
                 self.tableData = response.data.pageData;
-            })
-            axios.post('/dept/getDeptList').then(function (response) {
-                self.deptnos = response.data;
             })
         },
         methods:{
