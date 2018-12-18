@@ -93,11 +93,149 @@ public class UserAccountController {
         return "yrd/个人中心-系统消息";
     }
     /**
-     * 系统消息
+     * 账户设置
      * @return
      */
     @RequestMapping("/zhsz")
     public String zhsz(){
         return "yrd/个人中心-账户设置";
     }
+    /**
+     * 公司简介
+     * @return
+     */
+    @RequestMapping("/gsjj")
+    public String gsjj(){
+        return "yrd/公司简介";
+    }
+    /**
+     * 公司公告详情
+     * @return
+     */
+    @RequestMapping("/gsggxx")
+    public String gsggxx(){
+        return "yrd/公司公告详细";
+    }
+    /**
+     * 合作伙伴
+     * @return
+     */
+    @RequestMapping("/hzhb")
+    public String hzhb(){
+        return "yrd/合作伙伴";
+    }
+    /**
+     * 团队风采.html
+     * @return
+     */
+    @RequestMapping("/tdfc")
+    public String tdfc(){
+        return "yrd/团队风采";
+    }
+    /**
+     * 媒体报道.html
+     * @return
+     */
+    @RequestMapping("/mtbd")
+    public String mtbd(){
+        return "yrd/媒体报道";
+    }
+    /**
+     * 帮助中心.html
+     * @return
+     */
+    @RequestMapping("/bzzx")
+    public String bzzx(){
+        return "yrd/帮助中心";
+    }
+    /**
+     * 招贤纳士.html
+     * @return
+     */
+    @RequestMapping("/zxns")
+    public String zxns(){
+        return "yrd/招贤纳士";
+    }
+    /**
+     * 法律声明.html
+     * @return
+     */
+    @RequestMapping("/flsm")
+    public String flsm(){
+        return "yrd/法律声明";
+    }
+    /**
+     * 法律政策.html.html
+     * @return
+     */
+    @RequestMapping("/flzc")
+    public String flzc(){
+        return "yrd/法律政策";
+    }
+    /**
+     * 管理团队.html
+     * @return
+     */
+    @RequestMapping("/gltd")
+    public String gltd(){
+        return "yrd/管理团队";
+    }
+    /**
+     * 网站公告.html.html
+     * @return
+     */
+    @RequestMapping("/wzgg")
+    public String wzgg(){
+        return "yrd/网站公告";
+    }
+    /**
+     * 联系我们
+     * @return
+     */
+    @RequestMapping("/lxwm")
+    public String lxwm(){
+        return "yrd/联系我们";
+    }
+    /**
+     * 资费说明.html.html
+     * @return
+     */
+    @RequestMapping("/zfsm")
+    public String zfsm(){
+        return "yrd/资费说明";
+    }
+    /**
+     * borrow.html
+     * @return
+     */
+    @RequestMapping("/borrow")
+    public String borrow(){
+        return "yrd/borow";
+    }
+    /**
+     * index.html
+     * @return
+     */
+    @RequestMapping("/index")
+    public String index(){
+        return "yrd/index";
+    }
+    /**
+     * infor.html.html.html
+     * @return
+     */
+    @RequestMapping("/infor")
+    public String infor(){
+        return "yrd/infor";
+    }
+    /**
+     * list.html.html.html
+     * @return
+     */
+    @RequestMapping("/list")
+    public String list(){
+        return "yrd/list";
+    }
+
+
 }
