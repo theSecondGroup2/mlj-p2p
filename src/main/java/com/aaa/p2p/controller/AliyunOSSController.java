@@ -32,7 +32,7 @@ public class AliyunOSSController {
      */
     @RequestMapping("/toIndex")
     public String toIndex(){
-        return "index";
+        return "/main/resources/templates/yrd/index.html";
     }
 
     /**
