@@ -81,4 +81,12 @@ public class PicController {
     public String toPic(){
         return "back/pic";
     }
+    /**
+     * 跳转前台轮播图页面
+     * @return
+     */
+    @RequestMapping("/toFIndex")
+    public String toFIndex(){
+        return "forward/index";
+    }
 }
