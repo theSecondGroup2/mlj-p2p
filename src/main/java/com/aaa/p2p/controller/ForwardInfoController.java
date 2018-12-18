@@ -1,11 +1,15 @@
 package com.aaa.p2p.controller;
 
 import com.aaa.p2p.service.ForwardInfoService;
+import com.aaa.p2p.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -137,6 +141,47 @@ public class ForwardInfoController {
     @RequestMapping("/getArea")
     public List<Map> getArea(@RequestParam Map map) {
         return fUserService.getArea(map);
+    }
+
+    private final ResourceLoader resourceLoader;
+    @Autowired
+    public ForwardInfoController(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
+    /**
+     * 取出配置文件中upload.path的值，赋给uploadPath类变量
+     */
+    @Value("${upload.path}")
+    private String uploadPath;
+
+    /**
+     * 提交实名认证
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/subReal")
+    public int subReal(@RequestParam MultipartFile forwardPic, @RequestParam MultipartFile backPic, @RequestParam Map map) {
+        if (forwardPic != null) {
+            String newFileName = FileUtil.uploadFile(uploadPath, forwardPic);
+            map.put("forwardPic", newFileName);
+        }
+        if (backPic != null) {
+            String newFileName = FileUtil.uploadFile(uploadPath, backPic);
+            map.put("backPic", newFileName);
+        }
+        return fUserService.subReal(map);
+    }
+
+    /**
+     * 获取审核状态
+     * @param userId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getChkSta")
+    public String getChkSta(int userId) {
+        return fUserService.getChkSta(userId);
     }
 
 }

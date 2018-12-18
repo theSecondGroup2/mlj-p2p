@@ -38,7 +38,7 @@ public class ForwardUserServiceImpl implements ForwardUserService {
      * 前台用户注册业务
      * 1、将前台传过来的map插入到登录表
      * 2、获取对应的userID
-     * 3、依次插入到信息表，实名表，视频表
+     * 3、依次插入到信息表
      * @param map
      * @return
      */

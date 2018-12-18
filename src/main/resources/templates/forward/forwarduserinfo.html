@@ -210,11 +210,10 @@
         //发送手机验证码
         var realCode = 123;
         $("#sendCode").click(function() {
-            /*$.post("/forwardUser/sendCode", {
-
+            $.post("/forwardUser/sendCode", {
             }, function (data) {
                 realCode = data;
-            });*/
+            });
             //按钮倒计时
             var time = 15;
             var t = setInterval(function() {

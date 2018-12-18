@@ -80,4 +80,46 @@ public interface ForwardInfoDao {
      */
     List<Map> getArea(Map map);
 
+    /**
+     * 省份名
+     * @param map
+     * @return
+     */
+    String getPro(Map map);
+
+    /**
+     * 城市名
+     * @param map
+     * @return
+     */
+    String getCty(Map map);
+
+    /**
+     * 地区名
+     * @param map
+     * @return
+     */
+    String getAra(Map map);
+
+    /**
+     * 提交实名认证
+     * @param map
+     * @return
+     */
+    int subReal(Map map);
+
+    /**
+     * 修改状态
+     * @param map
+     * @return
+     */
+    int chgExist(Map map);
+
+    /**
+     * 获取审核状态
+     * @param userId
+     * @return
+     */
+    String getChkSta(int userId);
+
 }

@@ -80,4 +80,18 @@ public interface ForwardInfoService {
      */
     List<Map> getArea(Map map);
 
+    /**
+     * 提交实名认证
+     * @param map
+     * @return
+     */
+    int subReal(Map map);
+
+    /**
+     * 获取审核状态
+     * @param userId
+     * @return
+     */
+    String getChkSta(int userId);
+
 }

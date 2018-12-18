@@ -33,29 +33,29 @@
         <h1>实名认证</h1><h5 style="color:red;">*以下全为必填项</h5>
         <form id="realForm">
         <table class="table table-striped">
-            <input type="hidden" id="hideId">
+            <input type="hidden" id="hideId" name="userId">
             <tr class="success">
                 <td><h3>真实姓名</h3><span id="spanYi"></span></td>
-                <td><input type="text" class="form-control" id="realName" placeholder="请填写与身份证一致的真实姓名"></td>
+                <td><input type="text" name="realName" class="form-control" id="realName" placeholder="请填写与身份证一致的真实姓名"></td>
             </tr>
             <tr class="info">
                 <td><h3>身份证号</h3><span id="spanEr"></span></td>
-                <td><input type="text" class="form-control" id="idNumber" placeholder="请填写18位身份证号码"></td>
+                <td><input type="text" name="idNumber" class="form-control" id="idNumber" placeholder="请填写18位身份证号码"></td>
             </tr>
             <tr class="warning">
                 <td><h3>性别</h3></td>
                 <td>
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="man" value="男"> 男
+                        <input type="radio" name="sex" id="man" value="男"> 男
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" id="woman" value="女"> 女
+                        <input type="radio" name="sex" id="woman" value="女"> 女
                     </label>
                 </td>
             </tr>
             <tr class="danger">
                 <td><h3>学历</h3></td>
-                <td><select id="academic" class="form-control">
+                <td><select id="academic" name="academic" class="form-control">
                     <option>本科</option>
                     <option>专科</option>
                     <option>中专</option>
@@ -65,7 +65,7 @@
             </tr>
             <tr class="info">
                 <td><h3>住房</h3></td>
-                <td><select id="housed" class="form-control">
+                <td><select id="housed" name="housed" class="form-control">
                     <option>高档别墅</option>
                     <option>居民小区</option>
                     <option>廉价租房</option>
@@ -74,14 +74,14 @@
             </tr>
             <tr class="success">
                 <td><h3>婚姻</h3></td>
-                <td><select id="marriage" class="form-control">
+                <td><select id="marriage" name="marriage" class="form-control">
                     <option>未婚</option>
                     <option>已婚</option>
                 </select></td>
             </tr>
             <tr class="warning">
                 <td><h3>收入</h3></td>
-                <td><select id="income" class="form-control">
+                <td><select id="income" name="income" class="form-control">
                     <option>1500以内</option>
                     <option>1500-5000</option>
                     <option>5000-10000</option>
@@ -92,10 +92,10 @@
             <tr class="danger">
                 <td><h3>家庭住址</h3></td>
                 <td>
-                    <div class="col-xs-4"><select class="form-control" id="theProvince"><option></option></select></div>
-                    <div class="col-xs-4"><select class="form-control" id="theCity"><option>-请选择-</option></select></div>
-                    <div class="col-xs-4"><select class="form-control" id="theArea"><option>-请选择-</option></select></div>
-                    <input type="text" class="form-control" id="theDetail" placeholder="详细地址">
+                    <div class="col-xs-4"><select class="form-control" name="theProvince" id="theProvince"><option></option></select></div>
+                    <div class="col-xs-4"><select class="form-control" name="theCity" id="theCity"><option>-请选择-</option></select></div>
+                    <div class="col-xs-4"><select class="form-control" name="theArea" id="theArea"><option>-请选择-</option></select></div>
+                    <input type="text" class="form-control" name="theDetail" id="theDetail" placeholder="详细地址">
                 </td>
             </tr>
             <tr class="info">
@@ -127,10 +127,15 @@
         </form>
     </div>
 
-    <div style="margin-left:400px;margin-top:50px" id="finishFinish">
+    <div style="margin-left:400px;margin-top:50px" id="waitCheck">
         <div style="width:50px;height:50px;"><img src="/images/askone.png"></div>
         <h1>正在审核中</h1><br>
         <h3>请您耐心等待，现在可以前往了解借款流程</h3>
+    </div>
+
+    <div style="margin-left:400px;margin-top:50px" id="finishCheck">
+        <div style="width:50px;height:50px;"><img src="/images/successone.png"></div>
+        <h1>恭喜！您已通过实名认证！</h1><br>
     </div>
 
     <style>
@@ -189,18 +194,35 @@
                 $("#hideId").val(data.USERID);
                 userId = data.USERID;
                 $.post("/forwardInfo/getStation", {userId:data.USERID}, function (userExist) {
-                    if (userExist != 2) {
+                    if (userExist == 1) {
                         $("#notFinish").css("display","block");
                         $("#waitFinish").css("display","none");
-                        $("#finishFinish").css("display","none");
-                    } else {
+                        $("#waitCheck").css("display","none");
+                        $("#finishCheck").css("display","none");
+                    } else if (userExist == 2) {
                         $("#notFinish").css("display","none");
                         $("#waitFinish").css("display","block");
-                        $("#finishFinish").css("display","none");
+                        $("#waitCheck").css("display","none");
+                        $("#finishCheck").css("display","none");
+                    } else {
+                        $.post("/forwardInfo/getChkSta", {userId:$("#hideId").val()}, function (data) {
+                            if (data == "未审核") {
+                                $("#notFinish").css("display","none");
+                                $("#waitFinish").css("display","none");
+                                $("#waitCheck").css("display","block");
+                                $("#finishCheck").css("display","none");
+                            } else {
+                                $("#notFinish").css("display","none");
+                                $("#waitFinish").css("display","none");
+                                $("#waitCheck").css("display","none");
+                                $("#finishCheck").css("display","block");
+                            }
+                        });
                     }
                 });
             });
         });
+        //三级联动
         $(function () {
             $.post("/forwardInfo/getProvince", function (data) {
                 var opts = "";
@@ -229,7 +251,27 @@
             });
         });
         $("#subReal").click(function () {
-
+            var formData = new FormData($("#realForm")[0]);
+            console.log(formData);
+            $.ajax({
+                url: '/forwardInfo/subReal',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data > 0) {
+                        alert("提交成功！");
+                    }
+                },
+                error: function (data) {
+                    if (data < 0) {
+                        alert("wrong!");
+                    }
+                }
+            });
         });
     </script>
 

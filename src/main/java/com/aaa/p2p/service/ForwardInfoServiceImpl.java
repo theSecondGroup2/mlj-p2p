@@ -69,4 +69,32 @@ public class ForwardInfoServiceImpl implements ForwardInfoService {
         return fInfoDao.getArea(map);
     }
 
+    /**
+     * 提交实名认证
+     * 1、将获取的地址信息拼接成详细地址存入到map
+     * 2、添加到实名认证表
+     * 3、修改登录表状态为3
+     * @param map
+     * @return
+     */
+    @Override
+    public int subReal(Map map) {
+        String province = fInfoDao.getPro(map);
+        String city = fInfoDao.getCty(map);
+        String area = fInfoDao.getAra(map);
+        map.put("address", province+city+area+map.get("theDetail"));
+        //System.out.println(map);
+        int chg = fInfoDao.chgExist(map);
+        int sub = fInfoDao.subReal(map);
+        if (chg == 1 && sub == 1) {
+            return 1;
+        }
+        return 0;
+    }
+
+    @Override
+    public String getChkSta(int userId) {
+        return fInfoDao.getChkSta(userId);
+    }
+
 }
