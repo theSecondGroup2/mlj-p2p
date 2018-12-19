@@ -25,4 +25,11 @@ public interface BackCheckDao {
      */
     int getPageCount(Map map);
 
+    /**
+     * 审核操作
+     * @param map
+     * @return
+     */
+    int chgCheck(Map map);
+
 }

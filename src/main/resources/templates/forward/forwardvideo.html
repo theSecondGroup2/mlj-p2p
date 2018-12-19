@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实名认证</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title>用户登录</title>
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/fontello.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/animsition.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Merriweather:300,300i,400,400i,700,700i" rel="stylesheet">
+    <!-- owl Carousel Css -->
+    <link href="../css/owl.carousel.css" rel="stylesheet">
+    <link href="../css/owl.theme.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div style="margin-left:400px;margin-top:50px" id="stepOne">
+        <div style="width:50px;height:50px;"><img src="/images/wrongone.png"></div>
+        <h1>请先完善基本信息和实名认证！</h1>
+    </div>
+
+    <div style="margin-left:400px;margin-top:50px" id="stepTwo">
+        <h3>您现在可以预约视频审核，现在去预约吗？</h3><br>
+        <button id="goToApm" class="btn btn-primary">立即预约</button>
+    </div>
+
+    <div style="margin-left:400px;margin-top:50px" id="stepThr">
+        <input type="hidden" id="userId">
+        <table>
+            <tr>
+                <td>请选择视频审核日期：</td>
+                <td>
+                    <div style="position:relative;">
+                        <input type='text' class="form-control" id='datetime' />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>请选择您方便的时间段：</td>
+                <td>
+                    <select id="apmTime" name="apmTime" class="form-control">
+                        <option>8:00-10:00</option>
+                        <option>10:00-12:00</option>
+                        <option>14:00-16:00</option>
+                        <option>16:00-18:00</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><button id="goToSub" class="btn btn-primary">提交信息</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div style="margin-left:400px;margin-top:50px" id="stepFve">
+        <div style="width:50px;height:50px;"><img src="/images/askone.png"></div>
+        <h1>您已经成功申请审核</h1><br>
+        <h3>我们的客服人员将会在您预约的时间内联系您，请保持手机畅通</h3><br>
+        <h3>预约时间：<span id="theTime"></span></h3>
+    </div>
+
+    <div style="margin-left:400px;margin-top:50px" id="stepSix">
+        <div style="width:50px;height:50px;"><img src="/images/successone.png"></div>
+        <h1>恭喜！您已通过视频认证！</h1><br>
+    </div>
+
+    <!-- back to top icon -->
+    <a href="#0" class="cd-top" title="Go to top">Top</a>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/menumaker.js"></script>
+    <!-- animsition -->
+    <script type="text/javascript" src="../js/animsition.js"></script>
+    <script type="text/javascript" src="../js/animsition-script.js"></script>
+    <!-- sticky header -->
+    <script type="text/javascript" src="../js/jquery.sticky.js"></script>
+    <script type="text/javascript" src="../js/sticky-header.js"></script>
+    <!-- slider script -->
+    <script type="text/javascript" src="../js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="../js/slider-carousel.js"></script>
+    <script type="text/javascript" src="../js/service-carousel.js"></script>
+    <!-- Back to top script -->
+    <script src="../js/back-to-top.js" type="text/javascript"></script>
+    <!--日期输入框-->
+    <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script>
+        //日期选择器
+        $(function () {
+            $("#datetime").datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: moment.locale('zh-cn')
+            });
+        });
+        //获取session
+        var userId = 0;
+        $(function () {
+            $.post("/forwardUser/getSession", function (data) {
+                $("#userId").val(data.USERID);
+                userId = data.USERID;
+                $.post("/forwardInfo/getStation", {userId:data.USERID}, function (userExist) {
+                    if (userExist == 1 || userExist == 2) {
+                        $("#stepOne").css("display","block");
+                        $("#stepTwo").css("display","none");
+                        $("#stepThr").css("display","none");
+                        $("#stepFve").css("display","none");
+                        $("#stepSix").css("display","none");
+                    } else if (userExist == 3) {
+                        $("#stepOne").css("display","none");
+                        $("#stepTwo").css("display","block");
+                        $("#stepThr").css("display","none");
+                        $("#stepFve").css("display","none");
+                        $("#stepSix").css("display","none");
+                    } else {
+                        $.post("/forwardInfo/getVidSta", {userId:$("#userId").val()}, function (data) {
+                            if (data.AUDITRESULT == "未审核") {
+                                $("#stepOne").css("display","none");
+                                $("#stepTwo").css("display","none");
+                                $("#stepThr").css("display","none");
+                                $("#stepFve").css("display","block");
+                                $("#stepSix").css("display","none");
+                                $("#theTime").html(data.APPOINTMENTTIME);
+                            } else if (data.AUDITRESULT == "审核通过") {
+                                $("#stepOne").css("display","none");
+                                $("#stepTwo").css("display","none");
+                                $("#stepThr").css("display","none");
+                                $("#stepFve").css("display","none");
+                                $("#stepSix").css("display","block");
+                            } else if (data.AUDITRESULT == "审核未通过") {
+                                $("#stepOne").css("display","none");
+                                $("#stepTwo").css("display","block");
+                                $("#stepThr").css("display","none");
+                                $("#stepFve").css("display","none");
+                                $("#stepSix").css("display","none");
+                            }
+                        });
+                    }
+                });
+            });
+        });
+        //立即预约
+        $("#goToApm").click(function () {
+            $("#stepOne").css("display","none");
+            $("#stepTwo").css("display","none");
+            $("#stepThr").css("display","block");
+            $("#stepFve").css("display","none");
+            $("#stepSix").css("display","none");
+        });
+        //提交信息
+        $("#goToSub").click(function () {
+            $.post("/forwardInfo/subVideo", {
+                userId:$("#userId").val(),
+                appointmentTime:$("#datetime").val()+" "+$("#apmTime").val()
+            }, function (data) {
+                if (data > 0) {
+                    $("#stepOne").css("display","none");
+                    $("#stepTwo").css("display","none");
+                    $("#stepThr").css("display","none");
+                    $("#stepFve").css("display","block");
+                    $("#stepSix").css("display","none");
+                    $("#theTime").html($("#datetime").val()+" "+$("#apmTime").val());
+                } else {
+                    alert("wrong!");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

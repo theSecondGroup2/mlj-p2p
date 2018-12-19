@@ -114,6 +114,8 @@
 
     <!--添加界面 :visible.sync 同步-->
     <el-dialog title="审核" :visible.sync="editFormVisible" :close-on-click-modal="false">
+        <img :src="forwardPic" class="image" width="270px" height="200px">
+        <img :src="backPic" class="image" width="270px" height="200px">
         <el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm">
             <el-form-item label="姓名" prop="REALNAME">
                 <el-input :disabled="true" v-model="editForm.REALNAME" auto-complete="off"></el-input>
@@ -145,7 +147,6 @@
         </div>
     </el-dialog>
 </div>
-
 
 <script type="text/javascript">
     var app = new Vue({
@@ -196,6 +197,8 @@
                 AUDITRESULT: '',
                 AUDITREMARKS:''
             },
+            forwardPic:'',
+            backPic:'',
         },
         created:function(){
             //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
@@ -231,7 +234,10 @@
             //表格审核事件
             editClick:function(row) {
                 //根据这一行的某个字段去查询对应的你想要的信息
-                this.goUrl="";
+                //console.log(row.IDIMAGEFOUNTVAR);
+                this.forwardPic = '/forwardUser/showPic?fileName='+row.IDIMAGEFOUNTVAR;
+                this.backPic = '/forwardUser/showPic?fileName='+row.IDIMAGEBACKVAR;
+                this.goUrl="/backCheck/chgCheck";
                 this.editFormVisible = true;
                 this.editForm = Object.assign({}, row);
             },
@@ -261,12 +267,8 @@
                 var _self = this;
                 _self.loading = true;
                 var formData =this.editForm;//保存该对象里的值
-                //alert(formData);
                 var goUrl=this.goUrl;
-                alert(goUrl);
-                alert(JSON.stringify(formData));
                 axios.post(goUrl,formData).then(function(response){
-                    console.log(response.data);
                     if(response.data>0){
                         _self.editFormVisible = false;
                         _self.loadingData();//重新加载数据
