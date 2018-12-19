@@ -40,12 +40,22 @@ public class ForWordController {
     }
 
     /**
-     *
+     *跳转到我要投资页面
      * @return
      */
     @RequestMapping("/toBid")
-    public String toBid(Model model){
-        model.addAttribute("bidList",bidService.getList());
-        return "yrd/list";
+    public String toBid(){
+        //把全部通过的表显示出来，没有带分页
+        //model.addAttribute("bidList",bidService.getList());
+        return "yrd/bidList";
+    }
+
+    /**
+     *跳转到我要投资页面中的投资详情
+     * @return
+     */
+    @RequestMapping("/toBidInfo")
+    public String toBidInfo(Model model){
+        return "yrd/infor";
     }
 }

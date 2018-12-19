@@ -1,10 +1,17 @@
 package com.aaa.p2p.controller;
 
 import com.aaa.p2p.service.BidService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * className:BidController
@@ -29,5 +36,28 @@ public class BidController {
     public Object getList(){
 
         return bidService.getList();
+    }
+
+    /**
+     * 获得投标列表带分页
+     * @param map
+     * @return
+     */
+    @RequestMapping("/getListBy")
+    @ResponseBody
+    public Object getListBy(@RequestParam Map map){
+        Map resultMap = new HashMap();
+        if (map.get("pageNo") != null){//分页的查询
+            //设置当前第几页和每页显示数量
+            PageHelper.startPage(Integer.valueOf(map.get("pageNo") + ""), Integer.valueOf(map.get("pageSize") + ""));
+            //用PageInfo对结果进行包装
+            PageInfo<Map> pageInfo = new PageInfo<Map>(bidService.getListBy(map));
+            resultMap = new HashMap();
+            resultMap.put("total", pageInfo.getTotal());
+            resultMap.put("list", pageInfo.getList());
+        } else {//不分页的查询
+            resultMap.put("bidList",bidService.getList());
+        }
+        return resultMap;
     }
 }
