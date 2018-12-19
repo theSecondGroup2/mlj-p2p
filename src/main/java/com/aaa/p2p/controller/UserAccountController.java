@@ -3,6 +3,8 @@ package com.aaa.p2p.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * className:UserAccountController
  * discription:
@@ -17,8 +19,15 @@ public class UserAccountController {
      * @return
      */
     @RequestMapping("/Account")
-    public String userAccount(){
-        return "yrd/个人中心首页";
+    public String userAccount(HttpSession httpSession){
+
+        if ( httpSession.getAttribute("userInfo")!=null &&  httpSession.getAttribute("userInfo")!= ""){
+                return  "yrd/个人中心首页";
+        }
+        else{
+            return "forward/forwarduserlogin";
+        }
+
     }
     /**
      * 跳往资金记录
