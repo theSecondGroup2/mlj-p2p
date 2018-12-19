@@ -72,7 +72,7 @@ public class ForwardInfoServiceImpl implements ForwardInfoService {
     /**
      * 提交实名认证
      * 1、将获取的地址信息拼接成详细地址存入到map
-     * 2、添加到实名认证表
+     * 2、添加到实名认证表（如果是重复添加则先删除旧的审核信息）
      * 3、修改登录表状态为3
      * @param map
      * @return
@@ -85,6 +85,7 @@ public class ForwardInfoServiceImpl implements ForwardInfoService {
         map.put("address", province+city+area+map.get("theDetail"));
         //System.out.println(map);
         int chg = fInfoDao.chgExist(map);
+        fInfoDao.delOld(map);
         int sub = fInfoDao.subReal(map);
         if (chg == 1 && sub == 1) {
             return 1;
@@ -93,8 +94,23 @@ public class ForwardInfoServiceImpl implements ForwardInfoService {
     }
 
     @Override
-    public String getChkSta(int userId) {
+    public Map getChkSta(int userId) {
         return fInfoDao.getChkSta(userId);
+    }
+
+    @Override
+    public int subVideo(Map map) {
+        int chg = fInfoDao.chgExistTwo(map);
+        int sub = fInfoDao.subVideo(map);
+        if (chg == 1 && sub == 1) {
+            return 1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Map getVidSta(int userId) {
+        return fInfoDao.getVidSta(userId);
     }
 
 }

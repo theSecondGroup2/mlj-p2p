@@ -4,8 +4,8 @@
 <mapper namespace="com.aaa.p2p.dao.BackCheckDao">
     <!--带参分页查询-->
     <select id="getPagesByParam" resultType="map">
-        select realname,sex,address,idnumber,academic,housed,marriage,income,idimagefountvar,idimagebackvar,to_char(audittime,'yyyy-mm-dd') as audittime,auditresult,auditremarks from
-        (select rownum rn,realname,sex,address,idnumber,academic,housed,marriage,income,idimagefountvar,idimagebackvar,audittime,auditresult,auditremarks from tb_userreal where rownum &lt; #{end}) a where a.rn &gt; #{start}
+        select userid,realname,sex,address,idnumber,academic,housed,marriage,income,idimagefountvar,idimagebackvar,to_char(audittime,'yyyy-mm-dd') as audittime,auditresult,auditremarks from
+        (select rownum rn,userid,realname,sex,address,idnumber,academic,housed,marriage,income,idimagefountvar,idimagebackvar,audittime,auditresult,auditremarks from tb_userreal where rownum &lt; #{end}) a where a.rn &gt; #{start}
         <if test="REALNAME != null and REALNAME != ''">
             and REALNAME like '%'||#{REALNAME}||'%'
         </if>
@@ -25,4 +25,8 @@
             </if>
         </where>
     </select>
+    <!--审核操作-->
+    <update id="chgCheck" parameterType="map">
+        update tb_userreal set AUDITTIME = sysdate, AUDITRESULT = #{AUDITRESULT}, AUDITREMARKS = #{AUDITREMARKS} where userid = #{USERID}
+    </update>
 </mapper>

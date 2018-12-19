@@ -29,4 +29,9 @@ public class BackCheckServiceImpl implements BackCheckService {
         return backCheckDao.getPageCount(map);
     }
 
+    @Override
+    public int chgCheck(Map map) {
+        return backCheckDao.chgCheck(map);
+    }
+
 }

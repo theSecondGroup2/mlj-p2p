@@ -30,6 +30,7 @@
     </div>
 
     <div style="margin-left:400px;margin-top:50px;width:800px" id="waitFinish">
+        <span id="rstSpan"></span>
         <h1>实名认证</h1><h5 style="color:red;">*以下全为必填项</h5>
         <form id="realForm">
         <table class="table table-striped">
@@ -206,16 +207,22 @@
                         $("#finishCheck").css("display","none");
                     } else {
                         $.post("/forwardInfo/getChkSta", {userId:$("#hideId").val()}, function (data) {
-                            if (data == "未审核") {
+                            if (data.AUDITRESULT == "未审核") {
                                 $("#notFinish").css("display","none");
                                 $("#waitFinish").css("display","none");
                                 $("#waitCheck").css("display","block");
                                 $("#finishCheck").css("display","none");
-                            } else {
+                            } else if (data.AUDITRESULT == "审核通过") {
                                 $("#notFinish").css("display","none");
                                 $("#waitFinish").css("display","none");
                                 $("#waitCheck").css("display","none");
                                 $("#finishCheck").css("display","block");
+                            } else if (data.AUDITRESULT == "审核未通过") {
+                                $("#notFinish").css("display","none");
+                                $("#waitFinish").css("display","block");
+                                $("#waitCheck").css("display","none");
+                                $("#finishCheck").css("display","none");
+                                $("#rstSpan").html("审核失败，请重新进行审核，失败原因："+data.AUDITREMARKS);
                             }
                         });
                     }

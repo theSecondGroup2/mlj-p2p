@@ -46,5 +46,15 @@ public class BackCheckController {
         return resultMap;
     }
 
+    /**
+     * 审核操作
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/chgCheck")
+    public int chgCheck(@RequestBody Map map) {
+        return backCheckService.chgCheck(map);
+    }
 
 }

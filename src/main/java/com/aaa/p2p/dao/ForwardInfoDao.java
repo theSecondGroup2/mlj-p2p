@@ -120,6 +120,33 @@ public interface ForwardInfoDao {
      * @param userId
      * @return
      */
-    String getChkSta(int userId);
+    Map getChkSta(int userId);
+
+    /**
+     * 删除旧审核信息
+     * @param map
+     */
+    void delOld(Map map);
+
+    /**
+     * 修改状态
+     * @param map
+     * @return
+     */
+    int chgExistTwo(Map map);
+
+    /**
+     * 提交视频预约
+     * @param map
+     * @return
+     */
+    int subVideo(Map map);
+
+    /**
+     * 获取视频审核状态
+     * @param userId
+     * @return
+     */
+    Map getVidSta(int userId);
 
 }

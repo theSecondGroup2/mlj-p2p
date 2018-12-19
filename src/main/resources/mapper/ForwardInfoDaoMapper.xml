@@ -54,16 +54,34 @@
     <select id="getAra" resultType="String">
         select ANAME from AREA where AID = #{theArea}
     </select>
+    <!--删除旧审核信息-->
+    <delete id="delOld" parameterType="map">
+        delete from TB_USERREAL where USERID = #{userId}
+    </delete>
     <!--提交实名认证-->
     <insert id="subReal" parameterType="map">
         insert into TB_USERREAL (id,userid,realname,sex,address,idnumber,academic,housed,marriage,income,IDIMAGEFOUNTVAR,IDIMAGEBACKVAR,AUDITRESULT)
         values (TB_USERREAL_ID.nextval,#{userId},#{realName},#{sex},#{address},#{idNumber},#{academic},#{housed},#{marriage},#{income},#{forwardPic},#{backPic},'未审核')
     </insert>
+    <!--修改状态-->
     <update id="chgExist" parameterType="map">
         update TB_FWDLOGIN set USEREXIST = 3 where USERID = #{userId}
     </update>
     <!--获取审核状态-->
-    <select id="getChkSta" resultType="String">
-        select AUDITRESULT from TB_USERREAL where USERID = #{userId}
+    <select id="getChkSta" resultType="map">
+        select AUDITRESULT,AUDITREMARKS from TB_USERREAL where USERID = #{userId}
+    </select>
+    <!--修改状态-->
+    <update id="chgExistTwo" parameterType="map">
+        update TB_FWDLOGIN set USEREXIST = 4 where USERID = #{userId}
+    </update>
+    <!--提交视频预约-->
+    <insert id="subVideo" parameterType="map">
+        insert into TB_VIDEO_AUDIT (ID,USERID,APPOINTMENTTIME,AUDITRESULT) values
+        (TB_VIDEO_AUDIT_ID.nextval,#{userId},#{appointmentTime},'未审核')
+    </insert>
+    <!--获取视频审核状态-->
+    <select id="getVidSta" resultType="map">
+        select AUDITRESULT,APPOINTMENTTIME from TB_VIDEO_AUDIT where USERID = #{userId}
     </select>
 </mapper>

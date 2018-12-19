@@ -190,7 +190,7 @@
         //修改银行卡号
         $("#chgFur").click(function () {
             subUrl = "changeBankNum";
-            regTest = /^[0-9]{19}$/;
+            regTest = /^([1-9]{1})(\d{14}|\d{18})$/;
             $('#infoModal').modal('show');
             $("#fstStep").css("display","block");
             $("#nextStep").css("display","block");

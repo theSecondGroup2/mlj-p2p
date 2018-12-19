@@ -92,6 +92,20 @@ public interface ForwardInfoService {
      * @param userId
      * @return
      */
-    String getChkSta(int userId);
+    Map getChkSta(int userId);
+
+    /**
+     * 提交视频预约
+     * @param map
+     * @return
+     */
+    int subVideo(Map map);
+
+    /**
+     * 获取视频审核状态
+     * @param userId
+     * @return
+     */
+    Map getVidSta(int userId);
 
 }

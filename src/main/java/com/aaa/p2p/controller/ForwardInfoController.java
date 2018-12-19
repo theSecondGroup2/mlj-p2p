@@ -180,8 +180,40 @@ public class ForwardInfoController {
      */
     @ResponseBody
     @RequestMapping("/getChkSta")
-    public String getChkSta(int userId) {
+    public Map getChkSta(int userId) {
         return fUserService.getChkSta(userId);
+    }
+
+    /**
+     * 跳转视频认证
+     * @return
+     */
+    @RequestMapping("/toUserVideo")
+    public String toUserVideo() {
+        return "forward/forwardvideo";
+    }
+
+    /**
+     * 提交视频预约
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/subVideo")
+    public int subVideo(@RequestParam Map map) {
+        //System.out.println(map);
+        return fUserService.subVideo(map);
+    }
+
+    /**
+     * 获取视频审核状态
+     * @param userId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getVidSta")
+    public Map getVidSta(int userId) {
+        return fUserService.getVidSta(userId);
     }
 
 }
