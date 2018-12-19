@@ -16,4 +16,10 @@ public interface BidService {
      * @return
      */
     List<Map> getList();
+
+    /**
+     * 获取投标页面，带分页
+     * @return
+     */
+    List<Map> getListBy(Map map);
 }
