@@ -116,4 +116,15 @@ public class ForwardUserServiceImpl implements ForwardUserService {
         return 0;
     }
 
+    @Override
+    public int getResults(int userId) {
+        Map results = fUserDao.getResults(userId);
+        //System.out.println(results);
+        if (results.get("AUDITRESULTA").equals("审核通过") && results.get("AUDITRESULTB").equals("审核通过")) {
+            //System.out.println("111");
+            return fUserDao.chgResults(userId);
+        }
+        return 0;
+    }
+
 }

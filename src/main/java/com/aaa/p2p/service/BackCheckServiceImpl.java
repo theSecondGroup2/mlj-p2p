@@ -34,4 +34,19 @@ public class BackCheckServiceImpl implements BackCheckService {
         return backCheckDao.chgCheck(map);
     }
 
+    @Override
+    public List<Map> getPagesByParamT(Map map) {
+        return backCheckDao.getPagesByParamT(map);
+    }
+
+    @Override
+    public int getPageCountT(Map map) {
+        return backCheckDao.getPageCountT(map);
+    }
+
+    @Override
+    public int chgVideo(Map map) {
+        return backCheckDao.chgVideo(map);
+    }
+
 }
