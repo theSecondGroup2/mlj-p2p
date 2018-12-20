@@ -32,4 +32,25 @@ public interface BackCheckDao {
      */
     int chgCheck(Map map);
 
+    /**
+     * 带参分页查询
+     * @param map
+     * @return
+     */
+    List<Map> getPagesByParamT(Map map);
+
+    /**
+     * 查询分页总数量
+     * @param map
+     * @return
+     */
+    int getPageCountT(Map map);
+
+    /**
+     * 视频审核操作
+     * @param map
+     * @return
+     */
+    int chgVideo(Map map);
+
 }

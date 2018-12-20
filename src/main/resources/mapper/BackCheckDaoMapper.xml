@@ -4,7 +4,7 @@
 <mapper namespace="com.aaa.p2p.dao.BackCheckDao">
     <!--带参分页查询-->
     <select id="getPagesByParam" resultType="map">
-        select userid,realname,sex,address,idnumber,academic,housed,marriage,income,idimagefountvar,idimagebackvar,to_char(audittime,'yyyy-mm-dd') as audittime,auditresult,auditremarks from
+        select userid,realname,sex,address,idnumber,academic,housed,marriage,income,idimagefountvar,idimagebackvar,to_char(audittime,'yyyy-mm-dd hh:mm:ss') as audittime,auditresult,auditremarks from
         (select rownum rn,userid,realname,sex,address,idnumber,academic,housed,marriage,income,idimagefountvar,idimagebackvar,audittime,auditresult,auditremarks from tb_userreal where rownum &lt; #{end}) a where a.rn &gt; #{start}
         <if test="REALNAME != null and REALNAME != ''">
             and REALNAME like '%'||#{REALNAME}||'%'
@@ -28,5 +28,34 @@
     <!--审核操作-->
     <update id="chgCheck" parameterType="map">
         update tb_userreal set AUDITTIME = sysdate, AUDITRESULT = #{AUDITRESULT}, AUDITREMARKS = #{AUDITREMARKS} where userid = #{USERID}
+    </update>
+    <!--带参分页查询-->
+    <select id="getPagesByParamT" resultType="map">
+        select userid,usertel,realname,appointmenttime,auditresult,auditremarks,to_char(audittime,'yyyy-mm-dd hh:mm:ss') as audittime,to_char(appointtime,'yyyy-mm-dd hh:mm:ss') as appointtime from
+        (select rownum rn,a.userid,a.usertel,b.realname,c.appointmenttime,c.auditresult,c.auditremarks,c.audittime,c.appointtime from TB_FWDLOGIN a inner join TB_USERREAL b on (a.userid=b.userid)
+        inner join TB_VIDEO_AUDIT c on (a.userid=c.userid) where rownum &lt; #{end}) d where d.rn &gt; #{start}
+        <if test="REALNAME != null and REALNAME != ''">
+            and REALNAME like '%'||#{REALNAME}||'%'
+        </if>
+        <if test="AUDITRESULT != null and AUDITRESULT != ''">
+            and AUDITRESULT = #{AUDITRESULT}
+        </if>
+    </select>
+    <!--查询分页总数量-->
+    <select id="getPageCountT" resultType="int">
+        select count(*) from TB_FWDLOGIN a inner join TB_USERREAL b on (a.userid=b.userid) inner join TB_VIDEO_AUDIT c on (a.userid=c.userid)
+        <where>
+            <if test="REALNAME != null and REALNAME != ''">
+                and b.REALNAME like '%'||#{REALNAME}||'%'
+            </if>
+            <if test="AUDITRESULT != null and AUDITRESULT != ''">
+                and c.AUDITRESULT = #{AUDITRESULT}
+            </if>
+        </where>
+    </select>
+    <!--视频审核操作-->
+    <update id="chgVideo" parameterType="map">
+        update tb_video_audit set AUDITRESULT = #{AUDITRESULT}, APPOINTTIME = to_date(#{APPOINTTIME},'yyyy-MM-dd HH24:mi:ss'),
+        AUDITREMARKS = #{AUDITREMARKS}, AUDITTIME = sysdate where USERID = #{USERID}
     </update>
 </mapper>

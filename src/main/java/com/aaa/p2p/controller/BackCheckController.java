@@ -25,7 +25,7 @@ public class BackCheckController {
      * @return
      */
     @RequestMapping("/toRealCheck")
-    public String toUserReal() {
+    public String toRealCheck() {
         return "back/userrealcheck";
     }
 
@@ -33,7 +33,7 @@ public class BackCheckController {
     private BackCheckService backCheckService;
 
     /**
-     * 审核分页
+     * 实名审核分页
      * @param map
      * @return
      */
@@ -55,6 +55,41 @@ public class BackCheckController {
     @RequestMapping("/chgCheck")
     public int chgCheck(@RequestBody Map map) {
         return backCheckService.chgCheck(map);
+    }
+
+    /**
+     * 跳转视频认证审核
+     * @return
+     */
+    @RequestMapping("/toVideoCheck")
+    public String toVideoCheck() {
+        return "back/uservideocheck";
+    }
+
+    /**
+     * 视频审核分页
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/videoPage")
+    public Object videoPage(@RequestBody Map map) {
+        Map resultMap = new HashMap();
+        resultMap.put("pageData", backCheckService.getPagesByParamT(map));
+        resultMap.put("total", backCheckService.getPageCountT(map));
+        return resultMap;
+    }
+
+    /**
+     * 视频审核操作
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/chgVideo")
+    public int chgVideo(@RequestBody Map map) {
+        //System.out.println(map);
+        return backCheckService.chgVideo(map);
     }
 
 }

@@ -195,4 +195,15 @@ public class ForwardUserController {
         return fUserService.chgHead(map);
     }
 
+    /**
+     * 是否通过所有审核
+     * @param userId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getResults")
+    public int getResults(int userId) {
+        return fUserService.getResults(userId);
+    }
+
 }

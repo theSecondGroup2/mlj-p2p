@@ -34,4 +34,13 @@
     <update id="chgExist" parameterType="map">
         update TB_FWDLOGIN set USEREXIST = 2 where USERID = #{userId}
     </update>
+    <!--是否通过所有审核-->
+    <select id="getResults" resultType="map">
+        select b.auditresult AUDITRESULTA,c.auditresult AUDITRESULTB from TB_FWDLOGIN a inner join TB_USERREAL b on
+        (a.userid=b.userid) inner join TB_VIDEO_AUDIT c on (a.userid=c.userid) where a.userid = #{userId}
+    </select>
+    <!--改变登录表状态-->
+    <update id="chgResults" parameterType="int">
+        update TB_FWDLOGIN set USEREXIST = 5 where USERID = #{userId}
+    </update>
 </mapper>

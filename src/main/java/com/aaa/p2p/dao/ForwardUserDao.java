@@ -66,4 +66,17 @@ public interface ForwardUserDao {
      */
     int chgExist(Map map);
 
+    /**
+     * 是否通过所有审核
+     * @param userId
+     */
+    Map getResults(int userId);
+
+    /**
+     * 改变登录表状态
+     * @param userId
+     * @return
+     */
+    int chgResults(int userId);
+
 }

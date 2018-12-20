@@ -54,4 +54,11 @@ public interface ForwardUserService {
      */
     int chgHead(Map map);
 
+    /**
+     * 是否通过所有审核
+     * @param userId
+     * @return
+     */
+    int getResults(int userId);
+
 }
