@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.p2p.dao.CheckBidOneDao">
+    <!--查询投标信息-->
+    <select id="selectBidSumbit" resultType="map">
+        select s.bidAmount,to_char(s.bidDate,'yyyy-mm-dd') BIDDATE,s.bidRate,u.realname,u.USERID
+from tb_bid_submit s
+join tb_UserReal u
+    on s.userID = u.userID
+where s.BIDINFOID = #{ID}
+    </select>
+    <!--查询审核信息-->
+    <select id="selectBidAudit" resultType="map">
+        select to_char(a.auditTime,'yyyy-mm-dd') auditTime,a.auditResult,a.auditRemarks,to_char(a.APPLYTIME,'yyyy-mm-dd') applytime,e.EMPNAME
+from tb_bid_audit a
+join TB_EMP e
+    on a.auditID = e.ID
+where a.bidID = #{ID}
+    </select>
+</mapper>

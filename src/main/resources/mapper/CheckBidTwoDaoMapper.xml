@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.p2p.dao.CheckBidTwoDao">
+    <!--通过标的id获取标的信息-->
+   <select id="getBidInfoByBidId" resultType="map">
+       select * from TB_BIDINFO where ID = #{param1}
+   </select>
+    <!--插入还款计划表-->
+    <insert id="insertBidRepayInFo">
+        insert into tb_bid_repay_info (id,
+                               bidID,
+                               bidRepayAmount,
+                               bidRepayDeadDate,
+                               bidRepayState,
+                               bidRepayNumber,
+                               bidRepayTotPmts,
+                               bidRepayMethod,
+                               bidRepayUserID
+    ) values (tb_bid_repay_info_id.nextval,
+               #{param1},
+               #{param2},
+               to_date(#{param3},'YYYY-MM-DD HH24:MI:SS'),
+               #{param4},
+               #{param5},
+               #{param6},
+               #{param7},
+               #{param8}
+    )
+    </insert>
+    <!--根据投标人id获取投标的金额和投标利息，查询投标记录表-->
+    <select id="getBidAmount" resultType="map">
+        select * from  TB_BID_SUBMIT where userid = #{param1} and BIDINFOID = #{param2}
+    </select>
+    <!--更改投资人的信息-->
+    <update id="updateAccount">
+        update TB_ACCOUNT
+        set
+          RECEIVEINTEREST = RECEIVEINTEREST + #{param3},
+          RECEIVEPRINCIPAL = RECEIVEPRINCIPAL + #{param1},
+          FREEZINGAMOUNT = FREEZINGAMOUNT - #{param2}
+        where USERID = #{param4}
+    </update>
+    <!--更改借款人的信息-->
+    <update id="updateAccountJie">
+        update TB_ACCOUNT
+        set
+          AVAILABLEBALANCE = AVAILABLEBALANCE + #{param1},
+          RETURNAMOUNT = RETURNAMOUNT + #{param2},
+          SURPLUSCREDITLINE = SURPLUSCREDITLINE - #{param1}
+        where USERID = #{param3}
+    </update>
+    <!--通过userid查accountid-->
+    <select id="selectAccountIdByUserId" resultType="map">
+        select * from TB_ACCOUNT where USERID = #{param1}
+    </select>
+    <!--插入账户流水表-->
+    <insert id="insertUserAccountFlow">
+        insert into TB_USER_ACCOUNT_FLOW values (
+        TB_USER_ACCOUNT_FLOW_ID.nextval,
+        #{param1},
+        #{param2},
+        #{param3},
+        #{param4},
+        sysdate,
+        #{param5}
+        )
+    </insert>
+</mapper>
