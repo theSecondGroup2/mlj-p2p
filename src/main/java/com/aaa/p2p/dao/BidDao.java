@@ -49,10 +49,21 @@ public interface BidDao {
     List<Map> getListBy(Map map);
 
     /**
-     * 更新标的信息
+     * 更新标的信息，把标投的金额更新了
      * @param money
      * @return
      */
     @Update("update TB_BIDINFO set bidcurrentamount=#{param1} where id=#{param2} ")
     int investMoney(double money,int bidId);
+
+    /**
+     * 更新账户的可用余额，冻结金额
+     * @param USERID
+     * @param investMoney
+     * @return
+     */
+    @Update("update TB_ACCOUNT set AVAILABLEBALANCE=AVAILABLEBALANCE-#{param2},FREEZINGAMOUNT=FREEZINGAMOUNT+#{param2} where userId=#{param1}")
+    int updateMoney(String USERID,double investMoney);
+
+    int insertInvest(int bidId,String  USERID,String USERNAME,double investMoney,double bidRate);
 }
