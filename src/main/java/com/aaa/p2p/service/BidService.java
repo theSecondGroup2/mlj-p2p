@@ -18,6 +18,12 @@ public interface BidService {
     List<Map> getList();
 
     /**
+     * 通过bidid获得投标数据
+     * @return
+     */
+    List<Map> getListByBidId(int bidid);
+
+    /**
      * 获取投标页面，带分页
      * @return
      */

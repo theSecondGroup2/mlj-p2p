@@ -55,7 +55,8 @@ public class ForWordController {
      * @return
      */
     @RequestMapping("/toBidInfo")
-    public String toBidInfo(Model model){
-        return "yrd/infor";
+    public String toBidInfo(int bidid,Model model){
+        model.addAttribute("list",bidService.getListByBidId(bidid));
+        return "yrd/bidInfo";
     }
 }

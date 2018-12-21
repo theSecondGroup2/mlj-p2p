@@ -24,6 +24,11 @@ public class BidServiceImpl implements BidService{
     }
 
     @Override
+    public List<Map> getListByBidId(int bidid) {
+        return bidDao.getListByBidId(bidid);
+    }
+
+    @Override
     public List<Map> getListBy(Map map) {
           return bidDao.getListBy(map);
     }
