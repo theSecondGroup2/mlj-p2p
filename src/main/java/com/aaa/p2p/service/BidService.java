@@ -24,6 +24,13 @@ public interface BidService {
     List<Map> getListByBidId(int bidid);
 
     /**
+     * 通过bidid 来获得tb_account的可用余额
+     * @param bidid
+     * @return
+     */
+    Map getMaxMoneyByBidId(int bidid);
+
+    /**
      * 获取投标页面，带分页
      * @return
      */

@@ -21,11 +21,19 @@ public interface BidDao {
     List<Map> getList();
 
     /**
-     * 获取投标页面，不带分页
+     * 获取投标页面根据bidid ,并且查出来最大可以投的金额
      * @return
      */
-    @Select("select * from tb_bidinfo where Id=#{0}")
+    @Select("select a.*,(bidamount-bidcurrentamount) as maxmoney from TB_BIDINFO a where Id=#{0}")
     List<Map> getListByBidId(int bidid);
+
+    /**
+     * 通过bidid 来获得tb_account的可用余额
+     * @param bidid
+     * @return
+     */
+    @Select("select b.AVAILABLEBALANCE from TB_BIDINFO a left join tb_account b on a.userid=b.id where a.id=#{0}")
+    Map getMaxMoneyByBidId(int bidid);
 
     /**
      * 获得投标页面，带分页
