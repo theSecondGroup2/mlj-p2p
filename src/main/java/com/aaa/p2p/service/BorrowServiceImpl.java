@@ -19,6 +19,10 @@ public class BorrowServiceImpl implements BorrowService{
 
     @Override
     public int insert(Map map) {
+        //把bidrate除以100放进去
+        /*Object BIDRATE1 = map.get("BIDRATE");
+        Integer BIDRATE = Integer.valueOf(BIDRATE1+"");
+        map.put("BIDRATE",BIDRATE);*/
         return borrowDao.insert(map);
     }
 }

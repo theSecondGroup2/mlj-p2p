@@ -21,14 +21,21 @@ public interface BidDao {
     List<Map> getList();
 
     /**
+     * 获取投标页面，不带分页
+     * @return
+     */
+    @Select("select * from tb_bidinfo where Id=#{0}")
+    List<Map> getListByBidId(int bidid);
+
+    /**
      * 获得投标页面，带分页
      * @return
      */
-    @Select("<script>select  a.*,round(bidcurrentamount/bidamount,2)*100 as BIDSCHEDULE from tb_bidInfo a" +
-           "<where>     " +
+    @Select("<script>select  a.*,round(bidcurrentamount/bidamount,2)*100 as BIDSCHEDULE from tb_bidInfo a " +
+            "where bidState='审核通过'    " +
             "<if test=\"bidrate!=null and bidrate!=''\"> and ${bidrate}</if>" +
             "<if test=\"biddeadline!=null and biddeadline!=''\"> and ${biddeadline}</if>" +
             "<if test=\"bidrepaymentmethod!=null and bidrepaymentmethod!=''\"> and ${bidrepaymentmethod}</if>" +
-            "</where></script>")
+            "</script>")
     List<Map> getListBy(Map map);
 }

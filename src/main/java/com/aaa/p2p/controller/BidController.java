@@ -60,4 +60,16 @@ public class BidController {
         }
         return resultMap;
     }
+
+    /**
+     * 不加ResponseBody 返回Object时候返回 1 不加这个会非法参数异常
+     * @param money
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("invest")
+    public Object toInvest(int money){
+        System.out.println(money);
+        return 1;
+    }
 }
