@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,10 +56,16 @@ public class BidServiceImpl implements BidService{
         //把投资金额加上已投标的金额
         double money=integer+investMoney;
         bidDao.investMoney(money,bidId);
-        //更新个人余额 投资了多少个人余额减去多少
-         session.getAttribute("userInfo");
-
-
+        //更新个人余额 投资了多少个人余额减去多少,并且冻结金额增加
+        Object info = session.getAttribute("userInfo");
+        Map userInfo = (HashMap) info;
+        String USERID = userInfo.get("USERID")+"";
+        String USERNAME = userInfo.get("USERNAME") + "";
+        //执行dao层的更新钱方法
+        bidDao.updateMoney(USERID,investMoney);
+        //更新投资列表记录表
+        double bidRate=2.00;
+        bidDao.insertInvest(bidId,USERID,USERNAME,investMoney,bidRate);
         return 0;
     }
 }

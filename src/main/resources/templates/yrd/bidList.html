@@ -33,24 +33,24 @@
             </ul>
             <ul class="fn-right header-top-ul">
                 <!--用户名为空-->
-                <li th:if="${session.userName} eq null">
+                <li th:if="${session.userInfo.USERNAME} eq null">
                     <div class="" >
                         <a href="/forwardUser/toForwardUserReg" class="" title="免费注册" >免费注册</a>
                     </div>
                 </li>
-                <li th:if="${session.userName} eq null">
+                <li th:if="${session.userInfo.USERNAME} eq null">
                     <div class="" >
                         <a href="/forwardUser/toForwardUserLogin" class="js-login" title="登录" >登录</a>
                     </div>
                 </li>
                 <!--用户名不为空-->
-                <li th:if="${session.userName} ne null">
+                <li th:if="${session.userInfo.USERNAME} ne null">
                     <div class="">
                         <span th:text="欢迎您 "></span>
-                        <span th:text="${session.userName}"></span>
+                        <span th:text="${session.userInfo.USERNAME}"></span>
                     </div>
                 </li>
-                <li th:if="${session.userName} ne null">
+                <li th:if="${session.userInfo.USERNAME} ne null">
                     <div class="" >
                         <a href="/user/toLogin" class="js-login" title="退出">退出</a>
                     </div>
