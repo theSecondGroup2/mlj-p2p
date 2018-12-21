@@ -71,7 +71,7 @@
                 <ul>
                     <li> <span class="f16">借款金额</span><br>
                         <span class="f30 c-333" id="account" th:text="${list[0].BIDAMOUNT}"></span>元 </li>
-                    <li class="relative"><span class="f16">年利率</span><br>
+                    <li class="relative"><span class="f16">月利率</span><br>
                         <span class="f30 " th:text="${list[0].BIDRATE}+'%'"></span> </li>
                     <li><span class="f16">借款期限</span><br>
                         <span class="f30 c-333" th:text="${list[0].BIDDEADLINE}"></span>个月 </li>
@@ -86,6 +86,7 @@
                         <span class="c-green" style="color: #b92c28" th:text="${list[0].MAXMONEY}"></span> 元
                         <input type="hidden" th:value="${maxMoney.AVAILABLEBALANCE}" id="keYong"/>
                         <input type="hidden" th:value="${list[0].MAXMONEY}" id="zuiDa"/>
+                        <input type="hidden" th:value="${list[0].ID}" id="bidId"/>
                     </li>
                     <li> <span class="c-888">投资范围：</span> <span id="account_range"> 100元~
             不限 </span> </li>
@@ -109,7 +110,7 @@
                                 <h4 class="modal-title" id="myModalLabel">投资金额选择</h4>
                             </div>
                             <div class="modal-body">
-                                投资金额:<input id="investMoney" name="investMoney" onkeyup="check()"/><span id="inner"></span>
+                                投资金额:<input id="investMoney" name="investMoney" style="width: 250px" onkeydown="return showPri(event)" onkeyup="check()"/><span id="inner"></span>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -471,7 +472,15 @@
 <script src="../script/jquery.datetimepicker.js" type="text/javascript"></script>
 <script src="../script/datepicker.js" type="text/javascript"></script>
 <script type="text/javascript">
-//校验输入合适金额
+    //只能输入数字
+    function showPri(event){
+        var eve=event?event:window.event;
+        //document.getElementById("tex").value=eve.keyCode;
+        var a = eve.keyCode;
+        if(a>=48&&a<=57||a>=96&&a<=105||a==110||a==190||a==8)return true;
+        return false;
+    }
+    //校验输入合适金额
 function check() {
     var money=$("#investMoney").val();
     var moeny1=parseFloat(money);
@@ -509,11 +518,14 @@ $("#aadd").click(function () {
     });*/
     //显示
     $('#myModal').modal('show');
+    var zuiDa=parseFloat($("#zuiDa").val());
+    $("#investMoney").val("此标剩余可投金额为"+zuiDa+"元");
+    $("#submit").prop("disabled","disabled");
 });
 $("#submit").click(function(){
     $.ajax({
         url:'/bid/invest',
-        data:{money:$("#investMoney").val()},
+        data:{money:$("#investMoney").val(),bidId:$("#bidId").val()},
         type:'post',
         success:function () {
             $('#myModal').modal('hide');

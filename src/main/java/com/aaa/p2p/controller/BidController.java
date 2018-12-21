@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,14 +63,16 @@ public class BidController {
     }
 
     /**
+     * 投标方法
      * 不加ResponseBody 返回Object时候返回 1 不加这个会非法参数异常
      * @param money
      * @return
      */
     @ResponseBody
     @RequestMapping("invest")
-    public Object toInvest(int money){
+    public Object toInvest(double money, int bidId, HttpSession session){
         System.out.println(money);
+        bidService.investMoney(money,bidId,session);
         return 1;
     }
 }

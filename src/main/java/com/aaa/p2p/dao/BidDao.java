@@ -1,6 +1,7 @@
 package com.aaa.p2p.dao;
 
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Map;
@@ -46,4 +47,12 @@ public interface BidDao {
             "<if test=\"bidrepaymentmethod!=null and bidrepaymentmethod!=''\"> and ${bidrepaymentmethod}</if>" +
             "</script>")
     List<Map> getListBy(Map map);
+
+    /**
+     * 更新标的信息
+     * @param money
+     * @return
+     */
+    @Update("update TB_BIDINFO set bidcurrentamount=#{param1} where id=#{param2} ")
+    int investMoney(double money,int bidId);
 }

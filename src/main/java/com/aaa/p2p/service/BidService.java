@@ -1,5 +1,6 @@
 package com.aaa.p2p.service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -35,4 +36,11 @@ public interface BidService {
      * @return
      */
     List<Map> getListBy(Map map);
+
+    /**
+     * 投资金额，去更新投标金额
+     * @param money
+     * @return
+     */
+    int investMoney(double money, int bidId, HttpSession session);
 }
