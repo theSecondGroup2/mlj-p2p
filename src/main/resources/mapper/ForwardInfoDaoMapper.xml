@@ -84,4 +84,8 @@
     <select id="getVidSta" resultType="map">
         select AUDITRESULT,APPOINTMENTTIME from TB_VIDEO_AUDIT where USERID = #{userId}
     </select>
+    <!--获取账户余额和应还资金总额-->
+    <select id="getFstCount" resultType="map">
+        select AVAILABLEBALANCE,BIDAMOUNT from TB_BIDINFO a inner join tb_account b on(a.userid=b.userid) where a.userid=#{userId}
+    </select>
 </mapper>

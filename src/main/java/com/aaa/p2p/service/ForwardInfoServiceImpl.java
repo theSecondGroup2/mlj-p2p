@@ -113,4 +113,8 @@ public class ForwardInfoServiceImpl implements ForwardInfoService {
         return fInfoDao.getVidSta(userId);
     }
 
+    @Override
+    public Map getFstCount(int userId) {
+        return fInfoDao.getFstCount(userId);
+    }
 }

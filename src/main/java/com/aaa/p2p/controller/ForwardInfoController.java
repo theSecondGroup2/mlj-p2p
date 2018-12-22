@@ -216,4 +216,15 @@ public class ForwardInfoController {
         return fUserService.getVidSta(userId);
     }
 
+    /**
+     * 获取账户余额和应还资金总额
+     * @param userId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getFstCount")
+    public Map getFstCount(int userId) {
+        return fUserService.getFstCount(userId);
+    }
+
 }
