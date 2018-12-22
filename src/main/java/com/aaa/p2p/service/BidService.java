@@ -26,10 +26,10 @@ public interface BidService {
 
     /**
      * 通过bidid 来获得tb_account的可用余额
-     * @param bidid
+     * @param session
      * @return
      */
-    Map getMaxMoneyByBidId(int bidid);
+    Map getMaxMoneyByUserId(HttpSession session);
 
     /**
      * 获取投标页面，带分页

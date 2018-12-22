@@ -55,11 +55,11 @@ public class ForWordController {
      * @return
      */
     @RequestMapping("/toBidInfo")
-    public String toBidInfo(int bidid,Model model){
+    public String toBidInfo(int bidid,Model model,HttpSession session){
         //获得List<map> 标的信息
         model.addAttribute("list",bidService.getListByBidId(bidid));
         //获得map  用户可用资金
-        model.addAttribute("maxMoney",bidService.getMaxMoneyByBidId(bidid));
+        model.addAttribute("maxMoney",bidService.getMaxMoneyByUserId(session));
         return "yrd/bidInfo";
     }
 }

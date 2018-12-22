@@ -1,5 +1,6 @@
 package com.aaa.p2p.dao;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -29,12 +30,13 @@ public interface BidDao {
     List<Map> getListByBidId(int bidid);
 
     /**
-     * 通过bidid 来获得tb_account的可用余额
-     * @param bidid
+     * 通过userID 来获得tb_account的可用余额
+     * @param userID
      * @return
      */
-    @Select("select b.AVAILABLEBALANCE from TB_BIDINFO a left join tb_account b on a.userid=b.id where a.id=#{0}")
-    Map getMaxMoneyByBidId(int bidid);
+    //@Select("select b.AVAILABLEBALANCE from TB_BIDINFO a left join tb_account b on a.userid=b.id where a.id=#{0}")
+    @Select("select AVAILABLEBALANCE from tb_account where userID=#{param1}")
+    Map getMaxMoneyByUserId(String userID);
 
     /**
      * 获得投标页面，带分页
@@ -65,5 +67,42 @@ public interface BidDao {
     @Update("update TB_ACCOUNT set AVAILABLEBALANCE=AVAILABLEBALANCE-#{param2},FREEZINGAMOUNT=FREEZINGAMOUNT+#{param2} where userId=#{param1}")
     int updateMoney(String USERID,double investMoney);
 
-    int insertInvest(int bidId,String  USERID,String USERNAME,double investMoney,double bidRate);
+    /**
+     * 插入投资列表记录表
+     * @param bidId
+     * @param USERID
+     * @param USERNAME
+     * @param investMoney
+     * @param bidRate
+     * @return
+     */
+    @Insert("insert into TB_BID_SUBMIT  values (TB_BID_SUBMIT_id.nextval,#{param1},#{param2},#{param3},#{param4},sysdate,#{param5})")
+    int insertInvest(int bidId,String USERID,double investMoney,double bidRate,String USERNAME);
+
+    /**
+     * 通过userID获得accountID
+     * @param userID
+     * @return
+     */
+    @Select("select ID from TB_ACCOUNT where userID=#{param1}")
+    int getAccountIDByUserID(String userID);
+
+    /**
+     * 插入用户账户流水表
+     * @param USERID
+     * @param accountIDByUserID
+     * @param investMoney
+     * @param availablebalance
+     * @return
+     */
+    @Insert("insert into TB_USER_ACCOUNT_FLOW values(TB_USER_ACCOUNT_FLOW_ID.nextval,#{param1},#{param2},#{param3},#{param4},sysdate,'冻结')")
+    int insertFlow(String USERID,int accountIDByUserID,double investMoney,Object availablebalance);
+
+    /**
+     * 把标的状态改成满标，根据bidID
+     * @param bidID
+     * @return
+     */
+    @Update("update TB_BIDINFO set bidState='满标' where ID=#{param1}")
+    int updateBidState(int bidID);
 }

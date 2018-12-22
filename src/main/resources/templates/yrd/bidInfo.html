@@ -487,6 +487,7 @@ function check() {
     //获得最大投资金额和自己的最大金额判断最大可以投的金额为多少
     var zuiDa=parseFloat($("#zuiDa").val());
     var keYong=parseFloat($("#keYong").val());
+    alert('可用余额'+keYong);
     var maxMoney=1;
     if(zuiDa>keYong){
         //如果最大可投金额大于自己可用的最大金额， maxMoney为可用金额
