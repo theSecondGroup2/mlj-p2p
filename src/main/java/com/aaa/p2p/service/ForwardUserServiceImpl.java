@@ -94,10 +94,11 @@ public class ForwardUserServiceImpl implements ForwardUserService {
     }
 
     @Override
-    public void userLogOut() {
+    public int userLogOut() {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpSession session = attr.getRequest().getSession();
         session.invalidate();
+        return 1;
     }
 
     /**

@@ -149,4 +149,11 @@ public interface ForwardInfoDao {
      */
     Map getVidSta(int userId);
 
+    /**
+     * 获取账户余额和应还资金总额
+     * @param userId
+     * @return
+     */
+    Map getFstCount(int userId);
+
 }

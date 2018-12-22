@@ -33,7 +33,7 @@
                         <span class="top-text">欢迎您，亲爱的：</span>
                         <span class="top-text" id="getSession"></span>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span class="top-text"><a href="#">注销</a></span>
+                        <span class="top-text"><a href="/forwardUser/toForwardUserLogin" id="logOut">注销</a></span>
                     </div>
                 </div>
             </div>
@@ -148,6 +148,13 @@
                 $(".active-tab span").html(activeTab);
                 $(".previous-tab span").html(previousTab);
             });
+        });
+        $("#logOut").click(function () {
+            if (confirm("确定注销吗？")) {
+                return true;
+            } else {
+                return false;
+            }
         });
     </script>
 

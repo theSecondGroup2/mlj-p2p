@@ -165,8 +165,8 @@ public class ForwardUserController {
      */
     @ResponseBody
     @RequestMapping("/userLogOut")
-    public void userLogOut() {
-        fUserService.userLogOut();
+    public int userLogOut() {
+        return fUserService.userLogOut();
     }
 
     /**

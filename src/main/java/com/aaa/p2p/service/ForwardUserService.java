@@ -45,7 +45,7 @@ public interface ForwardUserService {
     /**
      * 注销用户（销毁session）
      */
-    void userLogOut();
+    int userLogOut();
 
     /**
      * 修改头像
