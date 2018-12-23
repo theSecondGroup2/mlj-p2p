@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.p2p.dao.HistoryDao">
+    <!--连表查询-->
+    <select id="getHistoryList" resultType="map">
+      select a.id,a.userid,a.bidid,u.realname,b.bidAmount,e.EMPNAME,to_char(a.AUDITTIME,'yyyy-mm-dd hh24:mi:ss') AUDITTIME,to_char(a.APPLYTIME,'yyyy-mm-dd hh24:mi:ss') APPLYTIME,a.AUDITRESULT,a.AUDITREMARKS
+from
+TB_BID_AUDIT a
+join tb_UserReal u
+on u.userID = a.userID
+join tb_bidinfo b
+    on b.id = a.bidID
+join TB_EMP e
+    on e.ID = a.auditID
+    <where>
+        <if test="STATE != null and STATE != ''">
+            and a.AUDITRESULT = #{STATE}
+        </if>
+        <if test="name != null and name != ''">
+            and u.REALNAME = #{name}
+        </if>
+    </where>
+    </select>
+</mapper>
