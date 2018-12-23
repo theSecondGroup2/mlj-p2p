@@ -52,6 +52,29 @@ public class PowerController {
         return powerList;
     }
     /**
+     * 回显权限菜单
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/backTree")
+    public Object backTree(@RequestBody Map map) {
+        Integer roleId = Integer.valueOf(map.get("roleId")+"");
+        List<TreeNode> powerList = powerService.getBackPowerList(roleId);
+        List list = new ArrayList();
+        for (TreeNode treeNode : powerList) {
+            if (treeNode.getChildren()!=null&&treeNode.getChildren().size()!=0){
+                List<TreeNode> list1 = treeNode.getChildren();
+                for (TreeNode node : list1) {
+                    int id = node.getId();
+                    list.add(id);
+                }
+            }
+        }
+        System.out.println(list);
+        return list;
+    }
+    /**
      * 毫无理由获取权限菜单树
      *
      * @return

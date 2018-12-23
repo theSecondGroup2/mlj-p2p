@@ -22,4 +22,19 @@ join TB_EMP e
         </if>
     </where>
     </select>
+    <!--查询还款计划表-->
+    <select id="selectRepay" resultType="map">
+        select i.ID,i.BIDREPAYUSERID as USERID,i.bidid,i.BIDREPAYAMOUNT,to_char(i.BIDREPAYDEADDATE,'yyyy-mm-dd hh24:mi:ss') BIDREPAYDEADDATE,i.BIDREPAYSTATE,i.BIDREPAYNUMBER,i.BIDREPAYTOTPMTS,i.BIDREPAYMETHOD,u.REALNAME
+        from TB_BID_REPAY_INFO i
+        join TB_USERREAL u
+        on i.BIDREPAYUSERID = u.USERID
+        <where>
+            <if test="name != null and name != ''">
+                and u.REALNAME = #{name}
+            </if>
+            <if test="state != null and state != ''">
+                and i.BIDREPAYSTATE = #{state}
+            </if>
+        </where>
+    </select>
 </mapper>

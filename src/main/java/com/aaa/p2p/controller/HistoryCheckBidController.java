@@ -49,4 +49,49 @@ public class HistoryCheckBidController {
         resultMap.put("pageData", pageInfo.getList());
         return resultMap;
     }
+
+    /**
+     * 满标查询
+     * @return
+     */
+    @RequestMapping("/selectFullBid")
+    public String selectFullBid(){
+        return "back/manbiao";
+    }
+    /**
+     * 流标查询
+     * @return
+     */
+    @RequestMapping("/selectLiuBid")
+    public String selectLiuBid(){
+        return "back/liubiao";
+    }
+
+    /**
+     * 还款详情页
+     * @return
+     */
+    @RequestMapping("/repay")
+    public String repay(){
+
+        return "back/repay";
+    }
+
+    /**
+     * 查询还款计划表
+     * @param map
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/selectRepay")
+    public Object selectRepay(@RequestBody Map map){
+        //设置当前第几页和每页显示数量
+        PageHelper.startPage(Integer.valueOf(map.get("pageNo") + ""), Integer.valueOf(map.get("pageSize") + ""));
+        //用PageInfo对结果进行包装
+        PageInfo<Map> pageInfo = new PageInfo<Map>(historyService.selectRepay(map));
+        Map resultMap = new HashMap();
+        resultMap.put("total", pageInfo.getTotal());
+        resultMap.put("pageData", pageInfo.getList());
+        return resultMap;
+    }
 }

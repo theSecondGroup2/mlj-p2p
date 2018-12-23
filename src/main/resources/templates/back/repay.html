@@ -23,7 +23,7 @@
             <el-form-item label="贷款人姓名">
                 <el-input v-model="searchForm.borrowUserName" placeholder="姓名"></el-input>
             </el-form-item>
-            <el-form-item label="审核结果">
+            <el-form-item label="还款状态">
                 <template>
                     <el-select v-model="searchForm.res" clearable placeholder="请选择">
                         <el-option
@@ -51,7 +51,7 @@
                 style="width: 100%">
             <el-table-column
                     prop="ID"
-                    label="审核id"
+                    label="id"
                     align="center"
                     v-if="isShow">
             </el-table-column>
@@ -73,36 +73,32 @@
                     align="center">
             </el-table-column>
             <el-table-column
-                    prop="BIDAMOUNT"
-                    label="贷款金额"
+                    prop="BIDREPAYAMOUNT"
+                    label="本期还款金额"
                     align="center">
             </el-table-column>
 
             <el-table-column
-                    prop="EMPNAME"
-                    label="审核人姓名"
+                    prop="BIDREPAYDEADDATE"
+                    label="还款截至日期"
                     align="center">
             </el-table-column>
             <el-table-column
-                    prop="AUDITTIME"
-                    label="审核时间"
+                    prop="BIDREPAYSTATE"
+                    label="还款状态"
                     align="center">
             </el-table-column>
             <el-table-column
-                    prop="AUDITRESULT"
-                    label="审核结果"
+                    prop="BIDREPAYNUMBER"
+                    label="还款期数"
                     align="center">
             </el-table-column>
             <el-table-column
-                    prop="AUDITREMARKS"
-                    label="审核备注"
+                    prop="BIDREPAYTOTPMTS"
+                    label="还款总期数"
                     align="center">
             </el-table-column>
-            <el-table-column
-                    prop="APPLYTIME"
-                    label="申请时间"
-                    align="center">
-            </el-table-column>
+
             <el-table-column
                     label="操作"
                     align="center">
@@ -249,7 +245,7 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: '历史审核记录'
+            message: '还款详情'
         }
     });
     var tableView = new Vue({
@@ -268,6 +264,12 @@
                 BIDDEADDAY: '',//招标天数
                 BIDAPPLYDATE: ''
             },
+            //部门下拉框框
+            options: [
+                {res: "还款中"},
+                {res: "还款结束"},
+                {res:"逾期还款"}
+            ],
             day: '',//招标天数
             dates: '',//申请日期
             //中间弹出表单
@@ -293,18 +295,6 @@
             userId: '',//贷款人id
             //弹出框表单的对齐方式
             labelPosition: "top",
-            //部门下拉框框
-            options: [
-                {res: "拒绝"},
-                {res: "未审核"},
-                {res: "审核通过"},
-                {res: "流标"},
-                {res: "满标"},
-                {res: "满标一审通过"},
-                {res: "满标二审通过"},
-                {res: "还款中"},
-                {res: "还款结束"}
-                ],
             //角色下拉框
             roles: [],
             //列表数据
@@ -343,7 +333,7 @@
         created: function () {
             //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
             var self = this;
-            axios.post('/his/selectHis', {
+            axios.post('/his/selectRepay', {
                 'pageNo': self.currentPage,
                 'pageSize': self.pageSize
             }).then(function (response) {
@@ -368,11 +358,11 @@
                 var res = this.searchForm.res;
                 //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
                 var self = this;
-                axios.post('/his/selectHis', {
+                axios.post('/his/selectRepay', {
                     'pageNo': self.currentPage,
                     'pageSize': self.pageSize,
                     'name':username,
-                    'STATE':res
+                    'state':res
                 }).then(function (response) {
                     self.total = response.data.total;
                     self.tableData = response.data.pageData;

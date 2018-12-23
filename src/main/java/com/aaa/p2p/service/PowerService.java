@@ -15,6 +15,12 @@ import java.util.Map;
  */
 public interface PowerService {
     /**
+     * 直接给roleid
+     * @param roleId
+     * @return
+     */
+    List<TreeNode> getBackPowerList(Integer roleId);
+    /**
      * 获取权限列表
      * @return
      */

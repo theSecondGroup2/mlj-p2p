@@ -23,18 +23,6 @@
             <el-form-item label="贷款人姓名">
                 <el-input v-model="searchForm.borrowUserName" placeholder="姓名"></el-input>
             </el-form-item>
-            <el-form-item label="审核结果">
-                <template>
-                    <el-select v-model="searchForm.res" clearable placeholder="请选择">
-                        <el-option
-                                v-for="item in options"
-                                :key="item.res"
-                                :label="item.res"
-                                :value="item.res">
-                        </el-option>
-                    </el-select>
-                </template>
-            </el-form-item>
             <el-form-item>
                 <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
                 <el-button type="success" icon="plus" @click="flushData">清空</el-button>
@@ -75,12 +63,6 @@
             <el-table-column
                     prop="BIDAMOUNT"
                     label="贷款金额"
-                    align="center">
-            </el-table-column>
-
-            <el-table-column
-                    prop="EMPNAME"
-                    label="审核人姓名"
                     align="center">
             </el-table-column>
             <el-table-column
@@ -293,18 +275,6 @@
             userId: '',//贷款人id
             //弹出框表单的对齐方式
             labelPosition: "top",
-            //部门下拉框框
-            options: [
-                {res: "拒绝"},
-                {res: "未审核"},
-                {res: "审核通过"},
-                {res: "流标"},
-                {res: "满标"},
-                {res: "满标一审通过"},
-                {res: "满标二审通过"},
-                {res: "还款中"},
-                {res: "还款结束"}
-                ],
             //角色下拉框
             roles: [],
             //列表数据
@@ -345,7 +315,8 @@
             var self = this;
             axios.post('/his/selectHis', {
                 'pageNo': self.currentPage,
-                'pageSize': self.pageSize
+                'pageSize': self.pageSize,
+                'STATE':'满标'
             }).then(function (response) {
                 self.total = response.data.total;
                 self.tableData = response.data.pageData;
@@ -371,8 +342,7 @@
                 axios.post('/his/selectHis', {
                     'pageNo': self.currentPage,
                     'pageSize': self.pageSize,
-                    'name':username,
-                    'STATE':res
+                    'name':username
                 }).then(function (response) {
                     self.total = response.data.total;
                     self.tableData = response.data.pageData;

@@ -16,4 +16,11 @@ public interface HistoryService {
      * @return
      */
     List<Map> getHistoryList(Map map);
+
+    /**
+     * 查询还款计划表
+     * @param map
+     * @return
+     */
+    List<Map> selectRepay(Map map);
 }
