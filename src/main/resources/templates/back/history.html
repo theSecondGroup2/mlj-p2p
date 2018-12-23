@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投标审核</title>
+    <!-- 引入样式 -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <h2>{{ message }}</h2>
+</div>
+
+<div id="tableView">
+    <!--列表顶部搜索和工具条-->
+    <el-row>
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline">
+            <el-form-item label="贷款人姓名">
+                <el-input v-model="searchForm.borrowUserName" placeholder="姓名"></el-input>
+            </el-form-item>
+            <el-form-item label="审核结果">
+                <template>
+                    <el-select v-model="searchForm.res" clearable placeholder="请选择">
+                        <el-option
+                                v-for="item in options"
+                                :key="item.res"
+                                :label="item.res"
+                                :value="item.res">
+                        </el-option>
+                    </el-select>
+                </template>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" icon="search" @click="searchClick">查询</el-button>
+                <el-button type="success" icon="plus" @click="flushData">清空</el-button>
+            </el-form-item>
+        </el-form>
+    </el-row>
+    <!--列表-->
+    <el-row>
+        <el-table
+                :data="tableData"
+                v-loading.body="loading"
+                border
+                @selection-change="selectionChange($event)"
+                style="width: 100%">
+            <el-table-column
+                    prop="ID"
+                    label="审核id"
+                    align="center"
+                    v-if="isShow">
+            </el-table-column>
+            <el-table-column
+                    prop="USERID"
+                    label="借款人id"
+                    align="center"
+                    v-if="isShow">
+            </el-table-column>
+            <el-table-column
+                    prop="BIDID"
+                    label="标的id"
+                    align="center"
+                    v-if="isShow">
+            </el-table-column>
+            <el-table-column
+                    prop="REALNAME"
+                    label="贷款人姓名"
+                    align="center">
+            </el-table-column>
+            <el-table-column
+                    prop="BIDAMOUNT"
+                    label="贷款金额"
+                    align="center">
+            </el-table-column>
+
+            <el-table-column
+                    prop="EMPNAME"
+                    label="审核人姓名"
+                    align="center">
+            </el-table-column>
+            <el-table-column
+                    prop="AUDITTIME"
+                    label="审核时间"
+                    align="center">
+            </el-table-column>
+            <el-table-column
+                    prop="AUDITRESULT"
+                    label="审核结果"
+                    align="center">
+            </el-table-column>
+            <el-table-column
+                    prop="AUDITREMARKS"
+                    label="审核备注"
+                    align="center">
+            </el-table-column>
+            <el-table-column
+                    prop="APPLYTIME"
+                    label="申请时间"
+                    align="center">
+            </el-table-column>
+            <el-table-column
+                    label="操作"
+                    align="center">
+                <template scope="scope">
+                    <el-button :plain="true" type="success" size="small" icon="edit" @click="editClick(scope.row)">详情
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+    </el-row>
+
+    <!--列表底部工具条和分页符-->
+    <el-row style="margin-top: 20px" type="flex" justify="end">
+        <el-col :span="18">
+            <el-pagination
+                    style="float: right"
+                    @size-change="pageSizeChange"
+                    @current-change="currentPageChange"
+                    :current-page="currentPage"
+                    page-sizes="[1, 2,3]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+        </el-col>
+    </el-row>
+    <!--编辑界面-->
+    <el-dialog title="编辑" :visible.sync="editFormVisible" :close-on-click-modal="false">
+
+        <!--借款人信息表单展示-->
+        <el-radio-group v-model="labelPosition" size="small">
+            <el-radio-button label="left">左对齐</el-radio-button>
+            <el-radio-button label="right">右对齐</el-radio-button>
+            <el-radio-button label="top">顶部对齐</el-radio-button>
+        </el-radio-group>
+        <h2>借款人信息</h2>
+        <div style="margin: 20px;"></div>
+        <el-form :label-position="labelPosition" label-width="70px" :model="topFrom">
+            <el-row :gutter="15">
+                <el-col :span="8">
+                    <el-form-item label="姓名">
+                        <el-input disabled v-model="topFrom.REALNAME"></el-input>
+                    </el-form-item>
+                    <el-form-item label="性别">
+                        <el-input disabled v-model="topFrom.SEX"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="身份证号">
+                        <el-input disabled v-model="topFrom.IDNUMBER"></el-input>
+                    </el-form-item>
+                    <el-form-item label="学历">
+                        <el-input disabled v-model="topFrom.ACADEMIC"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="住房">
+                        <el-input disabled v-model="topFrom.HOUSED"></el-input>
+                    </el-form-item>
+                    <el-form-item label="手机号码">
+                        <el-input disabled v-model="topFrom.USERTEL"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+        <hr>
+
+        <!--借款人账户信息-->
+        <h2>借款人账户信息</h2>
+        <div style="margin: 20px;"></div>
+        <el-form :label-position="labelPosition" label-width="50px" :model="centerFrom">
+            <el-row :gutter="15">
+                <el-col :span="8">
+                    <el-form-item label="可用余额">
+                        <el-input disabled v-model="centerFrom.AVAILABLEBALANCE"></el-input>
+                    </el-form-item>
+                    <el-form-item label="待收本金">
+                        <el-input disabled v-model="centerFrom.RECEIVEPRINCIPAL"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="信用额度">
+                        <el-input disabled v-model="centerFrom.CREDITLINE"></el-input>
+                    </el-form-item>
+                    <el-form-item label="待还金额">
+                        <el-input disabled v-model="centerFrom.RETURNAMOUNT"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="冻结金额">
+                        <el-input disabled v-model="centerFrom.FREEZINGAMOUNT"></el-input>
+                    </el-form-item>
+                    <el-form-item label="剩余信用额度">
+                        <el-input disabled v-model="centerFrom.SURPLUSCREDITLINE"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+        <hr>
+        <!--招标信息-->
+        <!--招标信息-->
+        <h2>标的信息</h2>
+        <div style="margin: 20px;"></div>
+        <el-form :label-position="labelPosition" label-width="50px" :model="btmFrom">
+            <el-row :gutter="15">
+                <el-col :span="8">
+                    <el-form-item label="贷款金额">
+                        <el-input disabled v-model="btmFrom.BIDAMOUNT"></el-input>
+                    </el-form-item>
+                    <el-form-item label="贷款利率">
+                        <el-input disabled v-model="btmFrom.BIDRATE"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="贷款时间">
+                        <el-input disabled v-model="btmFrom.BIDDEADLINE"></el-input>
+                    </el-form-item>
+                    <el-form-item label="还款方式">
+                        <el-input disabled v-model="btmFrom.BIDREPAYMENTMETHOD"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="招标天数">
+                        <el-input disabled v-model="btmFrom.BIDDEADDAY"></el-input>
+                    </el-form-item>
+                    <el-form-item label="申请时间">
+                        <el-input disabled v-model="btmFrom.BIDAPPLYDATE"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+        </el-form>
+        <hr>
+
+        <div slot="footer" class="dialog-footer">
+            <el-button @click.native="editFormVisible = false">取消</el-button>
+            <el-button type="primary" @click.native="editSubmit" :loading="editLoading">确定</el-button>
+        </div>
+    </el-dialog>
+
+</div>
+
+
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: '历史审核记录'
+        }
+    });
+    var tableView = new Vue({
+        el: '#tableView',
+        data: {
+            isShow: false,//列表id不显示
+            submitArr: [],
+            bidAuditData: [],//审核信息
+            bidSubmitData: [],//投标信息
+            //底部弹出的表
+            btmFrom: {
+                BIDAMOUNT: '',
+                BIDRATE: '',
+                BIDDEADLINE: '',
+                BIDREPAYMENTMETHOD: '',
+                BIDDEADDAY: '',//招标天数
+                BIDAPPLYDATE: ''
+            },
+            day: '',//招标天数
+            dates: '',//申请日期
+            //中间弹出表单
+            centerFrom: {
+                AVAILABLEBALANCE: '',
+                RECEIVEPRINCIPAL: '',
+                CREDITLINE: '',
+                RETURNAMOUNT: '',
+                FREEZINGAMOUNT: '',
+                SURPLUSCREDITLINE: ''
+            },
+            //弹出的顶部表单
+            topFrom: {
+                REALNAME: '',
+                SEX: '',
+                IDNUMBER: '',
+                ACADEMIC: '',
+                HOUSED: '',
+                USERTEL: ''
+            },
+            //标的id
+            bidId: '',
+            userId: '',//贷款人id
+            //弹出框表单的对齐方式
+            labelPosition: "top",
+            //部门下拉框框
+            options: [
+                {res: "拒绝"},
+                {res: "未审核"},
+                {res: "审核通过"},
+                {res: "流标"},
+                {res: "满标"},
+                {res: "满标一审通过"},
+                {res: "满标二审通过"},
+                {res: "满标一审失败"},
+                {res: "满标二审失败"},
+                {res: "还款中"},
+                {res: "还款结束"}
+                ],
+            //角色下拉框
+            roles: [],
+            //列表数据
+            tableData: [],
+            //显示加载中样式
+            loading: false,
+            //搜索表单
+            searchForm: {
+                borrowUserName: '',
+                res: ''
+            },
+            //当前页
+            currentPage: 1,
+            //分页大小
+            pageSize: 5,
+            //总条数
+            total: 800,
+            //删除的弹出框
+            deleteVisible: false,
+            //编辑界面是否显示
+            editFormVisible: false,
+            editLoading: false,
+            goUrl: '',
+            editFormRules: {
+                name: [
+                    {required: true, message: '请输入姓名', trigger: 'blur'}
+                ]
+            },
+            //编辑界面数据
+            editForm: {
+                ADVICE: '',
+                BIDSTATUS: '未审核'
+            },
+        },
+        //列表显示
+        created: function () {
+            //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
+            var self = this;
+            axios.post('/his/selectHis', {
+                'pageNo': self.currentPage,
+                'pageSize': self.pageSize
+            }).then(function (response) {
+                self.total = response.data.total;
+                self.tableData = response.data.pageData;
+            })
+        },
+        methods: {
+            //清空表格数据
+            flushData: function () {
+                //搜索表单
+                this.searchForm = {
+                    borrowUserName: '',
+                    res: ''
+                }
+                this.loadingData();//重新加载数据
+            },
+            //表格重新加载数据
+            loadingData: function () {
+                this.loading = true;
+                var username = this.searchForm.borrowUserName;
+                var res = this.searchForm.res;
+                //在 then的内部不能使用Vue的实例化的this, 因为在内部 this 没有被绑定。
+                var self = this;
+                axios.post('/his/selectHis', {
+                    'pageNo': self.currentPage,
+                    'pageSize': self.pageSize,
+                    'name':username,
+                    'STATE':res
+                }).then(function (response) {
+                    self.total = response.data.total;
+                    self.tableData = response.data.pageData;
+                })
+
+                setTimeout(function () {
+                    // console.info("加载数据成功");
+                    self.loading = false;
+                }, 300);
+            },
+            //表格编辑事件
+            editClick: function (row) {
+                var self = this;
+                //保存的url
+                this.editFormVisible = true;//弹出框
+                var bidid = Object.assign({}, row).BIDID;//标的ID
+                this.bidId = Object.assign({}, row).ID;
+                this.day = Object.assign({}, row).BIDDEADDAY;//招标天数
+                this.dates = Object.assign({}, row).BIDAPPLYDATE//申请日期
+                this.userId = Object.assign({}, row).USERID;//给保存使用的用户id
+                var userId = Object.assign({}, row).USERID;//用户id
+                //用户信息查询
+                axios.post('/bid/selectUserReal', {'USERID': userId}).then(function (response) {
+                    self.topFrom = response.data[0];//回调参数是List<Map>集合
+                })
+                //用户账户查询
+                axios.post('/bid/selectAnccout', {'USERID': userId}).then(function (response) {
+                    self.centerFrom = response.data[0];//回调参数是List<Map>集合
+                })
+                //查询标的信息
+                axios.post('/bid/selectList', {'ID': bidid}).then(function (response) {
+                    self.btmFrom = response.data.bidList[0];//回调参数是Map--List<Map>
+                })
+
+            },
+            //表格查询事件
+            searchClick: function () {
+                this.loadingData();//重新加载数据
+            },
+            //分页大小修改事件
+            pageSizeChange: function (val) {
+                // console.log('每页 ' + val +' 条');
+                this.pageSize = val;
+                var _self = this;
+                _self.loadingData();//重新加载数据
+            },
+            //当前页修改事件
+            currentPageChange: function (val) {
+                this.currentPage = val;
+                // console.log('当前页: ' + val);
+                var _self = this;
+                _self.loadingData();//重新加载数据
+            },
+            //保存点击事件
+            editSubmit: function () {
+                this.editFormVisible = false;
+                this.loadingData();//重新加载数据
+
+            }
+        }
+
+    })
+</script>
+
+</body>
+</html>

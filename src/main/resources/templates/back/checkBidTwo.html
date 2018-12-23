@@ -205,7 +205,7 @@
         <hr>
             <!--招标信息-->
             <!--招标信息-->
-            <h2>借款人账户信息</h2>
+            <h2>标的信息</h2>
             <div style="margin: 20px;"></div>
             <el-form :label-position="labelPosition" label-width="50px" :model="btmFrom">
                 <el-row :gutter="15">
@@ -321,7 +321,6 @@
                 </el-form-item>
                 <template>
                     <el-radio class="radio" v-model="editForm.BIDSTATUS" label="满标二审通过">通过</el-radio>
-                    <el-radio class="radio" v-model="editForm.BIDSTATUS" label="满标二审拒绝">拒绝</el-radio>
                 </template>
             </el-form>
         <hr>
@@ -488,8 +487,6 @@
                         arr.push(response.data[i].USERID);
                     }
                     self.submitArr=arr;
-                    alert(self.submitArr);
-
                 })
                 //审核信息列表
                 axios.post('/one/selectBidAudit',{'ID':id}).then(function (response) {

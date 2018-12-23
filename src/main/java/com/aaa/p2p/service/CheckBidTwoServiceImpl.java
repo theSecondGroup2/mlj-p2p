@@ -6,6 +6,7 @@ import com.aaa.p2p.dao.CheckBidTwoDao;
 import com.aaa.p2p.util.P2PUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,7 @@ import java.util.*;
  * createTime:2018-12-20 21:27
  */
 @Service
+@Transactional//事务
 public class CheckBidTwoServiceImpl implements CheckBidTwoService {
     @Autowired
     private CheckBidDao checkBidDao;
@@ -31,6 +33,7 @@ public class CheckBidTwoServiceImpl implements CheckBidTwoService {
      * @return
      */
     @Override
+    @Transactional
     public int ChickTwoSuss(Map map, HttpSession httpSession) {
         /**
          * map中：
