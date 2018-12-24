@@ -71,7 +71,6 @@ public class PowerController {
                 }
             }
         }
-        System.out.println(list);
         return list;
     }
     /**

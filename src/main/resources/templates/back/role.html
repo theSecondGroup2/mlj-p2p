@@ -362,8 +362,8 @@
             var _self = this;
             var id = Object.assign({}, row).ID;
             axios.post('/power/backTree',{'roleId':id}).then(function (response) {
-                alert(JSON.stringify(response.data))
                 _self.keys = response.data
+                _self.$refs.tree.setCheckedKeys(_self.keys);
             })
             //row.ID//角色id
             this.roleId = row.ID;
