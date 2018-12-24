@@ -129,7 +129,7 @@
             <ul>
                 <li class="nav_li active" id="nav_1"><a href="javascript:;">借款信息</a></li>
                 <li class="nav_li" id="nav_2"><a href="javascript:;">投资记录</a> <i class="icon icon-num1" style="margin-left: -15px;"> <span id="tender_times">23</span> <em></em> </i> </li>
-                <li class="nav_li" id="nav_3"><a href="javascript:;">还款列表</a></li>
+               <!-- <li class="nav_li" id="nav_3"><a href="javascript:;">还款列表</a></li>-->
             </ul>
         </div>
         <div class="bd">
@@ -251,7 +251,7 @@
                     剩余投标金额：<span class="c-orange">0.00 元</span>
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tbody>
-                        <tr>
+                        <tr >
                             <th>投标人</th>
                             <th>投标金额</th>
                             <th>投标时间</th>
@@ -259,138 +259,32 @@
                         </tr>
                         </tbody>
                         <tbody id="repayment_content">
-                        <tr>
-                            <td>筱*** </td>
-                            <td><span class="c-orange">￥652.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
+                        <tr th:each="submit:${submitList}">
+                            <td th:text="${submit.USERNAME}"></td>
+                            <td th:text="'￥'+${submit.BIDAMOUNT}"><span class="c-orange"></span></td>
+                            <td th:text="${submit.BIDDATE}"></td>
                             <td>自动</td>
                         </tr>
-                        <tr>
-                            <td>大*** </td>
-                            <td><span class="c-orange">￥94.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>p*** </td>
-                            <td><span class="c-orange">￥796.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>t*** </td>
-                            <td><span class="c-orange">￥4,000.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>湘*** </td>
-                            <td><span class="c-orange">￥5,642.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>A*** </td>
-                            <td><span class="c-orange">￥3,336.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>蒲*** </td>
-                            <td><span class="c-orange">￥2,582.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>c*** </td>
-                            <td><span class="c-orange">￥683.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>豆*** </td>
-                            <td><span class="c-orange">￥8,000.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>j*** </td>
-                            <td><span class="c-orange">￥2,725.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>l*** </td>
-                            <td><span class="c-orange">￥1,242.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>郑*** </td>
-                            <td><span class="c-orange">￥624.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>神*** </td>
-                            <td><span class="c-orange">￥100.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>快*** </td>
-                            <td><span class="c-orange">￥2,279.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>一*** </td>
-                            <td><span class="c-orange">￥500.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>思*** </td>
-                            <td><span class="c-orange">￥54.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>b*** </td>
-                            <td><span class="c-orange">￥1,027.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>林*** </td>
-                            <td><span class="c-orange">￥969.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>小*** </td>
-                            <td><span class="c-orange">￥81.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
-                        <tr>
-                            <td>V*** </td>
-                            <td><span class="c-orange">￥77.00</span></td>
-                            <td>2015-09-13 14:22:01</td>
-                            <td>自动</td>
-                        </tr>
+
+
                         </tbody>
                         <tfoot>
-                        <tr class="page-outer">
-                            <td colspan="4" align="center"><div class="pagination clearfix"><span class="page" id="repayment_content_pager"><a class="disabled"> 上一页 </a><a class="curr">1</a><a href="javascript:void(0)">2</a><a href="javascript:void(0)" next="2">下一页</a><em>共2页</em>
-                    <dl class="page-select">
-                      <dt><span>1</span><i class="icon icon-down"></i></dt>
-                      <dd style="display: none;"><a href="javascript:;" total="23" spaninterval="2" content="repayment_content">1</a><a href="javascript:;" total="23" spaninterval="2" content="repayment_content">2</a></dd>
-                    </dl>
-                    </span></div></td>
-                        </tr>
+
                         </tfoot>
                     </table>
+                    <ul class="pagination pagination-lg" >
+                        <li th:class="${pageNo==1}?'disabled' : ''"><a th:href="@{'/forword/toBidInfo?bidid='+${list[0].ID}+'&pageNo=' + ${pageNo-1}}">上一页</a></li>
+                        <li th:if="${pageNo-3 >=1}" ><a th:href="@{'/forword/toBidInfo?bidid='+${list[0].ID}+'&pageNo='+ ${pageNo-3}}" th:text="${pageNo -3}" >1</a></li>
+                        <li th:if="${pageNo-2 >=1}" ><a th:href="@{'/forword/toBidInfo?bidid='+${list[0].ID}+'&pageNo=' + ${pageNo-2}}" th:text="${pageNo -2}" >1</a></li>
+                        <li th:if="${pageNo-1 >=1}" ><a th:href="@{'/forword/toBidInfo?bidid='+${list[0].ID}+'&pageNo=' + ${pageNo-1}}" th:text="${pageNo -1}" >1</a></li>
+                        <li class="active"><a href="#" th:text="${pageNo}" >1</a></li>
+                        <li th:if="${pageNo+1 <=totalPage}" ><a th:href="@{'/forword/toBidInfo?bidid='+${list[0].ID}+'&pageNo=' + ${pageNo+1}}" th:text="${pageNo +1}" >1</a></li>
+                        <li th:if="${pageNo+2 <=totalPage}" ><a th:href="@{'/forword/toBidInfo?bidid='+${list[0].ID}+'&pageNo=' + ${pageNo+2}}" th:text="${pageNo +2}" >1</a></li>
+                        <li th:if="${pageNo+3 <=totalPage}" ><a th:href="@{'/forword/toBidInfo?bidid='+${list[0].ID}+'&pageNo=' + ${pageNo+3}}" th:text="${pageNo +3}" >1</a></li>
+
+                        <li th:class="${pageNo==totalPage}?'disabled' : ''" ><a th:href="@{'/forword/toBidInfo?bidid='+${list[0].ID}+'&pageNo=' + ${pageNo+1}}">下一页</a></li>
+                    </ul><br>
+
                 </div>
             </div>
             <div class="ui-tab-item" style="display: none;">
@@ -464,7 +358,7 @@
     </div>
     <div class="ft-record">
         <div class="ft-approve clearfix"><a class="icon-approve approve-0 fadeIn-2s" target="_blank" href="#"></a><a class="icon-approve approve-1 fadeIn-2s" target="_blank" href="#"></a><a class="icon-approve approve-2 fadeIn-2s" target="_blank" href="#"></a><a class="icon-approve approve-3 fadeIn-2s" target="_blank" href="#"></a></div>
-        <div class="ft-identity">©2015 亿人宝 All rights reserved&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;安徽省亿人宝投资管理有限公司&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备12345678号-1</a></div>
+        <div class="ft-identity">©2018 马六甲 All rights reserved&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;安徽省亿人宝投资管理有限公司&nbsp;&nbsp;&nbsp;<span class="color-e6">|</span>&nbsp;&nbsp;&nbsp;<a target="_blank" href="http://www.miitbeian.gov.cn/">皖ICP备12345678号-1</a></div>
     </div>
 </div>
 

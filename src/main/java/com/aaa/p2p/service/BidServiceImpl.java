@@ -104,4 +104,14 @@ public class BidServiceImpl implements BidService{
 
         return 0;
     }
+
+    /**
+     * 根据bidID来获得投资列表
+     * @param bidID
+     * @return
+     */
+    @Override
+    public List<Map> getSubmitByBidId(int bidID) {
+        return bidDao.getSubmitByBidId(bidID);
+    }
 }

@@ -105,4 +105,12 @@ public interface BidDao {
      */
     @Update("update TB_BIDINFO set bidState='满标' where ID=#{param1}")
     int updateBidState(int bidID);
+
+    /**
+     * 根据bidID来获得投资列表
+     * @param bidID
+     * @return
+     */
+    @Select("select * from TB_BID_SUBMIT where bidInfoID=#{param1}")
+    List<Map> getSubmitByBidId(int bidID);
 }
