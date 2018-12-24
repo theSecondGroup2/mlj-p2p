@@ -43,4 +43,11 @@ public interface BidService {
      * @return
      */
     int investMoney(double money, int bidId, HttpSession session);
+
+    /**
+     * 根据bidID来获得投资列表
+     * @param bidID
+     * @return
+     */
+    List<Map> getSubmitByBidId(int bidID);
 }
