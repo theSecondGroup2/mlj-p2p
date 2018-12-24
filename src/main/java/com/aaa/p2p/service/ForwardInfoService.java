@@ -115,4 +115,18 @@ public interface ForwardInfoService {
      */
     Map getFstCount(int userId);
 
+    /**
+     * 获取还款计划
+     * @param userId
+     * @return
+     */
+    List<Map> getRepayCount(int userId);
+
+    /**
+     * 一次还清贷款
+     * @param userId
+     * @return
+     */
+    int forOneRepay(int userId);
+
 }

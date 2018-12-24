@@ -156,4 +156,12 @@ public interface ForwardInfoDao {
      */
     Map getFstCount(int userId);
 
+    /**
+     * 获取还款计划
+     * @param userId
+     * @return
+     *
+     */
+    List<Map> getRepayCount(int userId);
+
 }

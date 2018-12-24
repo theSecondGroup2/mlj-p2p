@@ -227,4 +227,26 @@ public class ForwardInfoController {
         return fUserService.getFstCount(userId);
     }
 
+    /**
+     * 获取还款计划
+     * @param userId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getRepayCount")
+    public List<Map> getRepayCount(int userId) {
+        return fUserService.getRepayCount(userId);
+    }
+
+    /**
+     * 一次还清贷款
+     * @param userId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/forOneRepay")
+    public int forOneRepay(int userId) {
+        return fUserService.forOneRepay(userId);
+    }
+
 }
