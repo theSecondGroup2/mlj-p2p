@@ -117,4 +117,21 @@ public class ForwardInfoServiceImpl implements ForwardInfoService {
     public Map getFstCount(int userId) {
         return fInfoDao.getFstCount(userId);
     }
+
+    @Override
+    public List<Map> getRepayCount(int userId) {
+        return fInfoDao.getRepayCount(userId);
+    }
+
+    @Override
+    public int forOneRepay(int userId) {
+        //借款人
+        //获取该借款人还款总额
+        // List<Map>
+
+        //投资人
+
+        return 0;
+    }
+
 }

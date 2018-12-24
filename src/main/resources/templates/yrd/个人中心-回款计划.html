@@ -8,6 +8,7 @@
 <link href="../css/common.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="../css/user.css" />
 <link rel="stylesheet" type="text/css" href="../css/jquery.datetimepicker.css"/>
+<link href="../css/bootstrap.min.css" rel="stylesheet">
 <script type="text/javascript" src="../script/jquery.min.js"></script>
 <script type="text/javascript" src="../script/common.js"></script>
 <script src="../script/user.js" type="text/javascript"></script>
@@ -71,10 +72,23 @@
     <div class="personal-main">
       <div class="personal-back">
         <h3><i>回款计划</i></h3>
-          <table width="1000px"><tr>
-            <td>账户余额：</td><td><span id="spanOne"></span></td>
-            <td>应还资金总额：</td><td><span id="spanTwo"></span></td>
-          </tr></table>
+          <table width="800px" border="1px" cellspacing="0px" style="text-align:center;font-size:20px;">
+            <tr>
+              <td>账户余额</td><td><span id="spanOne"></span></td>
+              <td>应还资金总额</td><td><span id="spanTwo"></span></td>
+            </tr>
+            <tr>
+              <td colspan="4">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="color:#1b5ca5;" colspan="4">还款计划明细</td>
+            </tr>
+            <tr>
+              <td>还款期数</td><td>还款金额</td><td>还款利率</td><td>还款期限</td>
+            </tr>
+            <tbody id="tbody"></tbody>
+          </table>
+          <center><button id="forOneKey" class="btn btn-primary">一次还清</button></center>
       </div>
     </div>
     <div class="clear"></div>
@@ -130,13 +144,33 @@
     var userId = null;
     $(function () {
         $.post("/forwardUser/getSession", function (data) {
+            userId = data.USERID;
             $.post("/forwardInfo/getFstCount", {userId:data.USERID},function (dataS) {
                 $("#spanOne").html(dataS.AVAILABLEBALANCE);
                 $("#spanTwo").html(dataS.BIDAMOUNT);
             });
+            $.post("/forwardInfo/getRepayCount", {userId:data.USERID},function (dataS) {
+                var str = "";
+                for (var i = 0; i < dataS.length; i++) {
+                    str += "<tr><td>"+dataS[i].FST+"</td><td>"+dataS[i].SND+"</td><td>"+dataS[i].THR+"</td><td>"+dataS[i].FUR+"</td></tr>";
+                }
+                $("#tbody").append(str);
+                if (dataS.length == 0) {
+                    $("#forOneKey").prop("disabled", true);
+                } else {
+                    $("#forOneKey").prop("disabled", false);
+                }
+            });
         });
     });
-
+    
+    $("#forOneKey").click(function () {
+        $.post("/forwardInfo/forOneRepay", {userId:userId}, function (data) {
+            if (data > 0) {
+                alert("您已一次还清所有贷款");
+            }
+        });
+    });
 
 </script>
 

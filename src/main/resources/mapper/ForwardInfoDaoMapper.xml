@@ -88,4 +88,9 @@
     <select id="getFstCount" resultType="map">
         select AVAILABLEBALANCE,BIDAMOUNT from TB_BIDINFO a inner join tb_account b on(a.userid=b.userid) where a.userid=#{userId}
     </select>
+    <!--获取还款计划-->
+    <select id="getRepayCount" resultType="map">
+        select b.bidrepaynumber fst, b.bidrepayamount||'元' snd, a.bidrate||'%' thr, to_char(b.bidrepaydeaddate,'yyyy-MM-dd') fur from TB_BIDINFO a inner join
+        TB_BID_REPAY_INFO b on (a.userid=b.bidrepayuserid) where (a.bidstate = '满标二审通过' or a.bidstate = '还款中') and userid = #{userId}
+    </select>
 </mapper>
