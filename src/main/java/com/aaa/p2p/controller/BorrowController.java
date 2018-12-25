@@ -29,8 +29,13 @@ public class BorrowController {
      * @return
      */
     @RequestMapping("/toBorrow")
-    public String toBorrow(){
-        return "forward/borrow";
+    public String toBorrow(HttpSession httpSession){
+        if ( httpSession.getAttribute("userInfo")!=null &&  httpSession.getAttribute("userInfo")!= ""){
+            return  "forward/borrow";
+        }
+        else{
+            return "forward/forwarduserlogin";
+        }
     }
 
     /**
