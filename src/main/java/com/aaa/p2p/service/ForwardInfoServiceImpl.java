@@ -3,6 +3,7 @@ package com.aaa.p2p.service;
 import com.aaa.p2p.dao.ForwardInfoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.Map;
  * author:ZhangSenYao
  * createTime:2018-12-14 14:27
  */
+@Transactional
 @Service
 public class ForwardInfoServiceImpl implements ForwardInfoService {
 
@@ -26,6 +28,8 @@ public class ForwardInfoServiceImpl implements ForwardInfoService {
 
     @Override
     public int changePayPsw(Map map) {
+        //插入账户表的支付密码，相当于开户
+        fInfoDao.insertAccount(map);
         return fInfoDao.changePayPsw(map);
     }
 
