@@ -242,9 +242,7 @@ public class UserAccountController {
      * @return
      */
     @RequestMapping("/list")
-    public String list(){
-        return "yrd/list";
-    }
-
-
+    public String list(HttpSession httpSession){
+            return "yrd/list";
+        }
 }

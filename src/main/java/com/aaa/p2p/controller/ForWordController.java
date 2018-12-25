@@ -47,11 +47,16 @@ public class ForWordController {
      * @return
      */
     @RequestMapping("/toBid")
-    public String toBid(){
+    public String toBid(HttpSession httpSession) {
         //把全部通过的表显示出来，没有带分页
         //model.addAttribute("bidList",bidService.getList());
-        return "yrd/bidList";
-    }
+        if (httpSession.getAttribute("userInfo") != null && httpSession.getAttribute("userInfo") != "") {
+            System.out.println("马勋真帅");
+            return "yrd/bidList";
+        } else {
+            return "forward/forwarduserlogin";
+        }
+     }
 
     /**
      *跳转到我要投资页面中的投资详情
