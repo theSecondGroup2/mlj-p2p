@@ -5,4 +5,15 @@
     <select id="selectAccountByUserId" resultType="map">
         select * from TB_ACCOUNT where USERID = #{USERID}
     </select>
+    <select id="selectAccountPsd" resultType="map">
+        select TRANSACTIONPASSWORD from TB_ACCOUNT where USERID = #{userId}
+    </select>
+    <!-- 提现后余额更新 -->
+    <update id="updateAccountId">
+        update TB_ACCOUNT set availableBalance=AVAILABLEBALANCE-#{param1} where USERID=#{param2}
+    </update>
+    <!-- 充值后余额更新 -->
+    <update id="updateAccount">
+        update TB_ACCOUNT set availableBalance=AVAILABLEBALANCE+#{param1} where USERID=#{param2}
+    </update>
 </mapper>

@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -41,6 +42,7 @@
       <ul class="top-nav fn-clear">
         <li class="on"> <a href="/userAccount/index">首页</a> </li>
         <li> <a href="/userAccount/list" class="">我要投资</a> </li>
+        <li> <a href="/borrow/toBorrow" class="">我要借款</a> </li>
         <li> <a href="/userAccount/bzzx">安全保障</a> </li>
         <li class="top-nav-safe"> <a href="/userAccount/Account">我的账户</a> </li>
         <li> <a href="/userAccount/gsjj">关于我们</a> </li>
@@ -79,10 +81,13 @@
 		.ui-icon{
 			background:none;
 			width:0px;height:0px;
-		} 
+		}
+        .color{
+            background-color: #7e93ae;
+        }
 	</style>
       <div class="pmain-profile">
-        <div class="pmain-welcome"> <span class="fl"><span id="outLogin">晚上好，</span>tg_gpdt0139 喝一杯下午茶，让心情放松一下~</span> <span class="fr">上次登录时间：
+        <div class="pmain-welcome"> <span class="fl"><span id="outLogin">晚上好，</span><span th:text="${session.userInfo.USERNAME}" class="color"></span>&nbsp; 喝一杯下午茶，让心情放松一下~</span> <span class="fr">上次登录时间：
           2015-09-11 14:05:07 </span> </div>
         <div class="pmain-user">
           <div class="user-head"> <span id="clickHeadImage" class="head-img" title="点击更换头像">
@@ -131,13 +136,13 @@
               $.post("/forwardUser/getSession", function (data) {
                   $("#getSession").html(data.USERNAME);
               });
-              alert(111);
+              //alert(111);
               //获取用户的账户信息
               $.post(
                   "/account/byuserid",
                   function (data) {
-                      alert(JSON.stringify(data));
-                      alert(JSON.stringify(data[0].AVAILABLEBALANCE));
+                    //  alert(JSON.stringify(data));
+                      //alert(JSON.stringify(data[0].AVAILABLEBALANCE));
                       $("#zhze").html(data[0].TOTLE);
                       $("#kyye").html(data[0].AVAILABLEBALANCE);
                       $("#dslx").html(data[0].RECEIVEINTEREST);

@@ -14,7 +14,7 @@ import java.util.Map;
  * createTime:2018-12-19 08:59
  */
 @Service
-public class AccountServiceImpl implements AccountService{
+public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountDao accountDao;
     /**
@@ -35,4 +35,44 @@ public class AccountServiceImpl implements AccountService{
         }
         return mapList;
     }
+    /**
+     * 提现后更新账户余额
+     * @param tixian
+     * @param userid
+     * @return
+     */
+    @Override
+    public int updateAccountId(Integer tixian, Integer userid) {
+        return accountDao.updateAccountId(tixian,userid);
+    }
+    /**
+     * 充值后更新账户余额
+     * @param chongzhi
+     * @param userid
+     * @return
+     */
+    @Override
+    public int updateAccount(Integer chongzhi, Integer userid) {
+        return accountDao.updateAccount(chongzhi,userid);
+    }
+
+    /**
+     * 充值金额检验密码
+     * @param map
+     * @return
+     */
+   @Override
+   public int selectAccountPsd(Map map) {
+        int code=0;
+        List<Map> mapList=accountDao.selectAccountPsd(map);
+
+        int TRANSACTIONPASSWORD = Integer.valueOf(mapList.get(0).get("TRANSACTIONPASSWORD") + "");
+        int pwd = Integer.valueOf(map.get("investMoney")+"");
+        if(pwd != TRANSACTIONPASSWORD){
+            code = 200;
+            return code;
+        }
+        return code;
+    }
+
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.p2p.dao.UserFlowDao">
+    <insert id="add" >
+        insert into TB_USER_ACCOUNT_FLOW VALUES (TB_USER_ACCOUNT_FLOW_ID.nextval,
+        #{USERID},
+        (select ID from TB_ACCOUNT where USERID=#{USERID}),
+        #{tixian},
+        (select AVAILABLEBALANCE from TB_ACCOUNT where USERID=#{USERID}),
+        SYSDATE,
+        '提现'
+        )
+    </insert>
+    <insert id="insertadd" >
+        insert into TB_USER_ACCOUNT_FLOW VALUES (TB_USER_ACCOUNT_FLOW_ID.nextval,
+        #{USERID},
+        (select ID from TB_ACCOUNT where USERID=#{USERID}),
+        #{chongzhi},
+        (select AVAILABLEBALANCE from TB_ACCOUNT where USERID=#{USERID}),
+        SYSDATE,
+        '充值'
+        )
+    </insert>
+</mapper>

@@ -16,4 +16,22 @@ public interface AccountDao {
      * @return
      */
     List<Map> selectAccountByUserId(Map map);
+    /**
+     * 检验重置密码
+     * @param map
+     * @return
+     */
+    List<Map> selectAccountPsd(Map map);
+    /**
+     * 提现后更新账户余额
+     * @param tixian
+     * @return
+     */
+    int updateAccountId(Integer tixian, Integer userid);
+    /**
+     * 充值后更新账户余额
+     * @param
+     * @return
+     */
+    int updateAccount(Integer chongzhi, Integer userid);
 }
