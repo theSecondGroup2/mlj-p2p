@@ -118,4 +118,13 @@ public class BidServiceImpl implements BidService{
     public List<Map> getSubmitByBidId(int bidID) {
         return bidDao.getSubmitByBidId(bidID);
     }
+
+    @Override
+    public Map getUserRealByUserID(HttpSession session) {
+        //通过session 获得userid
+        Object info = session.getAttribute("userInfo");
+        Map userInfo = (HashMap) info;
+        String USERID = userInfo.get("USERID")+"";
+        return bidDao.getUserRealByUserID(USERID);
+    }
 }

@@ -122,4 +122,12 @@ public interface BidDao {
      */
     @Insert("insert into TB_BID_AUDIT(id,userID,bidID,auditID,auditTime,auditResult) values(TB_BID_AUDIT_id.nextval,#{param1},#{param2},44,sysdate,'系统审核')")
     int insertAudit(String userID,int bidID);
+
+    /**
+     * 根据userID来获得用户的真实信息
+     * @param userID
+     * @return
+     */
+    @Select("select * from TB_USERREAL where userID=#{param1}")
+    Map getUserRealByUserID(String userID);
 }
