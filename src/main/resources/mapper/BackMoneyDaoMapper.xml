@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.p2p.dao.BackMoneyDao">
+    <!--更改标的状态为还款中-->
+    <update id="updateState">
+        update TB_BIDINFO set BIDSTATE = '还款中' where ID = #{param1}
+    </update>
+    <!--根据标的id查标的信息-->
+    <select id="selectBidInfo" resultType="map">
+        select * from TB_BIDINFO where ID = #{ID}
+    </select>
+    <!--插入标的审核表中-->
+    <insert id="insertBidAudit">
+        insert into TB_BID_AUDIT values (TB_BID_AUDIT_ID.nextval,
+        #{param2},
+        #{param4},
+        44,
+        sysdate,
+        #{param1},
+        '系统审核',
+        to_date(substr(#{param3},0,19),'yyyy-mm-dd hh24:mi:ss')
+        )
+    </insert>
+    <!--更改还款计划表为已还款-->
+    <update id="updateRepayInfo">
+        update TB_BID_REPAY_INFO set BIDREPAYSTATE = '已还款' where BIDID = #{param1} and BIDREPAYNUMBER = #{param2}
+    </update>
+    <!--查询密码-->
+    <select id="selectPwd" resultType="map">
+        select * from TB_ACCOUNT where USERID = #{USERID}
+    </select>
+    <!--根据还款人id和还款期数查询还款金额-->
+    <select id="selectMoney" resultType="map">
+        select * from TB_BID_REPAY_INFO where BIDREPAYUSERID = #{param2} and BIDREPAYNUMBER=#{param1}
+    </select>
+    <!--更改借款人账户信息-->
+    <update id="updateUserAccount">
+        update TB_ACCOUNT set AVAILABLEBALANCE = AVAILABLEBALANCE-#{param1},
+                              RETURNAMOUNT = RETURNAMOUNT-#{param1},
+                              SURPLUSCREDITLINE = SURPLUSCREDITLINE + #{param3}
+                          where USERID=#{param2}
+    </update>
+    <!--插入账户流水表-->
+    <insert id="insertBidFlow">
+        insert into TB_USER_ACCOUNT_FLOW values (TB_USER_ACCOUNT_FLOW_ID.nextval,
+        #{param1},
+        #{param2},
+        #{param3},
+        #{param4},
+        sysdate,
+        #{param5})
+    </insert>
+    <select id="selectAccountSubmit" resultType="map">
+        select * from TB_BID_SUBMIT where USERID =#{param1} and bidinfoid =#{param2}
+    </select>
+    <!--更改还款人账户-->
+    <update id="updateUserTAccount">
+        update TB_ACCOUNT set AVAILABLEBALANCE = AVAILABLEBALANCE + #{param1},
+                              RECEIVEPRINCIPAL = RECEIVEPRINCIPAL - #{param4},
+                              RECEIVEINTEREST = RECEIVEINTEREST - #{param2}
+                          where USERID = #{param3}
+    </update>
+</mapper>
