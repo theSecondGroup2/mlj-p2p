@@ -32,6 +32,13 @@ public interface BidService {
     Map getMaxMoneyByUserId(HttpSession session);
 
     /**
+     * 根据bidID来获得招标人真实信息
+     * @param session
+     * @return
+     */
+    Map getUserRealByUserID(HttpSession session);
+
+    /**
      * 获取投标页面，带分页
      * @return
      */
