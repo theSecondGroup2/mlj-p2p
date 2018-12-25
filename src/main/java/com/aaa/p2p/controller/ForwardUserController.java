@@ -70,7 +70,7 @@ public class ForwardUserController {
     public ResponseEntity show(String fileName){
         try {
             // 由于是读取本机的文件，file是一定要加上的， path是在application配置文件中的路径
-            return ResponseEntity.ok(resourceLoader.getResource("file:" + uploadPath + fileName));
+            return ResponseEntity             .ok(resourceLoader.getResource("file:" + uploadPath + fileName));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
@@ -205,5 +205,8 @@ public class ForwardUserController {
     public int getResults(int userId) {
         return fUserService.getResults(userId);
     }
+
+
+
 
 }

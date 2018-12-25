@@ -10,6 +10,12 @@ import java.util.Map;
  * createTime:2018-12-14 14:28
  */
 public interface ForwardInfoDao {
+    /**
+     * 开户
+     * @param map
+     * @return
+     */
+    int insertAccount(Map map);
 
     /**
      * 通过session获取用户信息

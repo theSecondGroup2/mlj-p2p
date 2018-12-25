@@ -96,4 +96,18 @@
         on (a.userid=b.bidrepayuserid)
         where (a.bidstate = '满标二审通过' or a.bidstate = '还款中') and userid = #{userId}
     </select>
+    <!--开户-->
+    <insert id="insertAccount">
+        insert into TB_ACCOUNT values (
+        TB_ACCOUNT_ID.nextval,
+        #{userId},
+        0,
+        0,
+        0,
+        0,
+        50000,
+        50000,
+        #{chgData}
+        )
+    </insert>
 </mapper>
