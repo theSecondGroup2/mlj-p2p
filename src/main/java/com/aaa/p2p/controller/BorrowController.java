@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,8 +43,32 @@ public class BorrowController {
         //通过session获得userID
         HttpSession session = request.getSession();
         Map resultMap = (Map)(session.getAttribute("userInfo"));
-//        String userID = resultMap.get("USERID")+"";
-      //  map.put("userID",userID);
+        String userID = resultMap.get("USERID")+"";
+
         return borrowService.insert(map);
+    }
+
+    /**
+     *
+     * @param userID
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/select")
+    public Object selectBidIf(@RequestParam Integer userID){
+        System.out.println(borrowService.selectBidIf(userID));
+        Map map=new HashMap();
+        //判断这个用户是否有正在投的标
+        map.put("list",borrowService.selectBidIf(userID));
+        //判断是不是视频和实名通过了，都通过返回1，有没有通过的返回0
+        String strUserID=userID+"";
+        map.put("auditResult",borrowService.selectBidAudit(strUserID));
+        map.put("userID",userID);
+        return map;
+        /* if(borrowService.selectBidIf(userID).size()>0){
+            return 1;
+        }else {
+            return 0;
+        }*/
     }
 }

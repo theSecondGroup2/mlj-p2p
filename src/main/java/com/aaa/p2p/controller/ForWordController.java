@@ -63,7 +63,6 @@ public class ForWordController {
         model.addAttribute("list",bidService.getListByBidId(bidid));
         //获得map  用户可用资金
         model.addAttribute("maxMoney",bidService.getMaxMoneyByUserId(session));
-        List<Map> submitByBidId = bidService.getSubmitByBidId(bidid);
         //设置当前第几页和每页显示数量
         PageHelper.startPage(Integer.valueOf(pageNo + ""),1);
         //用PageInfo对结果进行包装

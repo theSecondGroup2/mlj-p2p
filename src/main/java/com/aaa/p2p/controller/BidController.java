@@ -47,12 +47,14 @@ public class BidController {
     @RequestMapping("/getListBy")
     @ResponseBody
     public Object getListBy(@RequestParam Map map){
+        System.out.println("map:"+map);
         Map resultMap = new HashMap();
         if (map.get("pageNo") != null){//分页的查询
             //设置当前第几页和每页显示数量
             PageHelper.startPage(Integer.valueOf(map.get("pageNo") + ""), Integer.valueOf(map.get("pageSize") + ""));
             //用PageInfo对结果进行包装
             PageInfo<Map> pageInfo = new PageInfo<Map>(bidService.getListBy(map));
+            System.out.println(bidService.getListBy(map)+".......");
             resultMap = new HashMap();
             resultMap.put("total", pageInfo.getTotal());
             resultMap.put("list", pageInfo.getList());

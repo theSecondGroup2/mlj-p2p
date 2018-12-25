@@ -26,7 +26,7 @@ public class BidFailController {
      * 每小时执行一次
      */
     //@Scheduled(cron = "0 0 */1  * * * ")
-    @Scheduled(cron = "0/10 * *  * * * ")//10秒执行1次
+    @Scheduled(cron = "0 0 *  * * * ")//10秒执行1次
     public void bidFail(){
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         System.out.println("流标开始  "+time);

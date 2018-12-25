@@ -42,7 +42,7 @@ public interface BidDao {
      * 获得投标页面，带分页
      * @return
      */
-    @Select("<script>select  a.*,round(bidcurrentamount/bidamount,2)*100 as BIDSCHEDULE from tb_bidInfo a " +
+    @Select("<script>select  a.* , round(bidcurrentamount/bidamount,2)*100 as BIDSCHEDULE from tb_bidInfo a " +
             "where bidState='审核通过'    " +
             "<if test=\"bidrate!=null and bidrate!=''\"> and ${bidrate}</if>" +
             "<if test=\"biddeadline!=null and biddeadline!=''\"> and ${biddeadline}</if>" +
@@ -113,4 +113,13 @@ public interface BidDao {
      */
     @Select("select * from TB_BID_SUBMIT where bidInfoID=#{param1}")
     List<Map> getSubmitByBidId(int bidID);
+
+    /**
+     * 插入系统审核记录表
+     * @param userID
+     * @param bidID
+     * @return
+     */
+    @Insert("insert into TB_BID_AUDIT(id,userID,bidID,auditID,auditTime,auditResult) values(TB_BID_AUDIT_id.nextval,#{param1},#{param2},44,sysdate,'系统审核')")
+    int insertAudit(String userID,int bidID);
 }
