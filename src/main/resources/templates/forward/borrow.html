@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>借款操作</title>
-    <script src="../js/jquery-1.8.3.js"></script>
+    <link href="../css/common.css" rel="stylesheet" />
+    <link href="../css/index.css" rel="stylesheet" type="text/css">
+    <link href="../css/detail.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../script/jquery.min.js"></script>
+    <script type="text/javascript" src="../script/common.js"></script>
+    <script src="../script/ablumn.js"></script>
+    <script src="../script/plugins.js"></script>
+    <script src="../script/detail.js"></script>
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -12,13 +20,13 @@
     body{
         background-color: #b9def0;
     }
-    span{
+    #shangBian span{
         font-size: 30px;
         color:red;
     }
-    div{
+    /*div{
         overflow:auto;
-    }
+    }*/
     #shangBian{
         text-align:center;
     }
@@ -33,6 +41,59 @@
         width:800px;
     }
 </style>
+<header>
+    <div class="header-top min-width" >
+        <div class="container fn-clear"> <strong class="fn-left">咨询热线：400-668-6698<span class="s-time">服务时间：9:00 - 18:00</span></strong>
+            <ul class="header_contact">
+                <li class="c_1"> <a class="ico_head_weixin" id="wx"></a>
+                    <div class="ceng" id="weixin_xlgz" style="display: none;">
+                        <div class="cnr"> <img src="../images/code.png"> </div>
+                        <b class="ar_up ar_top"></b> <b class="ar_up_in ar_top_in"></b> </div>
+                </li>
+                <li class="c_2"><a href="#" target="_blank" title="官方QQ" alt="官方QQ"><b class="ico_head_QQ"></b></a></li>
+                <li class="c_4"><a href="#" target="_blank" title="新浪微博" alt="新浪微博"><b class="ico_head_sina"></b></a></li>
+            </ul>
+            <ul class="fn-right header-top-ul">
+                <!--用户名为空-->
+                <li th:if="${session.userInfo.USERNAME} eq null">
+                    <div class="" >
+                        <a href="/forwardUser/toForwardUserReg" class="" title="免费注册" >免费注册</a>
+                    </div>
+                </li>
+                <li th:if="${session.userInfo.USERNAME} eq null">
+                    <div class="" >
+                        <a href="/forwardUser/toForwardUserLogin" class="js-login" title="登录" >登录</a>
+                    </div>
+                </li>
+                <!--用户名不为空-->
+                <li th:if="${session.userInfo.USERNAME} ne null">
+                    <div class="">
+                        <span th:text="欢迎您 "></span>
+                        <span th:text="${session.userInfo.USERNAME}"></span>
+                    </div>
+                </li>
+                <li th:if="${session.userInfo.USERNAME} ne null">
+                    <div class="" >
+                        <a href="/user/toLogin" class="js-login" title="退出">退出</a>
+                    </div>
+                </li>
+                    <input type="hidden" th:value="${session.userInfo.USERID}" id="userID"/>
+            </ul>
+        </div>
+    </div>
+    <div class="header min-width">
+        <div class="container">
+            <div class="fn-left logo"> <a class="" href="/userAccount/index"> <img src="../images/logo.png" title=""> </a> </div>
+            <ul class="top-nav fn-clear">
+                <li> <a href="/userAccount/index">首页</a> </li>
+                <li class="on"> <a href="/userAccount/list" >我要投资</a> </li>
+                <li> <a href="/userAccount/bzzx">安全保障</a> </li>
+                <li class="top-nav-safe"> <a href="/userAccount/grzxsy">我的账户</a> </li>
+                <li> <a href="/userAccount/gsjj">关于我们</a> </li>
+            </ul>
+        </div>
+    </div>
+</header>
 <div id="shangBian">
     <span >信用贷款</span>
     <span>车辆抵押</span>
@@ -55,7 +116,7 @@
                 <td><label for="bidAmount">贷款金额</label></td><td><input type="text" id="bidAmount" name="bidAmount"/><span style="font-size: small;color: #5cb85c">单位为元</span></td>
             </tr>
             <tr class="success">
-                <td><label for="bidRepaymentMethod">还款方式</label></td><td><input type="text" id="bidRepaymentMethod" name="bidRepaymentMethod" value="等额本息"/><span style="font-size: small;color: #5cb85c">现仅支持等额本息</span></td>
+                <td><label for="bidRepaymentMethod">还款方式</label></td><td><input type="text" id="bidRepaymentMethod" name="bidRepaymentMethod" value="等额本息" readonly="true"/><span style="font-size: small;color: #5cb85c">现仅支持等额本息</span></td>
             </tr>
             <tr class="warning"><td><label for="bidType">标的类型</label></td><td><select id="bidType" name="bidType">
                 <option>信用贷</option>
@@ -75,7 +136,7 @@
         </select></td>
         </tr>
             <tr class="warning">
-                <td><label for="bidRate">还款月利率</label></td><td><input type="text" id="bidRate" name="bidRate" value="2"/><span style="font-size: small;color: #5cb85c">单位为%</span></td>
+                <td><label for="bidRate" readonly="true" >还款月利率</label></td><td><input type="text" id="bidRate" name="bidRate" value="2" readonly="true"/><span style="font-size: small;color: #5cb85c">单位为%</span></td>
             </tr>
             <tr class="success">
                 <td><label for="bidApplyDate">申请时间</label></td><td><input type="date" id="bidApplyDate" name="bidApplyDate" readonly="readonly" /></td>
@@ -87,7 +148,7 @@
                 <td><label for="bidDesc">借款描述</label></td><td><textarea id="bidDesc" name="bidDesc"/></textarea></td>
             </tr>
             <tr>
-                <td colspan="2" align="center"><input type="button" value="提交" onclick="toInsert()"/></td>
+                <td colspan="2" align="center"><input type="button" value="提交" onclick="return toInsert()"/></td>
             </tr>
         </form>
 
@@ -126,7 +187,26 @@
 
     //提交方法
     function toInsert(){
-        alert(1);
+       /* //获取form标签元素
+        var form=document.getElementById('formA');
+        //获取form下元素下所有input标签
+        var inputArray=form.getElementsByTagName("input");
+        var inputArrayLength=inputArray.length;
+        alert(inputArrayLength);
+        //循环input元素数组
+        for(var int=0;int<inputArrayLength;int++){
+            //判断每个input元素的值是否为空
+            if( inputArray[int].value==null || inputArray[int].value==''){
+                alert('亲！所有项都为必填项^_^');
+                return false;
+            }
+        }*/
+        var bidAmount=$("#bidAmount").val();
+        var bidDesc=$("#bidDesc").val();
+        if(bidAmount==''&&bidDesc==''){
+            alert("每项都为必填项，请都填写完再提交")
+            return false;
+        }
         $.ajax({
             url:"/borrow/insert",
             data:$("#formA").serialize(),
@@ -139,6 +219,11 @@
 
              }
         });
+        //如果所有Input标签的值都不为空的话
+        alert('下单成功');
+        //页面刷新
+        location.href=location.href;
+        return true;
      }
 
     //姓名校验
@@ -174,19 +259,33 @@
     });
 
     //页面数据初始化
-    /*$(function () {
+    $(function () {
         $.ajax({
             url:"/borrow/select",
             type:"post",
+            data:{userID:$('#userID').val()},
             //dataType:"json",
             success:function(data){
-                alert(data);
+                //查询是否有一个正在投的标
+                //if(data>0){
+                if (data.auditResult==0){
+                    var str="<span style='font-size: 50px;color: #8bc026'>您还没有完成审核，请审核完成后再来投标吧</span>";
+                    $("#youBian").html('');
+                    $("#youBian").html(str);
+                }else if(data.list.length>0){
+                    var str="<span style='font-size: 50px;color: #8bc026'> 您有未完成的标，现在不能继续投标</span>";
+                    $("#youBian").html('');
+                    $("#youBian").html(str);
+                }else {
+
+                }
+
             },
             error:function () {
-
+                alert("error");
             }
         });
-    });*/
+    });
 </script>
 </body>
 </html>

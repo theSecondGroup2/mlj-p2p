@@ -63,6 +63,11 @@ public class BidFailServiceImpl implements BidFailService {
                 }
                 //遍历每一个流标的表，改为状态为流标完成
                 bidFailDao.updateBidStateFailSuc(bidID);
+                //插入审核记录表
+                //通过bidID来获得招标人的userID
+                List<Map> listByBidId = bidDao.getListByBidId(bidID);
+                String userID = listByBidId.get(0).get("USERID")+"";
+                bidDao.insertAudit(userID,bidID);
             }
         }
         return 0;
