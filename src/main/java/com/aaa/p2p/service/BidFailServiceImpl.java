@@ -67,7 +67,7 @@ public class BidFailServiceImpl implements BidFailService {
                 //通过bidID来获得招标人的userID
                 List<Map> listByBidId = bidDao.getListByBidId(bidID);
                 String userID = listByBidId.get(0).get("USERID")+"";
-                bidDao.insertAudit(userID,bidID);
+                bidDao.insertFailAudit(userID,bidID);
             }
         }
         return 0;

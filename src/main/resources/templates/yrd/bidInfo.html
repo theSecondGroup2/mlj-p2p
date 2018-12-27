@@ -145,11 +145,11 @@
                         <dd>
                             <div class="text">
                                 <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人信息介绍：</p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人赵女士，<span>1988</span>年出生，大专学历，未婚，户籍地址为四川省古蔺县，现居住于成都市成华区。</p>
+                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人<span th:text="${userReal.REALNAME}"></span><span>1988</span>年出生，学历<span th:text="${userReal.ACADEMIC}"></span>，未婚，户籍地址为四川省古蔺县，现居住于<span th:text="${userReal.ADDRESS}"></span></p>
                                 <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人工作情况：</p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 赵女士为成都某服装店老板，月收入<span>2</span>万元，收入居住稳定。</p>
+                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> <span th:text="${userReal.REALNAME}"></span>为成都某服装店老板，月收入<span>2</span>万元，收入居住稳定。</p>
                                 <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人资产介绍：</p>
-                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 赵女士有<span>1</span>辆全款长安福特福克斯汽车。</p>
+                                <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> <span th:text="${userReal.REALNAME}"></span>有<span>1</span>辆全款长安福特福克斯汽车。</p>
                                 <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 详细资金用途：</p>
                                 <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;"> 借款人申请汽车质押贷款，贷款用于资金周转。</p>
                             </div>
@@ -435,6 +435,7 @@ $("#submit").click(function(){
         type:'post',
         success:function () {
             $('#myModal').modal('hide');
+            alert("投资成功了");
             location.href=location.href;
         },
         error:function () {
