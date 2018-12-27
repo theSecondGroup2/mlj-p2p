@@ -90,7 +90,9 @@ public class BackMoneyServiceImpl implements BackMoneyService {
         mmm.put("ID",bidId);
         List<Map> maps1 = backMoneyDao.selectBidInfo(mmm);
         Double zhaobiao = Double.parseDouble(maps1.get(0).get("BIDAMOUNT")+"");//招标金额
+        System.out.println("招标金额："+zhaobiao);
         Integer yueshu = Integer.valueOf(maps1.get(0).get("BIDDEADLINE")+"");//还款月数
+        System.out.println("还款月数"+yueshu);
         Double lilv = Double.parseDouble(maps1.get(0).get("BIDRATE")+"");//利率
 
 
@@ -104,16 +106,23 @@ public class BackMoneyServiceImpl implements BackMoneyService {
                 //根据投标人id查询投标金额
                 List<Map> maps2 = backMoneyDao.selectAccountSubmit(userTid,bidId);
                 Double toubiao = Double.parseDouble(maps2.get(0).get("BIDAMOUNT")+"");//个人投标金额
-
+                System.out.println("个人投标金额"+toubiao);
                 //根据招标金额和个人投标金额，计算投资人个人应得本息和
                 Double money = bidrepayamount * (toubiao/zhaobiao);//投标人被还款金额
-                Double interestTotle = P2PUtil.getInterestTotle(toubiao, lilv, yueshu);//还款总利息
-                //每月利息
-                Double lixi =  interestTotle/yueshu;
+                System.out.println("本期总还款金额："+bidrepayamount);
+                System.out.println("本期被还款金额："+money);
+                Double interestTotle = P2PUtil.getMonthTotle(toubiao, lilv/100, yueshu);//每月本息和
+                System.out.println("每月本息和："+interestTotle);
                 //每月本金
-                Double benjin = money-lixi;
+                Double yuebenjin = toubiao/yueshu;
+                System.out.println("每月的本金："+yuebenjin);
+                //每月利息
+                Double lixi =  interestTotle - yuebenjin;
+                System.out.println("每月被还利息："+lixi);
+
+
                 //更改完成
-                int i = backMoneyDao.updateUserTAccount(money, lixi, userTid,benjin);
+                int i = backMoneyDao.updateUserTAccount(money, lixi, userTid,yuebenjin);
 
 
                 /**
