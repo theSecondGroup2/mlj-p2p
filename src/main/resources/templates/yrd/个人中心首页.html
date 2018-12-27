@@ -26,12 +26,28 @@
         <li class="c_4"><a href="#" target="_blank" title="新浪微博" alt="新浪微博"><b class="ico_head_sina"></b></a></li>
       </ul>
       <ul class="fn-right header-top-ul">
-        <li> <a href="/userAccount/index" class="app">返回首页</a> </li>
-        <li>
-          <div class=""><a href="/forwardUser/toForwardUserReg" class="c-orange" title="免费注册">免费注册</a></div>
+        <!--用户名为空-->
+        <li th:if="${session.userInfo.USERNAME} eq null">
+          <div class="" >
+            <a href="/forwardUser/toForwardUserReg" class="" title="免费注册" >免费注册</a>
+          </div>
         </li>
-        <li>
-          <div class=""><a href="/forwardUser/toForwardUserLogin" class="js-login" title="登录">登录</a></div>
+        <li th:if="${session.userInfo.USERNAME} eq null">
+          <div class="" >
+            <a href="/forwardUser/toForwardUserLogin" class="js-login" title="登录" >登录</a>
+          </div>
+        </li>
+        <!--用户名不为空-->
+        <li th:if="${session.userInfo.USERNAME} ne null">
+          <div class="">
+            <span th:text="欢迎您 "></span>
+            <span th:text="${session.userInfo.USERNAME}"></span>
+          </div>
+        </li>
+        <li th:if="${session.userInfo.USERNAME} ne null">
+          <div class="" >
+            <a href="/forwardUser/toForwardUserLogin" class="js-login" title="退出">退出</a>
+          </div>
         </li>
       </ul>
     </div>

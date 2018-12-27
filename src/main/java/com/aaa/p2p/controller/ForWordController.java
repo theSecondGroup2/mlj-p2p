@@ -30,8 +30,13 @@ public class ForWordController {
      * @return
      */
     @RequestMapping("/toIndex")
-    public String toIndex(){
-        return "yrd/index";
+    public String toIndex(HttpSession httpSession){
+        if ( httpSession.getAttribute("userInfo")!=null ){
+            return "yrd/index";
+        }
+        else{
+            return "yrd/indextwo";
+        }
     }
     /**
      * 跳转borrow页面
