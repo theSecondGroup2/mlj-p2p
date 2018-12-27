@@ -120,8 +120,18 @@ public interface BidDao {
      * @param bidID
      * @return
      */
-    @Insert("insert into TB_BID_AUDIT(id,userID,bidID,auditID,auditTime,auditResult) values(TB_BID_AUDIT_id.nextval,#{param1},#{param2},44,sysdate,'系统审核')")
+    @Insert("insert into TB_BID_AUDIT(id,userID,bidID,auditID,auditTime,auditResult,AUDITREMARKS) values(TB_BID_AUDIT_id.nextval,#{param1},#{param2},44,sysdate,'满标','系统审核')")
     int insertAudit(String userID,int bidID);
+
+    /**
+     * 流标插入系统审核记录表
+     * @param userID
+     * @param bidID
+     * @return
+     */
+    @Insert("insert into TB_BID_AUDIT(id,userID,bidID,auditID,auditTime,auditResult,AUDITREMARKS) values(TB_BID_AUDIT_id.nextval,#{param1},#{param2},44,sysdate,'流标','系统审核')")
+    int insertFailAudit(String userID,int bidID);
+
 
     /**
      * 根据userID来获得用户的真实信息

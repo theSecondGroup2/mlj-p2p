@@ -49,7 +49,7 @@ public class BorrowController {
         HttpSession session = request.getSession();
         Map resultMap = (Map)(session.getAttribute("userInfo"));
         String userID = resultMap.get("USERID")+"";
-
+        map.put("userID",userID);
         return borrowService.insert(map);
     }
 
