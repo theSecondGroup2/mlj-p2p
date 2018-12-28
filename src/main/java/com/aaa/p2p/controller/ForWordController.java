@@ -56,7 +56,6 @@ public class ForWordController {
         //把全部通过的表显示出来，没有带分页
         //model.addAttribute("bidList",bidService.getList());
         if (httpSession.getAttribute("userInfo") != null && httpSession.getAttribute("userInfo") != "") {
-            System.out.println("马勋真帅");
             return "yrd/bidList";
         } else {
             return "forward/forwarduserlogin";

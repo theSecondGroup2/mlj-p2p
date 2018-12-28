@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -146,8 +147,12 @@ public class ForwardUserController {
      * @return
      */
     @RequestMapping("/toUserMain")
-    public String toUserMain() {
-        return "forward/forwardusermain";
+    public String toUserMain(HttpSession httpSession) {
+        if (httpSession.getAttribute("userInfo") != null && httpSession.getAttribute("userInfo") != "") {
+            return "forward/forwardusermain";
+        } else {
+            return "forward/forwarduserlogin";
+        }
     }
 
     /**
