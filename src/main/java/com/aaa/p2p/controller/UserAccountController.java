@@ -226,8 +226,13 @@ public class UserAccountController {
      * @return
      */
     @RequestMapping("/index")
-    public String index(){
-        return "yrd/index";
+    public String index(HttpSession httpSession){
+        if ( httpSession.getAttribute("userInfo")!=null ){
+            return "yrd/index";
+        }
+        else{
+            return "yrd/indextwo";
+        }
     }
     /**
      * infor.html.html.html
