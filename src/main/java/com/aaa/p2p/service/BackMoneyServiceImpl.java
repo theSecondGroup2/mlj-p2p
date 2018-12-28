@@ -70,6 +70,10 @@ public class BackMoneyServiceImpl implements BackMoneyService {
          *        3.代收利息-本月利息
          */
         k = updateUserTAccount(map,bidrepayamount);
+/**
+ * 更改标的状态
+ */
+        selectOver(map);
 
         return k;
     }
@@ -187,6 +191,31 @@ public class BackMoneyServiceImpl implements BackMoneyService {
         } else {
             return 0;
         }
+    }
+
+    /**
+     * 查询还款列表已还款的的个数
+     * @param map
+     * @return
+     */
+    @Override
+    public int selectOver(Map map) {
+        int bidId = Integer.valueOf(map.get("ID")+"");//标的id
+        //根据标的id查还款月数
+        Map mmm = new HashMap();
+        mmm.put("ID",bidId);
+        List<Map> maps1 = backMoneyDao.selectBidInfo(mmm);
+        Integer yueshu = Integer.valueOf(maps1.get(0).get("BIDDEADLINE")+"");//还款月数
+
+
+        int i = backMoneyDao.selectOver(map);
+        int k = Integer.valueOf(yueshu);
+        int i1 = 0;
+        if (i==k){
+             i1 = backMoneyDao.updateBidInfo(map);
+            System.out.println("还款结束"+i);
+        }
+        return i1;
     }
 
     /**

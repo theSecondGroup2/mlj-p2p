@@ -23,4 +23,8 @@ public interface BackMoneyService {
      * @return
      */
     int selectPwd(Map map);
+    /**
+     * 更改标的状态为还款结束
+     */
+    int selectOver(Map map);
 }

@@ -61,4 +61,12 @@
                               RECEIVEINTEREST = RECEIVEINTEREST - #{param2}
                           where USERID = #{param3}
     </update>
+    <!--查询还款计划表的已还款的个数-->
+    <select id="selectOver" resultType="int">
+        select count(*) from TB_BID_REPAY_INFO where BIDREPAYSTATE='已还款'
+    </select>
+    <!--更改标的状态为还款结束-->
+    <update id="updateBidInfo">
+        update TB_BIDINFO set BIDSTATE = '还款结束' where ID = #{ID}
+    </update>
 </mapper>

@@ -89,4 +89,18 @@ public interface BackMoneyDao {
      * @return
      */
     int updateUserTAccount(Double money, Double lixi,int userTid,Double benjin);
+
+    /**
+     * 查询还款计划表的已还款的个数
+     * @param map
+     * @return
+     */
+    int selectOver(Map map);
+
+    /**
+     * 更改标的状态为还款结束
+     * @param map
+     * @return
+     */
+    int updateBidInfo(Map map);
 }

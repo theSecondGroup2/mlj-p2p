@@ -3,7 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.p2p.dao.AccountDao">
     <select id="selectAccountByUserId" resultType="map">
-        select * from TB_ACCOUNT where USERID = #{USERID}
+        select ID,USERID,AVAILABLEBALANCE,ROUND(RECEIVEINTEREST) RECEIVEINTEREST,ROUND(RECEIVEPRINCIPAL) RECEIVEPRINCIPAL,ROUND(RETURNAMOUNT) RETURNAMOUNT,
+         FREEZINGAMOUNT,CREDITLINE,CEIL(SURPLUSCREDITLINE) SURPLUSCREDITLINE,transactionPassword from TB_ACCOUNT where USERID = #{USERID}
     </select>
     <select id="selectAccountPsd" resultType="map">
         select TRANSACTIONPASSWORD from TB_ACCOUNT where USERID = #{userId}
