@@ -4,6 +4,7 @@ import com.aaa.p2p.entity.TreeNode;
 import com.aaa.p2p.service.EmpService;
 import com.aaa.p2p.service.OnPowerService;
 import com.aaa.p2p.service.PowerService;
+import com.aaa.p2p.util.GetIpUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -11,6 +12,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,10 @@ public class PowerController {
     private EmpService empService;
     @Autowired
     private OnPowerService onPowerService;
+
+
+
+
 
     /**
      * 获取权限菜单树
@@ -187,26 +194,25 @@ public class PowerController {
             }
         }
     }
-    /**
-     * 通过用户名密码登陆查询的登陆用户放到session中
-     *
-     */
-    public void setUserSession(String userName,HttpSession session){
-        session.setMaxInactiveInterval(60*60);//以秒为单位，即在没有活动60分钟后，session将失效
-        List<Map> maps = empService.selectEmp(userName);
-        session.setAttribute("emp",maps.get(0));
-    }
+
     /**
      * 用户名密码跳转欢迎页面
      *
      * @return
      */
     @RequestMapping("/toLogin")
-    public String toLogin(String userName, String passWord, Model model, HttpSession httpSession) {
+    public String toLogin(String userName, String passWord, Model model, HttpSession session, HttpServletRequest request) {
         if (userName!=null&&userName!=""){
+
             //将用户放到session中
-            httpSession.setAttribute("userName",userName);
-            setUserSession(userName,httpSession);//通过用户名登陆的emp信息放到session中
+            session.setAttribute("userName",userName);
+            String ipAddress = GetIpUtil.getIpAddress(request);
+            session.setAttribute("ip",ipAddress);
+
+            //session.setMaxInactiveInterval(60*60);//以秒为单位，即在没有活动60分钟后，session将失效
+            List<Map> maps = empService.selectEmp(userName);
+            session.setAttribute("emp",maps.get(0));//通过用户名登陆的emp信息放到session中
+
             //shiro的关键代码，执行认证功能
             // 1.获取subject
             Subject subject = SecurityUtils.getSubject();
@@ -217,6 +223,7 @@ public class PowerController {
                 //登陆成功
                 subject.login(usernamePasswordToken);
                 model.addAttribute("msg","登陆成功");
+
                 //跳到欢迎页面
                 return "tree/index";
             } catch (UnknownAccountException e) {
