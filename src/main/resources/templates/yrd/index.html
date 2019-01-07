@@ -51,6 +51,48 @@ $(document).ready(function() {
     }); //当鼠标放上去的时候，滚动停止，鼠标离开的时候滚动开始
 });
 
+//动态获得投标列表
+$(function () {
+    $.ajax({
+        url:"/bid/getListBy",
+        data:{pageNo:1,pageSize:3},
+        async:false,//同步
+        type:"post",
+        dataType:"json",
+        success:function (data) {
+            var str="";
+            if(data!=null){
+             for(var i=0;i<data.list.length;i++){
+            str +="<li>"+
+                "<div class=\"title\"><a href=\"/userAccount/infor\" target=\"_blank\"><i class=\"icon icon-zhai\" title=\"债权贷\"></i></a><a href=\"/forword/toBidInfo?bidid="+data.list[i].BIDID+"\" class=\"f18\" title=\"周先生债权质押借款0.1万元\" target=\"_blank\">" +data.list[i].BIDDESC +"</a></div>\n"+
+                "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n"+
+                "<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n"+
+                "<tbody>\n"+
+                "<tr>\n"+
+                "<td width=\"260\">借款金额<span class=\"f24 c-333\">" +data.list[i].BIDAMOUNT +"</span>元</td>\n"+
+                "<td width=\"165\">月利率<span class=\"f24 c-333\">" +data.list[i].BIDRATE +"%</span></td>\n"+
+                "<td width=\"180\" align=\"center\">期限<span class=\"f24 c-orange\">" +data.list[i].BIDDEADLINE +"</span>天</td>\n"+
+                "<td><div class=\"circle\">\n"    +
+                "<div class=\"left progress-bar\">\n"+
+                "<div class=\"progress-bgPic progress-bfb1\">\n"+
+                "<div class=\"show-bar\">" +data.list[i].BIDSCHEDULE +"%</div>\n"    +
+                "</div>\n"    +
+                "</div>\n"+
+                "</div></td>\n"+
+                "<td align=\"right\"><a class=\"ui-btn btn-green\" href=\"/forword/toBidInfo?bidid="+data.list[i].BIDID+"\">我要投资</a> </td>\n"+
+                "</tr>\n"+
+                "</tbody>\n"+
+                "</table>\n"+
+                "</li>"
+            }
+            $("#bid").append(str);
+            }
+        },
+        error:function () {
+            alert("error");
+        }
+    });
+});
 
 </script>
 </head>
@@ -167,6 +209,7 @@ $(function(){
     $(".login_float").animate({top: gaintop,opacity:1},100);
 });
 
+
 </script>
 <div class="new-announcement">
   <div class="new-announcement-title">最新公告</div>
@@ -205,9 +248,9 @@ $(function(){
         <div class="bd">
           <div class="des"><span class="fn-left">期限1-29天，期限短，收益见效快</span><a href="/userAccount/list" class="fn-right">查看更多&gt;&gt;</a></div>
           <div class="borrow-list">
-            <ul>
+            <ul id="bid">
               <li>
-                <div class="title"><a href="/userAccount/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a><a href="/userAccount/infor" class="f18" title="金女士债权质押借款1万元" target="_blank">金女士债权质押借款1万元</a></div>
+                <div class="title"><a href="/userAccount/infor" target="_blank"><i class="icon icon-zhai" title="债权贷"></i></a><a href="/userAccount/infor" class="f18" title="金44女士债权质押借款1万元" target="_blank">金44女士债权质押借款1万元</a></div>
                 <table width="100%" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
