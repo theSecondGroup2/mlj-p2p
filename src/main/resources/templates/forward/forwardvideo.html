@@ -142,7 +142,6 @@
                                 $("#stepSix").css("display","block");
                                 $.post("/forwardUser/getResults", {userId:userId}, function (dataS) {
                                     if (dataS > 0) {
-                                        alert("aha!");
                                     }
                                 });
                             } else if (data.AUDITRESULT == "审核未通过") {
