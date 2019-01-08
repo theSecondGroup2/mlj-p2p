@@ -115,15 +115,22 @@
 
         function chongZhi() {
             var chongzhi = $('#chongzhi').val();
+            var actualMessage=$("#actualMoney_message");
             //(chongzhi);
-            $.ajax({
-                type:"post",
-                url:"/account/updateAccount",
-                data:{'chongzhi':chongzhi},
-                success:function(data){
-                    alert(data);
-                }
-            });
+            if(chongzhi < 0 ){
+                $(actualMessage).text("不能输入小于零的金额").css("color","red");
+                $(actualMessage).show();
+                $('#chongZhi').prop("disable",false);
+            }else {
+                $.ajax({
+                    type: "post",
+                    url: "/account/updateAccount",
+                    data: {'chongzhi': chongzhi},
+                    success: function (data) {
+                        alert(data);
+                    }
+                });
+            }
         }
 
 		//<![CDATA[
@@ -452,6 +459,7 @@
                   </em> </span> <span class="quick-error3" id="bankCardError"></span> </div>-->
                 <div class="bank-check" id="bank-check2"> <b class="selected" id="bankProtocol1"></b><span class="bank-agree">我同意并接受<a href="#" target="_blank">《亿人宝投资咨询与管理服务电子协议》</a></span> <span class="error" id="bankProtocol_message" style="display:none;margin-top:-3px;">请同意协议内容！</span> </div>
               <input type="button" name="" value="充值" class="btn-paycz" onclick="chongZhi()">
+                <span id="actualMoney_message" style="display:none" class="error"></span>
               </div>
               <!--<div class="fr bank-info">
                 <p class="bank-tit">快捷支付支持银行：</p>
