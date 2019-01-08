@@ -39,6 +39,16 @@ public class ForWordController {
         }
     }
     /**
+     * 跳转index页面
+     * @return
+     */
+    @RequestMapping("/toindex")
+    public String toindex(){
+
+            return "yrd/indextwo";
+
+    }
+    /**
      * 跳转borrow页面
      * @return
      */
