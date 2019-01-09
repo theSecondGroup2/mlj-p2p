@@ -270,7 +270,7 @@
                 //查询是否有一个正在投的标
                 //if(data>0){
                 if (data.auditResult==0){
-                    var str="<span style='font-size: 50px;color: #8bc026'>您还没有完成审核，请审核完成后再来投标吧</span>";
+                    var str="<span style='font-size: 50px;color: #8bc026'>您还没有完成审核，请审核完成后再来投标吧&nbsp;&nbsp;<u><a href='/forwardUser/toUserMain'>实名认证</a>&nbsp;&nbsp;<a href='/forwardUser/toUserMain'>视频认证</a></u></span>";
                     $("#youBian").html('');
                     $("#youBian").html(str);
                 }else if(data.list.length>0){
