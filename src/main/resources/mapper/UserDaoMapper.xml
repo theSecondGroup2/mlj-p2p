@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--dao层接口的全路径-->
 <mapper namespace="com.aaa.p2p.dao.UserDao">
+    <!--FLOWDATE:'',
+            FLOWDTYPE:'',
+            AMOUNT:'',
+            AVAILABLEBALANCE:''-->
+    <select id="getAccountFlow" resultType="map">
+        select to_char(FLOWDATE,'yyyy-mm-dd') FLOWDATE,FLOWTYPE,AMOUNT,AVAILABLEBALANCE
+        from TB_USER_ACCOUNT_FLOW where USERID = #{param1}
+    </select>
+    <select id="getReplyFlow" resultType="map">
+        select to_char(BIDDATE,'yyyy-mm-dd') BIDDATE,BIDRATE,BIDAMOUNT
+        from TB_BID_SUBMIT
+        where USERID = #{param1}
+    </select>
     <select id="getPageByParam" resultType="map">
        select empno,ename,job,hiredate,sal,comm,deptno
         from

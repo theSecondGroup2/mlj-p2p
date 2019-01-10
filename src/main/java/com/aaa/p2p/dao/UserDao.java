@@ -53,4 +53,18 @@ public interface UserDao {
      * @return
      */
     int batchDel(List empNos);
+
+    /**
+     * 资金记录页面
+     * @param userId
+     * @return
+     */
+    List<Map> getAccountFlow(int userId);
+
+    /**
+     * 查询投资记录
+     * @param userId
+     * @return
+     */
+    List<Map> getReplyFlow(int userId);
 }
