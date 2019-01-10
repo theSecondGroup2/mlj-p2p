@@ -24,6 +24,15 @@ import java.util.Map;
 public class CheckBidController {
     @Autowired
     private CheckBidService checkBidService;
+    /**
+     * 前台页面统计
+     */
+    @RequestMapping("/getSum")
+    @ResponseBody
+    public Object getSum(){
+        Map sum = checkBidService.getSum();
+        return sum;
+    }
 
     /**
      * 跳转页面
