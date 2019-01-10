@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +23,28 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+    /**
+     * 根据session查资金记录页面
+     */
+    @ResponseBody
+    @RequestMapping("/getAccountFlow")
+    public Object getAccountFlow(HttpSession httpSession){
+        Map map = (HashMap)httpSession.getAttribute("userInfo");
+        int userId = Integer.valueOf(map.get("USERID")+"");
+        List<Map> list = userService.getAccountFlow(userId);
+        return list;
+    }
+    /**
+     * 根据session查询投资列表
+     */
+    @ResponseBody
+    @RequestMapping("/getReplyFlow")
+    public Object getReplyFlow(HttpSession httpSession){
+        Map map = (HashMap)httpSession.getAttribute("userInfo");
+        int userId = Integer.valueOf(map.get("USERID")+"");
+        List<Map> list = userService.getReplyFlow(userId);
+        return list;
+    }
 
 
     /**

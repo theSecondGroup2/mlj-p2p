@@ -54,4 +54,17 @@ public interface UserService {
      */
     int batchDel(Map map);
 
+    /**
+     * 资金记录页面
+     * @param userId
+     * @return
+     */
+    List<Map> getAccountFlow(int userId);
+
+    /**
+     * 投资列表
+     * @param userId
+     * @return
+     */
+    List<Map> getReplyFlow(int userId);
 }

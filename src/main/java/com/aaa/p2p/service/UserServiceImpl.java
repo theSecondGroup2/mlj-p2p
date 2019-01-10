@@ -85,4 +85,19 @@ public class UserServiceImpl implements UserService {
         int i = userDao.batchDel(empNos);
         return i;
     }
+
+    /**
+     * 资金记录页面
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Map> getAccountFlow(int userId) {
+        return userDao.getAccountFlow(userId);
+    }
+
+    @Override
+    public List<Map> getReplyFlow(int userId) {
+        return userDao.getReplyFlow(userId);
+    }
 }
