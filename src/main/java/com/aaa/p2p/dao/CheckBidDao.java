@@ -38,4 +38,26 @@ public interface CheckBidDao {
      * 更改标的状态
      */
     int updateState(Map map);
+    /**
+     * 查询累计投资金额
+     */
+    Double selectOne();
+
+    /**
+     * 已还本息
+     * @return
+     */
+    Double selectTwo();
+
+    /**
+     * 注册人数
+     * @return
+     */
+    Double selectZcrs();
+
+    /**
+     * 余额
+     * @return
+     */
+    Double selectYe();
 }

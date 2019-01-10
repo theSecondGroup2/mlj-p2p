@@ -35,4 +35,10 @@ public interface CheckBidService {
      * 更改标的状态
      */
     int updateState(Map map, HttpSession session);
+
+    /**
+     * 查询前台数据
+     * @return
+     */
+    Map getSum();
 }

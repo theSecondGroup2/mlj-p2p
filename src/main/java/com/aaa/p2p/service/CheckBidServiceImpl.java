@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,6 +88,24 @@ public class CheckBidServiceImpl implements CheckBidService {
             return 0;
         }
         return 0;
+    }
+
+    /**
+     * 添加集合方法
+     * @return
+     */
+    @Override
+    public Map getSum() {
+        Map map = new HashMap();
+        Double ljtzje = checkBidDao.selectOne();
+        Double yhbx = checkBidDao.selectTwo();
+        Double ye = checkBidDao.selectYe();
+        Double zcrs = checkBidDao.selectZcrs();
+        map.put("ljtzje",ljtzje);//累计投资金额
+        map.put("yhbx",yhbx);
+        map.put("ye",ye);
+        map.put("zcrs",zcrs);
+        return map;
     }
 }
 
