@@ -76,12 +76,9 @@
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/userAccount/zjjl">资金记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/userAccount/tzjl">投资记录</a></span></li>
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/userAccount/hkjh">回款计划</a></span></li>
-        <li class=""><span><a href="/userAccount/ktdsf"><i class="dot dot02"></i>开通第三方</a> </span> </li>
         <li><span><a href="/userAccount/cz1"><i class="dot dot03"></i>充值</a></span></li>
         <li class=""><span><a href="/userAccount/tx1"><i class="dot dot04"></i>提现</a></span></li>
-        <li style="position:relative;"> <span> <a href="/userAccount/xtxx"><i class="dot dot08"></i>系统信息 </a> </span> </li>
         <li style="position:relative;"> <span> <a href="/forwardUser/toUserMain"><i class="dot dot08"></i>个人信息 </a> </span> </li>
-        <li><span><a href="/userAccount/zhsz"><i class="dot dot09"></i>账户设置</a></span></li>
       </ul>
     </div>
     <div class="personal-main">
@@ -104,8 +101,7 @@
         }
 	</style>
       <div class="pmain-profile">
-        <div class="pmain-welcome"> <span class="fl"><span id="outLogin">晚上好，</span><span th:text="${session.userInfo.USERNAME}" class="color"></span>&nbsp; 喝一杯下午茶，让心情放松一下~</span> <span class="fr">上次登录时间：
-          2015-09-11 14:05:07 </span> </div>
+        <div class="pmain-welcome"> <span class="fl"><span id="outLogin">晚上好，</span><span th:text="${session.userInfo.USERNAME}" class="color"></span>&nbsp; 喝一杯下午茶，让心情放松一下~</span> </div>
         <div class="pmain-user">
           <div class="user-head"> <span id="clickHeadImage" class="head-img" title="点击更换头像">
             <form  method="post" action="">
@@ -129,8 +125,6 @@
           <div class="user-info user-info1">
             <ul>
               <li>用户名<span id="getSession"></span></li>
-              <li>安全级别<span><i class="safe-level"><i class="onlevel" style="width:40%;"></i></i></span> <a href="#">[低]</a></li>
-              <li>您还未开通第三方支付账户，请 <a class="pmain-log" href="/userAccount/ktdsf">立即开通</a>以确保您的正常使用和资金安全。 </li>
             </ul>
           </div>
         </div>
