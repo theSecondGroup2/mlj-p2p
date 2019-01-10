@@ -74,7 +74,7 @@
                 </li>
                 <li th:if="${session.userInfo.USERNAME} ne null">
                     <div class="" >
-                        <a href="/user/toLogin" class="js-login" title="退出">退出</a>
+                        <a href="/forword/toindex" class="js-login" title="退出">退出</a>
                     </div>
                 </li>
                     <input type="hidden" th:value="${session.userInfo.USERID}" id="userID"/>
@@ -114,7 +114,7 @@
     <table class="table table-striped">
         <form id="formA" >
             <tr class="success">
-                <td><label for="bidAmount">贷款金额</label></td><td><input type="text" id="bidAmount" name="bidAmount"/><span style="font-size: small;color: #5cb85c">单位为元</span></td>
+                <td><label for="bidAmount">贷款金额</label></td><td><input type="text" id="bidAmount" name="bidAmount" onkeydown="return showPri(event)" onkeyup="check()"/><span style="font-size: small;color: #5cb85c" id="money">单位为元</span></td>
             </tr>
             <tr class="success">
                 <td><label for="bidRepaymentMethod">还款方式</label></td><td><input type="text" id="bidRepaymentMethod" name="bidRepaymentMethod" value="等额本息" readonly="true"/><span style="font-size: small;color: #5cb85c">现仅支持等额本息</span></td>
@@ -149,7 +149,7 @@
                 <td><label for="bidDesc">借款描述</label></td><td><textarea id="bidDesc" name="bidDesc"/></textarea></td>
             </tr>
             <tr>
-                <td colspan="2" align="center"><input type="button" value="提交" onclick="return toInsert()"/></td>
+                <td colspan="2" align="center"><input type="button" value="提交" id="tiJiao" onclick="return toInsert()"/></td>
             </tr>
         </form>
 
@@ -258,6 +258,26 @@
         $("#bidDeadDate").val(now);
 
     });
+
+    //校验输入金额
+    //只能输入数字
+    function showPri(event){
+        var eve=event?event:window.event;
+        //document.getElementById("tex").value=eve.keyCode;
+        var a = eve.keyCode;
+        if(a>=48&&a<=57||a>=96&&a<=105||a==110||a==190||a==8)return true;
+        return false;
+    }
+    function check() {
+     var money=  parseFloat($("#bidAmount").val());
+     if(10000<=money&&money<=50000){
+        $("#money").html("金额范围正确");
+         $("#tiJiao").prop("disabled",false);
+     }else{
+         $("#money").html("范围为1万-5万元").css("color","red");
+         $("#tiJiao").prop("disabled","disabled");
+     }
+    }
 
     //页面数据初始化
     $(function () {
