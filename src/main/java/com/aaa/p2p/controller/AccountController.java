@@ -92,6 +92,7 @@ public class AccountController {
         if (i==j){
             return "充值成功";
         }else {
+            System.out.println(j+"---------------------");
             return "充值失败";
         }
 //        System.out.println(i);

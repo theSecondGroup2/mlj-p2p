@@ -87,8 +87,7 @@
         <li><span><a style="font-size:14px;text-align:center;width:115px;padding-right:35px;" href="/userAccount/hkjh">回款计划</a></span></li>
         <li><span><a href="/userAccount/cz1"><i class="dot dot03"></i>充值</a></span></li>
         <li class=""><span><a href="/userAccount/tx1"><i class="dot dot04"></i>提现</a></span></li>
-        <li><span><a href="/userAccount/zhsz"><i class="dot dot09"></i>账户设置</a></span></li>
-
+        <li style="position:relative;"> <span> <a href="/forwardUser/toUserMain"><i class="dot dot08"></i>个人信息 </a> </span> </li>
       </ul>
     </div>
     <div class="personal-main">
@@ -204,7 +203,6 @@
                             $.post("/back/one", {qishu:qishu,ID:bidId,userId:userId}, function (data) {
                                 if (data > 0) {
                                     alert("恭喜您！您已还清本期！");
-                                    location.href="/userAccount/hkj";
                                 }else{
                                     alert("还款失败！")
                                 }
