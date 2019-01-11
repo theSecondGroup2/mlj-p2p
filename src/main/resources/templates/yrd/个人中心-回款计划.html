@@ -174,25 +174,14 @@
             $.post("/forwardInfo/getRepayCount", {userId:data.USERID},function (dataS) {
                 var str = "";
                 for (var i = 0; i < dataS.length; i++) {
-                    str += "<tr><td>"+dataS[i].FST+"</td><td>"+dataS[i].SND+"</td><td>"+dataS[i].BIDREPAYSTATE+"</td><td>"+dataS[i].FUR+"</td><td><input type='button' value='还款' onclick='huankuan("+dataS[i].FST+","+dataS[i].BID+","+dataS[i].USERID+")'></td></tr>";
+                    str += "<tr><td>"+dataS[i].FST+"</td><td>"+dataS[i].SND+"</td><td>"+dataS[i].BIDREPAYSTATE+"</td><td>"+dataS[i].FUR+"</td><td><input type='button'  value='还款' onclick='huankuan("+dataS[i].FST+","+dataS[i].BID+","+dataS[i].USERID+")'></td></tr>";
                 }
+
                 $("#tbody").append(str);
-                if (dataS.length == 0) {
-                    $("#forOneKey").prop("disabled", true);
-                } else {
-                    $("#forOneKey").prop("disabled", false);
-                }
             });
         });
     });
 
-    $("#forOneKey").click(function () {
-        $.post("/forwardInfo/forOneRepay", {userId:userId}, function (data) {
-            if (data > 0) {
-                alert("您已一次还清所有贷款");
-            }
-        });
-    });
     //单次还款
     function huankuan(qishu,bidId,userId) {
         //sweetalert2
@@ -215,6 +204,7 @@
                             $.post("/back/one", {qishu:qishu,ID:bidId,userId:userId}, function (data) {
                                 if (data > 0) {
                                     alert("恭喜您！您已还清本期！");
+                                    location.href="/userAccount/hkj";
                                 }else{
                                     alert("还款失败！")
                                 }
