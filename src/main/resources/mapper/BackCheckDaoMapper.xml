@@ -58,4 +58,17 @@
         update tb_video_audit set AUDITRESULT = #{AUDITRESULT}, APPOINTTIME = to_date(#{APPOINTTIME},'yyyy-MM-dd HH24:mi:ss'),
         AUDITREMARKS = #{AUDITREMARKS}, AUDITTIME = sysdate where USERID = #{USERID}
     </update>
+    <!--获取各个省份人数-->
+    <select id="addressNum" resultType="map">
+        select count(*) as NUM, ADDRESS as ADDR from tb_userreal group by address
+    </select>
+    <!--获取标ID-->
+    <select id="selBid" resultType="map">
+        select ID from TB_BIDINFO
+    </select>
+    <!--月盈利统计-->
+    <select id="getEChartsData" resultType="map">
+        select bi.id as bid,bs.bidAmount,ui.userName as username,bi.bidRate,bs.bidRate/bi.bidDeadline as monprofit from tb_bid_submit bs inner join
+        tb_bidinfo bi on bi.id = bs.bidInfoID inner join tb_fwdlogin ui on ui.userID = bs.userID where bi.id = #{id}
+    </select>
 </mapper>
