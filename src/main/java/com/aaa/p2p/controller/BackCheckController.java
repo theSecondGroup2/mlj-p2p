@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -90,6 +92,55 @@ public class BackCheckController {
     public int chgVideo(@RequestBody Map map) {
         //System.out.println(map);
         return backCheckService.chgVideo(map);
+    }
+
+    /**
+     * 跳转省份echars图
+     * @return
+     */
+    @RequestMapping("/toUserProfit")
+    public String toUserProfit() {
+        return "back/userProfit";
+    }
+
+    /**
+     * 获取各个省份人数
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/addressNum")
+    public List<Map> addressNum() {
+        return backCheckService.addressNum();
+    }
+
+    /**
+     * 跳转盈利echars图
+     * @return
+     */
+    @RequestMapping("/toMonProfit")
+    public String toMonProfit() {
+        return "back/monProfit";
+    }
+
+    /**
+     * 获取标ID
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/selBid")
+    public List<Map> selBid() {
+        return backCheckService.selBid();
+    }
+
+    /**
+     * 月盈利统计
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getEChartsData")
+    public List<Map> getEChartsData(int id) {
+        return backCheckService.getEChartsData(id);
     }
 
 }

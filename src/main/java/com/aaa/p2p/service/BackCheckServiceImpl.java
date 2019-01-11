@@ -49,4 +49,22 @@ public class BackCheckServiceImpl implements BackCheckService {
         return backCheckDao.chgVideo(map);
     }
 
+    @Override
+    public List<Map> addressNum() {
+        List<Map> mapList = backCheckDao.addressNum();
+        for (Map map : mapList) {
+            map.put("ADDRESS", (map.get("ADDR")+"").substring(0, 2));
+        }
+        return mapList;
+    }
+
+    @Override
+    public List<Map> selBid() {
+        return backCheckDao.selBid();
+    }
+
+    @Override
+    public List<Map> getEChartsData(int id) {
+        return backCheckDao.getEChartsData(id);
+    }
 }

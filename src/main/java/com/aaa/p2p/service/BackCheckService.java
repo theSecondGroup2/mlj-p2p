@@ -53,4 +53,23 @@ public interface BackCheckService {
      */
     int chgVideo(Map map);
 
+    /**
+     * 获取各个省份人数
+     * @return
+     */
+    List<Map> addressNum();
+
+    /**
+     * 获取标ID
+     * @return
+     */
+    List<Map> selBid();
+
+    /**
+     * 月盈利统计
+     * @param id
+     * @return
+     */
+    List<Map> getEChartsData(int id);
+
 }
