@@ -115,6 +115,7 @@
                             </div>
                             <div class="modal-body">
                                 投资金额:<input id="investMoney" name="investMoney" style="width: 250px" onkeydown="return showPri(event)" onkeyup="check()" onfocus="clearlove()"/><span id="inner"></span><br>
+                                <div>&nbsp;</div>
                                 支付密码：<input onkeydown="return showPri(event)"/>
                             </div>
                             <div class="modal-footer">
@@ -408,7 +409,7 @@ function check() {
           $("#submit").prop("disabled","disabled");
     }else if(moeny1>maxMoney){
         //提醒输入金额超出范围
-        $("#inner").html("输入金额超出范围").css("color","red");
+        $("#inner").html("输入金额超出范围或余额不足").css("color","red");
         $("#submit").prop("disabled","disabled");
     }
     else {
