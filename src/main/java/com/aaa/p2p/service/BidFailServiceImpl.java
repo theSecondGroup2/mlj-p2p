@@ -36,14 +36,11 @@ public class BidFailServiceImpl implements BidFailService {
         List<Map> listBidFailID = bidFailDao.getBidFailID();
         if(listBidFailID!=null&&listBidFailID.size()>0){
             for (Map map : listBidFailID) {
-                System.out.println("map"+map);
                 Integer bidID = Integer.valueOf(map.get("ID") + "");
                 //通过bidID获得投资人的id，钱数，再去解冻
                 List<Map> investListByBidID = bidFailDao.getInvestListByBidID(bidID);
-                System.out.println(investListByBidID);
                 if(investListByBidID!=null&&investListByBidID.size()>0){
                     for (Map map1 : investListByBidID) {
-                        System.out.println("map1"+map1);
                         Integer userID = Integer.valueOf(map1.get("USERID") + "");
                         //投资金额
                         Double bidAmount = Double.valueOf(map1.get("BIDAMOUNT") + "");
@@ -58,7 +55,6 @@ public class BidFailServiceImpl implements BidFailService {
                         Map maxMoneyByUserId = bidDao.getMaxMoneyByUserId(strUserID);
                         Object availablebalance = maxMoneyByUserId.get("AVAILABLEBALANCE");
                         bidFailDao.insertFlow(strUserID,accountIDByUserID,bidAmount,availablebalance);
-                        System.out.println("流标成功，"+strUserID);
                     }
                 }
                 //遍历每一个流标的表，改为状态为流标完成

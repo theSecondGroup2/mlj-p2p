@@ -49,7 +49,6 @@ public class AccountController {
     public String updateAccountId(Integer tixian, HttpSession session) {
         Map userMap = (Map) session.getAttribute("userInfo");
         Integer userid = Integer.valueOf(userMap.get("USERID") + "");
-        System.out.println("tixian:" + tixian);
         int i = accountService.updateAccountId(tixian, userid);
         Map map = new HashMap();
         map.put("tixian",tixian);
@@ -82,7 +81,6 @@ public class AccountController {
     public String updateAccount(Integer chongzhi,HttpSession session){
         Map userMap = (Map)session.getAttribute("userInfo");
         Integer userid = Integer.valueOf(userMap.get("USERID")+"");
-        System.out.println("chongzhi:"+chongzhi);
         int i = accountService.updateAccount(chongzhi,userid);
         Map map = new HashMap();
         map.put("chongzhi",chongzhi);
@@ -92,7 +90,6 @@ public class AccountController {
         if (i==j){
             return "充值成功";
         }else {
-            System.out.println(j+"---------------------");
             return "充值失败";
         }
 //        System.out.println(i);
@@ -108,7 +105,6 @@ public class AccountController {
     @ResponseBody
     @RequestMapping("/checkNamePswd")
     public int checkNamePswd(@RequestParam Map map,HttpSession session){
-        System.out.println("密码是："+map);
         Map userMap = (Map)session.getAttribute("userInfo");
         int userId = Integer.valueOf(userMap.get("USERID")+"");
         map.put("userId",userId);

@@ -87,7 +87,6 @@ public class ForwardInfoServiceImpl implements ForwardInfoService {
         String city = fInfoDao.getCty(map);
         String area = fInfoDao.getAra(map);
         map.put("address", province+city+area+map.get("theDetail"));
-        //System.out.println(map);
         int chg = fInfoDao.chgExist(map);
         fInfoDao.delOld(map);
         int sub = fInfoDao.subReal(map);

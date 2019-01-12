@@ -61,7 +61,6 @@ public class BorrowController {
     @ResponseBody
     @RequestMapping("/select")
     public Object selectBidIf(@RequestParam Integer userID){
-        System.out.println(borrowService.selectBidIf(userID));
         Map map=new HashMap();
         //判断这个用户是否有正在投的标
         map.put("list",borrowService.selectBidIf(userID));

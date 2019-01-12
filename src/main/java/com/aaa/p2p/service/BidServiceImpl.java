@@ -79,9 +79,7 @@ public class BidServiceImpl implements BidService{
         String USERID = userInfo.get("USERID")+"";
         String USERNAME = userInfo.get("USERNAME") + "";
         //投资金额等于标的最大投资金额，满标
-        System.out.println(maxmoney+"..........");
         if(maxmoney==investMoney){
-            System.out.println("满标");
             bidDao.updateBidState(bidId);
             //自动满标后插入审核记录表
             bidDao.insertAudit(USERID,bidId);

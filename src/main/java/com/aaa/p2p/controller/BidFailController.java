@@ -29,7 +29,6 @@ public class BidFailController {
     @Scheduled(cron = "0 0 *  * * * ")//10秒执行1次
     public void bidFail(){
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        System.out.println("流标开始  "+time);
         //流标操作
         bidFailService.bidFail();
 

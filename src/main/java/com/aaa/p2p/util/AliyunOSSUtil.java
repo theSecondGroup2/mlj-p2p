@@ -126,14 +126,10 @@ public class AliyunOSSUtil {
         // 列出文件。
         ObjectListing listing = ossClient.listObjects(listObjectsRequest);
         // 遍历所有文件。
-        System.out.println("Objects:");
         for (OSSObjectSummary objectSummary : listing.getObjectSummaries()) {
-            System.out.println(objectSummary.getKey());
         }
         // 遍历所有commonPrefix。
-        System.out.println("CommonPrefixes:");
         for (String commonPrefix : listing.getCommonPrefixes()) {
-            System.out.println(commonPrefix);
         }
         // 关闭OSSClient。
         ossClient.shutdown();

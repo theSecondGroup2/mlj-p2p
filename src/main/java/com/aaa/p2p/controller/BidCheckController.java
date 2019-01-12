@@ -53,7 +53,6 @@ public class BidCheckController {
     @ResponseBody
     @RequestMapping("batchUpdate")
     public Object batchUpdate(@RequestBody Map map){
-        System.out.println(map);
         return bidCheckService.batchUpdate(map);
     }
 }

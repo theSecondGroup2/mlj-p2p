@@ -30,7 +30,6 @@ public class AccountServiceImpl implements AccountService {
             Double receiveprincipal = Double.parseDouble(mapList.get(0).get("AVAILABLEBALANCE") + "");//可用余额
             Double receiveInterest = Double.parseDouble(mapList.get(0).get("FREEZINGAMOUNT") + "");//冻结金额
             Double totle = receiveInterest + receiveprincipal;//账户总额
-            System.out.println(totle);
             mapList.get(0).put("TOTLE",totle);
         }
         return mapList;

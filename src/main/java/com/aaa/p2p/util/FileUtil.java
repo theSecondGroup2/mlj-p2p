@@ -66,8 +66,6 @@ public class FileUtil {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            System.out.println("222");
-            System.out.println("----------file download" + filename);
             try {
                 bis.close();
                 fis.close();
