@@ -63,7 +63,11 @@ public class EmpServiceImpl implements EmpService{
      */
     @Override
     public int deleteEmp(Map map) {
-        return empDao.deleteEmp(map);
+        if(Integer.valueOf(map.get("ID")+"")==51){
+            return 0;
+        } else {
+            return empDao.deleteEmp(map);
+        }
     }
     /**
      * 通过手机号获取用户
