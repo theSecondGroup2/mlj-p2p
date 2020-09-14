@@ -27,8 +27,8 @@ public class AliyunOSSUtil {
     private static String FILE_URL;
     private static String bucketName = "luruihua";
     private static String endpoint = "oss-cn-beijing.aliyuncs.com";
-    private static String accessKeyId = "LTAIwtEAZycDZf6T";
-    private static String accessKeySecret = "JoRxYr3jsdE9XZqkqfwOOR7bm6DyFw";
+    private static String accessKeyId = "";
+    private static String accessKeySecret = "";
     private static String fileHost = "img";
 
 
